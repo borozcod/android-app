@@ -4,60 +4,44 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#184D4F">
+    android:background="#1EC2CA"
+    android:id="@+id/home">
 
-    <Button
-        android:layout_width="375dp"
-        android:layout_height="wrap_content"
-        android:text="SIGN UP"
-        android:id="@+id/button2"
-        android:onClick="toSignupActivity"
-        android:nestedScrollingEnabled="true"
-        android:background="#BFDADB"
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:id="@+id/imageButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="46dp" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/signin_img"
+        android:onClick="toSigninActivity" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:id="@+id/imageButton2"
+        android:layout_above="@+id/imageButton"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/signup_img"
+        android:onClick="toSignupActivity" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_marginTop="54dp"
-        android:src="@drawable/BORROW_LABLE"
+        android:src="@drawable/borrow_logo"
+        android:layout_marginTop="44dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:src="@drawable/card"
-        android:layout_alignBottom="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:src="@drawable/phone"
-        android:layout_marginTop="60dp"
+        android:id="@+id/imageView5"
+        android:src="@drawable/hands_logo"
         android:layout_below="@+id/imageView"
-        android:layout_alignStart="@+id/imageView" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="48dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
-        android:src="@drawable/camera"
-        android:layout_alignBottom="@+id/imageView2"
-        android:layout_alignEnd="@+id/imageView" />
-
-    <ImageButton
-        android:layout_width="375dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
-        android:src="@drawable/loginIcon"
-        android:background="#28A86E"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
