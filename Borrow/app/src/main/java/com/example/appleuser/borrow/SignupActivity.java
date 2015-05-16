@@ -35,8 +35,26 @@ public class SignupActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_signup);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeActionBar();
 
+        initializeButtons();
+    }
+
+    private void initializeActionBar()
+    {
+        // set title
+        setTitle("Borrow :: Sign Up");
+
+        // set icon
+        //getActionBar().setIcon(R.drawable.PICTURE_NAME);
+
+        // set back button
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initializeButtons()
+    {
         buttonCreateAccount = (Button)findViewById(R.id.signupButtonCreateAccount);
         buttonCancel = (Button)findViewById(R.id.signupButtonCancel);
 

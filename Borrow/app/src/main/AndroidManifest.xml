@@ -23,7 +23,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.appleuser.borrow.MainActivity" />
@@ -31,7 +31,7 @@
         <activity
             android:name=".SigninActivity"
             android:label="@string/title_activity_signin"
-            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.appleuser.borrow.MainActivity" />
@@ -39,10 +39,18 @@
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.appleuser.borrow.MainActivity" />
+        </activity>
+        <activity
+            android:name=".AddItemActivity"
+            android:label="@string/title_activity_add_new_item"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.appleuser.borrow.HomeActivity" />
         </activity>
     </application>
 

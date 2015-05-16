@@ -13,6 +13,8 @@ import android.view.View.OnClickListener;
 public class HomeActivity extends ActionBarActivity {
 
     private Button buttonSignOut;
+    private Button buttonAddItem;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +26,28 @@ public class HomeActivity extends ActionBarActivity {
     private void initializeActivity() {
         setContentView(R.layout.activity_home);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        initializeActionBar();
 
+        initializeButtons();
+    }
+
+    private void initializeActionBar()
+    {
+        // set title
+        setTitle("Borrow :: Home");
+
+        // set icon
+        //getActionBar().setIcon(R.drawable.PICTURE_NAME);
+
+        // set back button
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void initializeButtons()
+    {
         buttonSignOut = (Button)findViewById(R.id.homeButtonSignOut);
+        buttonAddItem = (Button)findViewById(R.id.homeButtonAddItem);
 
         buttonSignOut.setOnClickListener(new OnClickListener() {
             @Override
@@ -34,6 +55,19 @@ public class HomeActivity extends ActionBarActivity {
                 signOut();
             }
         });
+
+        buttonAddItem.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toAddItemActivity();
+            }
+        });
+    }
+
+    private void toAddItemActivity()
+    {
+        i = new Intent(getApplicationContext(), AddItemActivity.class);
+        startActivity(i);
     }
 
     private void signOut()

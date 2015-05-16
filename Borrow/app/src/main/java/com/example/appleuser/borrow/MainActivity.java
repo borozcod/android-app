@@ -33,10 +33,27 @@ public class MainActivity extends ActionBarActivity
         initializeActivity();
     }
 
-    private void initializeActivity()
-    {
+    private void initializeActivity() {
         setContentView(R.layout.activity_main);
 
+        initializeActionBar();
+
+        initializeButtons();
+
+        initializeDatabase();
+    }
+
+    private void initializeActionBar()
+    {
+        // set title
+        setTitle("Borrow");
+
+        // set icon
+        //getActionBar().setIcon(R.drawable.PICTURE_NAME);
+    }
+
+    private void initializeButtons()
+    {
         buttonSignin = (ImageButton)findViewById(R.id.mainButtonSignin);
         buttonSignup = (ImageButton)findViewById(R.id.mainButtonSignup);
 
@@ -54,6 +71,10 @@ public class MainActivity extends ActionBarActivity
             }
         });
 
+    }
+
+    private void initializeDatabase()
+    {
         // connects to Parse database: borrowappandroid@gmail.com
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, "xEVrr9KpRW07GEYHlph9pkrRAdeAXFg5xZllfaN8", "OTu2sE7Dr72YZQazWAVkPPVN9cDuC1kBSB23Nfau");

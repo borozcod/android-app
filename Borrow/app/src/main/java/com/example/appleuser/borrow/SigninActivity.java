@@ -36,8 +36,26 @@ public class SigninActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_signin);
 
+        initializeActionBar();
+
+        initializeButtons();
+    }
+
+    private void initializeActionBar()
+    {
+        // set title
+        setTitle("Borrow :: Sign In");
+
+        // set icon
+        //getActionBar().setIcon(R.drawable.PICTURE_NAME);
+
+        // set back button
+        getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
+    }
+
+    private void initializeButtons()
+    {
         buttonBack = (Button)findViewById(R.id.signinButtonBack);
         buttonSignin = (ImageButton)findViewById(R.id.signinButtonSignin);
 
