@@ -22,15 +22,27 @@
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:label="@string/title_activity_home"
+            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.appleuser.borrow.MainActivity" />
         </activity>
         <activity
             android:name=".SigninActivity"
-            android:label="@string/title_activity_signin" >
+            android:label="@string/title_activity_signin"
+            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.appleuser.borrow.MainActivity" />
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:label="@string/title_activity_signup" >
+            android:label="@string/title_activity_signup"
+            android:parentActivityName="com.example.appleuser.borrow.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.appleuser.borrow.MainActivity" />
         </activity>
     </application>
 

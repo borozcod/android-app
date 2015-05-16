@@ -11,20 +11,18 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="75dp"
-        android:id="@+id/imageButton"
+        android:id="@+id/mainButtonSignin"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/signin_img"
-        android:onClick="toSigninActivity" />
+        android:src="@drawable/signin_img" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="75dp"
-        android:id="@+id/imageButton2"
-        android:layout_above="@+id/imageButton"
+        android:id="@+id/mainButtonSignup"
+        android:layout_above="@+id/mainButtonSignin"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/signup_img"
-        android:onClick="toSignupActivity" />
+        android:src="@drawable/signup_img" />
 
     <ImageView
         android:layout_width="wrap_content"
