@@ -9,11 +9,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 
 public class HomeActivity extends ActionBarActivity {
 
     private Button buttonSignOut;
-    private Button buttonAddItem;
+    private ImageButton buttonAddItem;
     private Intent i;
 
     @Override
@@ -47,7 +48,7 @@ public class HomeActivity extends ActionBarActivity {
     private void initializeButtons()
     {
         buttonSignOut = (Button)findViewById(R.id.homeButtonSignOut);
-        buttonAddItem = (Button)findViewById(R.id.homeButtonAddItem);
+        buttonAddItem = (ImageButton)findViewById(R.id.homeButtonAddItem);
 
         buttonSignOut.setOnClickListener(new OnClickListener() {
             @Override
@@ -85,6 +86,7 @@ public class HomeActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_signin, menu);
+
         return true;
     }
 

@@ -47,10 +47,14 @@
         <activity
             android:name=".AddItemActivity"
             android:label="@string/title_activity_add_new_item"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.appleuser.borrow.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".MyListActivity"
+            android:label="@string/title_activity_my_list" >
         </activity>
     </application>
 

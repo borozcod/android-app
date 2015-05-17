@@ -103,7 +103,7 @@ public class SigninActivity extends ActionBarActivity
     private void toHomeActivity()
     {
         finish();
-        i = new Intent(getApplicationContext(), HomeActivity.class);
+        i = new Intent(getApplicationContext(), MyListActivity.class);
         startActivity(i);
     }
 
