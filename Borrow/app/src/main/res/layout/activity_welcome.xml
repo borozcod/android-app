@@ -1,0 +1,65 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="#24B2DA"
+    tools:context="com.example.appleuser.borrow.WelcomeActivity">
+
+    TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/borrowText"
+        android:src="@drawable/borrow_lable_main"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/borrowLogo"
+        android:layout_marginTop="42dp"
+        android:src="@drawable/hands_logo"
+        android:layout_below="@+id/borrowText"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue to Borrow Home"
+        android:id="@+id/welcomeButtonContinue"
+        android:layout_above="@+id/welcomeButtonSignOut"
+        android:layout_alignEnd="@+id/borrowLogo"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Out"
+        android:id="@+id/welcomeButtonSignOut"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/welcomeButtonContinue"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome to Borrow,"
+        android:id="@+id/welcomeText"
+        android:layout_below="@+id/borrowLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="38dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/userText"
+        android:layout_below="@+id/welcomeText"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

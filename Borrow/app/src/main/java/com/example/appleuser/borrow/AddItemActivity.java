@@ -151,23 +151,21 @@ public class AddItemActivity extends ActionBarActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_add_new_item, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         Log.d("Sagev", "Action Bar Start");
 
-        switch (id) {
-            //noinspection SimplifiableIfStatement
+        switch (id)
+        {
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
                 return true;

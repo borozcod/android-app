@@ -16,12 +16,19 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
-
 public class SignupActivity extends ActionBarActivity
 {
     private Button buttonCreateAccount;
     private Button buttonCancel;
+    private EditText editTextUsername;
+    private EditText editTextPassword;
+    private EditText editTextPasswordRepeat;
     private Intent i;
+    private String username;
+    private String password;
+    private String passwordRepeat;
+    private StringBuilder errMsg;
+    private ParseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -61,7 +68,7 @@ public class SignupActivity extends ActionBarActivity
         buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAccount();
+                signup();
             }
         });
 
@@ -73,62 +80,79 @@ public class SignupActivity extends ActionBarActivity
         });
     }
 
+    private void signup()
+    {
+        getTextFields();
+
+        if (isInputValid())
+            createAccount();
+        else
+            toast(errMsg.toString());
+    }
+
     private void createAccount()
     {
-        String username = ((EditText)findViewById(R.id.signupUsernameText)).getText().toString();
-        String password1 = ((EditText)findViewById(R.id.signupPasswordText)).getText().toString();
-        String password2 = ((EditText)findViewById(R.id.signupPasswordRepeatText)).getText().toString();
+        user = new ParseUser();
 
-        if (username.length() == 0)
-        {
-            Toast.makeText(SignupActivity.this, "Please enter a Username", Toast.LENGTH_LONG).show();
-            return;
-        }
+        user.setUsername(username);
+        user.setPassword(password);
 
-        if (password1.length() == 0)
-        {
-            Toast.makeText(SignupActivity.this, "Please enter a Password", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (password2.length() == 0)
-        {
-            Toast.makeText(SignupActivity.this, "Please repeat your Password", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        if (!password1.equals(password2))
-        {
-            Toast.makeText(SignupActivity.this, "Passwords do not match", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Log.d("Sagev", "New acc");
-        ParseUser newUser = new ParseUser();
-        Log.d("Sagev", "Set user");
-        newUser.setUsername(username);
-        Log.d("Sagev", "Set pass");
-        newUser.setPassword(password1);
-        Log.d("Sagev", "Push acc");
-        newUser.signUpInBackground(new SignUpCallback() {
+        user.signUpInBackground(new SignUpCallback() {
             @Override
-            public void done(ParseException e) {
-                Log.d("Sagev", "Start if block");
-                if (e != null) {
-                    Log.d("Sagev", "Caught error");
-                    Toast.makeText(SignupActivity.this, e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                    Log.d("Sagev", "Threw error");
+            public void done(ParseException pe) {
+                if (pe != null) {
+                    toast(pe.getMessage());
                 } else {
-                    Log.d("Sagev", "Switch view");
-                    toHomeActivity();
-                    //Log.d("Sagev", "Modify greeting");
-                    //((TextView) findViewById(R.id.homeWelcomeText)).setText("Welcome to Borrow, " + ((EditText) findViewById(R.id.signupUsernameText)).getText().toString());
-                    Log.d("Sagev", "end if-block");
+                    toWelcomeActivity();
                 }
             }
         });
-        Log.d("Sagev", "Finish");
+    }
+
+    private void getTextFields()
+    {
+        editTextUsername = (EditText)findViewById(R.id.signupUsernameText);
+        editTextPassword = (EditText)findViewById(R.id.signupPasswordText);
+        editTextPasswordRepeat = (EditText)findViewById(R.id.signupPasswordRepeatText);
+
+        username = editTextUsername.getText().toString();
+        password = editTextPassword.getText().toString();
+        passwordRepeat = editTextPasswordRepeat.getText().toString();
+    }
+
+    private boolean isInputValid()
+    {
+        errMsg = new StringBuilder();
+        boolean isValid = true;
+
+        if (username.length() == 0) {
+            isValid = false;
+            errMsg.append("Please enter a username\n");
+        }
+        if (password.length() == 0) {
+            isValid = false;
+            errMsg.append("Please enter a password\n");
+        } else if (passwordRepeat.length() == 0) {
+            isValid = false;
+            errMsg.append("Please repeat your password\n");
+        } else if (!password.equals(passwordRepeat)) {
+            isValid = false;
+            errMsg.append("Passwords do not match");
+        }
+
+        return isValid;
+    }
+
+    private void toast(String msg)
+    {
+        Toast.makeText(SignupActivity.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    private void toWelcomeActivity()
+    {
+        finish();
+        i = new Intent(getApplicationContext(), WelcomeActivity.class);
+        startActivity(i);
     }
 
     private void toHomeActivity()
@@ -144,23 +168,20 @@ public class SignupActivity extends ActionBarActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_signup, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         Log.d("Sagev", "Action Bar Start");
 
         switch (id) {
-            //noinspection SimplifiableIfStatement
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
                 return true;

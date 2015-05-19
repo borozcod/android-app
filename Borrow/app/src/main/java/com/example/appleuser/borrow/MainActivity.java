@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity
     private ImageButton buttonSignin;
     private ImageButton buttonSignup;
     private Intent i;
+    private static boolean initializeParse = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,14 +34,33 @@ public class MainActivity extends ActionBarActivity
         initializeActivity();
     }
 
-    private void initializeActivity() {
+    private void initializeActivity()
+    {
         setContentView(R.layout.activity_main);
 
         initializeActionBar();
 
         initializeButtons();
 
-        initializeDatabase();
+        if (initializeParse) {
+            initializeDatabase();
+            initializeParse = false;
+        }
+        getUserStatus();
+    }
+
+    private void getUserStatus()
+    {
+        if (ParseUser.getCurrentUser() != null) {
+            toWelcomeActivity();
+        }
+    }
+
+    private void toWelcomeActivity()
+    {
+        finish();
+        i = new Intent(getApplicationContext(), WelcomeActivity.class);
+        startActivity(i);
     }
 
     private void initializeActionBar()
@@ -93,20 +113,17 @@ public class MainActivity extends ActionBarActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

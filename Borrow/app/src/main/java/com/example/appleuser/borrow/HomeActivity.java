@@ -11,20 +11,25 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 
-public class HomeActivity extends ActionBarActivity {
+import com.parse.ParseUser;
+
+public class HomeActivity extends ActionBarActivity
+{
 
     private Button buttonSignOut;
     private ImageButton buttonAddItem;
-    private Intent i;
+    private static Intent i;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         initializeActivity();
     }
 
-    private void initializeActivity() {
+    private void initializeActivity()
+    {
         setContentView(R.layout.activity_home);
 
         initializeActionBar();
@@ -73,41 +78,46 @@ public class HomeActivity extends ActionBarActivity {
 
     private void signOut()
     {
-        //signout
+        ParseUser.logOut();
         toMainActivity();
     }
 
     private void toMainActivity()
     {
         finish();
+        i = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(i);
+    }
+
+    private void toWelcomeActivity()
+    {
+        finish();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
         getMenuInflater().inflate(R.menu.menu_signin, menu);
 
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
         Log.d("Sagev", "Action Bar Start");
 
-        switch (id) {
-            //noinspection SimplifiableIfStatement
+        switch (id)
+        {
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
                 return true;
             }
             case android.R.id.home : {
                 Log.d("Sagev", "Back");
-                toMainActivity();
+                toWelcomeActivity();
                 return true;
             }
         }

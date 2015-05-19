@@ -23,7 +23,7 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".WelcomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.appleuser.borrow.MainActivity" />
@@ -55,6 +55,10 @@
         <activity
             android:name=".MyListActivity"
             android:label="@string/title_activity_my_list" >
+        </activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:label="@string/title_activity_welcome" >
         </activity>
     </application>
 
