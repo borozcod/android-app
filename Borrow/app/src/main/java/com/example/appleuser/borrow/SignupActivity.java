@@ -109,7 +109,8 @@ public class SignupActivity extends ActionBarActivity
                 if (pe != null) {
                     toast(pe.getMessage());
                 } else {
-                    toWelcomeActivity();
+                    setResult(RESULT_OK);
+                    finish();
                 }
             }
         });

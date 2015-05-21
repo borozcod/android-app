@@ -81,6 +81,8 @@ public class WelcomeActivity extends ActionBarActivity
 
         i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
+
+        finish();
     }
 
     @Override

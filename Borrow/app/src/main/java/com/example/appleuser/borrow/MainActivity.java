@@ -25,6 +25,8 @@ public class MainActivity extends ActionBarActivity
     private ImageButton buttonSignup;
     private Intent i;
     private static boolean initializeParse = true;
+    final private int SIGNUP_REQUEST = 0;
+    final private int SIGNIN_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,15 +38,15 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeActivity()
     {
+        initializeDatabase();
+
+        getUserStatus();
+
         setContentView(R.layout.activity_main);
 
         initializeActionBar();
 
         initializeButtons();
-
-        initializeDatabase();
-
-        getUserStatus();
     }
 
     private void getUserStatus()
@@ -78,14 +80,14 @@ public class MainActivity extends ActionBarActivity
         buttonSignin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toSigninActivity(v);
+                toSigninActivity();
             }
         });
 
         buttonSignup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toSignupActivity(v);
+                toSignupActivity();
             }
         });
 
@@ -101,16 +103,18 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-    private void toSigninActivity(View v)
+    private void toSigninActivity()
     {
         i = new Intent(getApplicationContext(), SigninActivity.class);
-        startActivity(i);
+        Log.d("Sagev", "start activity signin");
+        startActivityForResult(i, SIGNIN_REQUEST);
     }
 
-    private void toSignupActivity(View v)
+    private void toSignupActivity()
     {
         i = new Intent(getApplicationContext(), SignupActivity.class);
-        startActivity(i);
+        Log.d("Sagev", "start activity signup");
+        startActivityForResult(i, SIGNUP_REQUEST);
     }
 
     @Override
@@ -130,5 +134,39 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        Log.d("Sagev", "recieved result");
+        if (requestCode == SIGNIN_REQUEST) {
+            Log.d("Sagev", "request caught");
+            if (resultCode == RESULT_OK) {
+                Log.d("Sagev", "Okay");
+                i = new Intent(getApplicationContext(), WelcomeActivity.class);
+                startActivity(i);
+                finish();
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.d("Sagev", "canceled");
+            } else {
+                Log.d("Sagev", "err");
+            }
+        }
+
+        Log.d("Sagev", "recieved result");
+        if (requestCode == SIGNUP_REQUEST) {
+            Log.d("Sagev", "request caught");
+            if (resultCode == RESULT_OK) {
+                Log.d("Sagev", "Okay");
+                i = new Intent(getApplicationContext(), WelcomeActivity.class);
+                startActivity(i);
+                finish();
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.d("Sagev", "canceled");
+            } else {
+                Log.d("Sagev", "err");
+            }
+        }
     }
 }

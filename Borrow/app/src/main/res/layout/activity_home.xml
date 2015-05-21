@@ -25,22 +25,13 @@
         <!--android:layout_alignEnd="@+id/listView"-->
         <!--android:layout_alignParentStart="true" />-->
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign out"
-        android:id="@+id/homeButtonSignOut"
-        android:onClick="homeToMainActivity"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/homeButtonAddItem"
         android:src="@drawable/pluss_button"
         android:background="#80465A"
-        android:layout_above="@+id/homeButtonSignOut"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -19,8 +19,6 @@ public class MyListActivity extends ListActivity {
         MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, values);
 
         setListAdapter(adapter);
-
-
     }
 
     @Override

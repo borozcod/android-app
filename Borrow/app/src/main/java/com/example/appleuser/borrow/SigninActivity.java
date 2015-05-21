@@ -91,7 +91,8 @@ public class SigninActivity extends ActionBarActivity
                 if (pe != null) {
                     toast(pe.getMessage());
                 } else {
-                    toWelcomeActivity();
+                    setResult(RESULT_OK);
+                    finish();
                 }
             }
         });
@@ -123,6 +124,7 @@ public class SigninActivity extends ActionBarActivity
         finish();
         i = new Intent(getApplicationContext(), WelcomeActivity.class);
         startActivity(i);
+
     }
 
     private void toMainActivity()

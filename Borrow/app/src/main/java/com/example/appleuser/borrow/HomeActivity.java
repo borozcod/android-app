@@ -15,8 +15,6 @@ import com.parse.ParseUser;
 
 public class HomeActivity extends ActionBarActivity
 {
-
-    private Button buttonSignOut;
     private ImageButton buttonAddItem;
     private static Intent i;
 
@@ -52,15 +50,7 @@ public class HomeActivity extends ActionBarActivity
 
     private void initializeButtons()
     {
-        buttonSignOut = (Button)findViewById(R.id.homeButtonSignOut);
         buttonAddItem = (ImageButton)findViewById(R.id.homeButtonAddItem);
-
-        buttonSignOut.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
 
         buttonAddItem.setOnClickListener(new OnClickListener() {
             @Override
@@ -74,12 +64,6 @@ public class HomeActivity extends ActionBarActivity
     {
         i = new Intent(getApplicationContext(), AddItemActivity.class);
         startActivity(i);
-    }
-
-    private void signOut()
-    {
-        ParseUser.logOut();
-        toMainActivity();
     }
 
     private void toMainActivity()
