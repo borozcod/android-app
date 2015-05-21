@@ -115,6 +115,7 @@ public class AddItemActivity extends ActionBarActivity
             bo = getItem();
             bo.save();
             toast("Placeholder: Item created!");
+            MyListActivity.values.add(bo); // TODO: temporary, replace later
             toHomeActivity();
         }
     }

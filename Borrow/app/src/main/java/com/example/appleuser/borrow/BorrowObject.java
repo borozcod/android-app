@@ -71,7 +71,7 @@ public class BorrowObject
         return ( "Name:\t" + name + "\n"
                 + "Desc:\t" + desc + "\n"
                 + "Price:\t" + price + "\n"
-                + "Owner:\t" + user);
+                + "Owner:\t" + user.getUsername());
     }
 
     public void save()

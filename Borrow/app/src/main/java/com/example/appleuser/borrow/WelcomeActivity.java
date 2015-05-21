@@ -57,7 +57,7 @@ public class WelcomeActivity extends ActionBarActivity
         buttonContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toHomeActivity();
+                toMyListActivity();
             }
         });
 
@@ -102,5 +102,11 @@ public class WelcomeActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toMyListActivity()
+    {
+        i = new Intent(getApplicationContext(), MyListActivity.class);
+        startActivity(i);
     }
 }
