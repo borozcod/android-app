@@ -1,5 +1,6 @@
 package com.example.appleuser.borrow;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -79,9 +80,14 @@ public class SigninActivity extends ActionBarActivity
     private void signin() {
         getTextFields();
 
+        final ProgressDialog dialog = new ProgressDialog(SigninActivity.this);
+        dialog.setMessage("Logging in");
+        dialog.show();
+
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException pe) {
+                dialog.dismiss();
                 if (pe != null) {
                     toast(pe.getMessage());
                 } else {

@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.10"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:minHeight="50dp">
 
             <Space
                 android:layout_width="wrap_content"
@@ -41,7 +42,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10">
+            android:layout_weight="0.10"
+            android:minHeight="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10">
+            android:layout_weight="0.10"
+            android:minHeight="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +91,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10">
+            android:layout_weight="0.10"
+            android:minHeight="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -118,7 +122,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:minHeight="50dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +151,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10"></LinearLayout>
+            android:layout_weight="0.10">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addItemImageViewThumb"
+                android:minWidth="320dp"
+                android:minHeight="180dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -159,23 +172,9 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="0.10"></LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
             android:layout_weight="0.10"
-            android:weightSum="1">
+            android:weightSum="1"
+            android:minHeight="50dp">
 
             <Space
                 android:layout_width="wrap_content"
@@ -199,5 +198,12 @@
                 android:id="@+id/addItemButtonCancel" />
 
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.10"></LinearLayout>
     </LinearLayout>
 </RelativeLayout>

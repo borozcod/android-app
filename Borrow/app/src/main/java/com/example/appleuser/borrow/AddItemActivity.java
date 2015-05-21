@@ -1,5 +1,13 @@
 package com.example.appleuser.borrow;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +17,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.parse.ParseUser;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class AddItemActivity extends ActionBarActivity
@@ -20,8 +35,12 @@ public class AddItemActivity extends ActionBarActivity
     private EditText editTextName;
     private EditText editTextDesc;
     private EditText editTextPrice;
-    private Object pic; // temporary
+    private ImageView imageViewThumb;
     private StringBuilder errMsg;
+    private Uri picUri;
+    private Bitmap picThumb;
+    private Intent i;
+    private String uid; //picture name
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +56,7 @@ public class AddItemActivity extends ActionBarActivity
 
         initializeActionBar();
 
-        initializeButtons();
+        initializeWidgets();
     }
 
     private void initializeActionBar()
@@ -53,8 +72,10 @@ public class AddItemActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initializeButtons()
+    private void initializeWidgets()
     {
+        imageViewThumb = (ImageView)findViewById(R.id.addItemImageViewThumb);
+
         buttonAddItem = (Button)findViewById(R.id.addItemButtonAddItem);
         buttonCancel = (Button)findViewById(R.id.addItemButtonCancel);
         buttonUploadPicture = (Button)findViewById(R.id.addItemButtonUploadPicture);
@@ -76,8 +97,9 @@ public class AddItemActivity extends ActionBarActivity
         buttonUploadPicture.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open camera and return picture?
-                toast("Placeholder: Upload Picture onClick");
+                if (hasCamera()) {
+                    getPic();
+                }
             }
         });
     }
@@ -133,8 +155,11 @@ public class AddItemActivity extends ActionBarActivity
         bo.setDesc(editTextDesc.getText().toString());
         Log.d("Sagev", "set price");
         bo.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
-        // set parse user here
-        // set picture here
+        Log.d("Sagev", "set user");
+        bo.setUser(ParseUser.getCurrentUser());
+        Log.d("Sagev", "set pic");
+        if (picThumb != null)
+            bo.setPic(picThumb, uid);
 
         Log.d("Sagev", "return obj");
         return bo;
@@ -178,5 +203,49 @@ public class AddItemActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // camera methods
+    private void getPic()
+    {
+        i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "Borrow");
+
+        if (!storageDir.exists()) {
+            if (!storageDir.mkdirs()) {
+                toast("Could not create storage directory");
+                return;
+            }
+        }
+
+        uid = new SimpleDateFormat("HHmmss-ddMMyyyy").format(new Date());
+        File picFile = new File(storageDir.getPath() + File.separator +
+            "BorrowImg_" + uid + ".jpg");
+
+        picUri = Uri.fromFile(picFile);
+        i.putExtra(MediaStore.EXTRA_OUTPUT, picUri);
+
+        startActivityForResult(i, 1);
+    }
+
+    private boolean hasCamera()
+    {
+        return this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (resultCode == RESULT_OK) {
+            toast("Pic saved");
+            picThumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picUri.getPath()), 320, 180);
+            imageViewThumb.setImageBitmap(picThumb);
+        } else if (resultCode == RESULT_CANCELED) {
+            toast("Canceled operation");
+        } else {
+            toast("Error");
+        }
     }
 }

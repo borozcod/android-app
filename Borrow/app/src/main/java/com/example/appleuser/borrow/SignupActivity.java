@@ -1,5 +1,6 @@
 package com.example.appleuser.borrow;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -94,12 +95,17 @@ public class SignupActivity extends ActionBarActivity
     {
         user = new ParseUser();
 
+        final ProgressDialog dialog = new ProgressDialog(SignupActivity.this);
+        dialog.setMessage("Creating account");
+        dialog.show();
+
         user.setUsername(username);
         user.setPassword(password);
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(ParseException pe) {
+                dialog.dismiss();
                 if (pe != null) {
                     toast(pe.getMessage());
                 } else {

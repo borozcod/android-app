@@ -42,10 +42,8 @@ public class MainActivity extends ActionBarActivity
 
         initializeButtons();
 
-        if (initializeParse) {
-            initializeDatabase();
-            initializeParse = false;
-        }
+        initializeDatabase();
+
         getUserStatus();
     }
 
@@ -95,9 +93,12 @@ public class MainActivity extends ActionBarActivity
 
     private void initializeDatabase()
     {
-        // connects to Parse database: borrowappandroid@gmail.com
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "xEVrr9KpRW07GEYHlph9pkrRAdeAXFg5xZllfaN8", "OTu2sE7Dr72YZQazWAVkPPVN9cDuC1kBSB23Nfau");
+        if (initializeParse) {
+            // connects to Parse database: borrowappandroid@gmail.com
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, "xEVrr9KpRW07GEYHlph9pkrRAdeAXFg5xZllfaN8", "OTu2sE7Dr72YZQazWAVkPPVN9cDuC1kBSB23Nfau");
+            initializeParse = false;
+        }
     }
 
     private void toSigninActivity(View v)

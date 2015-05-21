@@ -1,8 +1,14 @@
 package com.example.appleuser.borrow;
 
-import com.parse.Parse;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by S on 5/16/2015.
@@ -12,11 +18,11 @@ public class BorrowObject
     private String name;
     private String desc; // description
     private Double price;
-    private Object pic; // picture : temporary object
+    private ParseFile pic; // picture : temporary object
     private ParseUser user;
-    private ParseObject borrowObject;
+    private ParseObject borrowObject; // TODO: replace this by extending ParseObject
 
-    public BorrowObject(String name, String desc, Double price, Object pic, ParseUser user)
+    public BorrowObject(String name, String desc, Double price, ParseFile pic, ParseUser user)
     {
         this.name = name;
         this.desc = desc;
@@ -36,18 +42,36 @@ public class BorrowObject
     public void setPrice(Double price){this.price = price;}
     public Double getPrice(){return price;}
 
-    public void setPic(Object pic){this.pic = pic;}
-    public Object getPic(){return pic;}
-
     public void setUser(ParseUser user){this.user = user;}
     public ParseUser getUser(){return user;}
+
+    // picture getter/setters
+    public void setPic(Bitmap pic, String name)
+    {
+        byte[] data;
+        ByteArrayOutputStream stream;
+
+        stream = new ByteArrayOutputStream();
+        pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        data = stream.toByteArray();
+
+        this.pic = new ParseFile("pic", data);
+    }
+
+    public Bitmap getPic() throws ParseException
+    {
+        byte[] data = pic.getData();
+
+        return BitmapFactory.decodeByteArray(data, 0, data.length);
+    }
 
     @Override
     public String toString()
     {
         return ( "Name:\t" + name + "\n"
                 + "Desc:\t" + desc + "\n"
-                + "Price:\t" + price );
+                + "Price:\t" + price + "\n"
+                + "Owner:\t" + user);
     }
 
     public void save()
@@ -58,17 +82,17 @@ public class BorrowObject
         borrowObject.saveInBackground();
     }
 
-    public ParseObject toParseObject()
+    public void toParseObject()
     {
         borrowObject = new ParseObject("BorrowObject");
 
         borrowObject.put("name", name);
         borrowObject.put("desc", desc);
         borrowObject.put("price", price);
-        //borrowObject.put("pic", pic);
-        //borrowObject.put("user", user);
+        borrowObject.put("user", user);
 
-        return borrowObject;
+        if (pic != null)
+            borrowObject.put("pic", pic);
     }
 
     public void fromParseObject(ParseObject po)
@@ -76,7 +100,7 @@ public class BorrowObject
         name = po.getString("name");
         desc = po.getString("desc");
         price = po.getDouble("price");
-        //get pic here
-        //user = po.getParseUser("user");
+        user = po.getParseUser("user");
+        pic = po.getParseFile("pic");
     }
 }
