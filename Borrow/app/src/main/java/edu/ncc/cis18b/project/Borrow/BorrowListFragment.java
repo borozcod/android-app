@@ -1,4 +1,4 @@
-package com.example.appleuser.borrow;
+package edu.ncc.cis18b.project.Borrow;
 
 import android.app.ListFragment;
 import android.content.Context;
@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.appleuser.borrow.R;
 import com.parse.ParseException;
 
 import java.util.List;

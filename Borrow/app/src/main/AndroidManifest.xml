@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,39 +25,39 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName=".WelcomeActivity" >
+            android:parentActivityName="edu.ncc.cis18b.project.Borrow.WelcomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.appleuser.borrow.MainActivity" />
+                android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name=".SigninActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.SigninActivity"
             android:label="@string/title_activity_signin"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="edu.ncc.cis18b.project.Borrow.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.appleuser.borrow.MainActivity" />
+                android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name=".SignupActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName="edu.ncc.cis18b.project.Borrow.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.appleuser.borrow.MainActivity" />
+                android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name=".AddItemActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.AddItemActivity"
             android:label="@string/title_activity_add_new_item"
-            android:parentActivityName=".HomeActivity" >
+            android:parentActivityName="edu.ncc.cis18b.project.Borrow.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.appleuser.borrow.HomeActivity" />
+                android:value="edu.ncc.cis18b.project.Borrow.HomeActivity" />
         </activity>
         <activity
-            android:name=".WelcomeActivity"
+            android:name="edu.ncc.cis18b.project.Borrow.WelcomeActivity"
             android:label="@string/title_activity_welcome" >
         </activity>
     </application>

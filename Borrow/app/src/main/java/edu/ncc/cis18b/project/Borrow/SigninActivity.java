@@ -1,4 +1,4 @@
-package com.example.appleuser.borrow;
+package edu.ncc.cis18b.project.Borrow;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.ActionBarActivity;
@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.content.Intent;
 
+import com.example.appleuser.borrow.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;

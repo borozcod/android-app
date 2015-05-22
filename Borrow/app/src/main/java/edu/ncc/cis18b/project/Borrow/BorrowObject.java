@@ -1,4 +1,4 @@
-package com.example.appleuser.borrow;
+package edu.ncc.cis18b.project.Borrow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

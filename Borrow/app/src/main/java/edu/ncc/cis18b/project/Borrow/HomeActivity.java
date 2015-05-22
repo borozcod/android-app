@@ -1,4 +1,4 @@
-package com.example.appleuser.borrow;
+package edu.ncc.cis18b.project.Borrow;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.appleuser.borrow.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;

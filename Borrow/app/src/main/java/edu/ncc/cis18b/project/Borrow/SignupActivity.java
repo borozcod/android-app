@@ -1,4 +1,4 @@
-package com.example.appleuser.borrow;
+package edu.ncc.cis18b.project.Borrow;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,9 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.appleuser.borrow.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
