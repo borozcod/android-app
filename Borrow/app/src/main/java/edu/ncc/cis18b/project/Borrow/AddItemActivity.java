@@ -115,7 +115,7 @@ public class AddItemActivity extends ActionBarActivity
         } else {
             bo = getItem();
             bo.save();
-            HomeActivity.values.add(bo); // TODO: temporary, replace later
+            HomeActivity.borrowObjects.add(bo); // TODO: temporary, replace later
             toHomeActivity();
         }
     }

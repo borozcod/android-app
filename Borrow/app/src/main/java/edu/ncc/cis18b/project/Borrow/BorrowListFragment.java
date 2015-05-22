@@ -16,25 +16,26 @@ import android.widget.Toast;
 import com.example.appleuser.borrow.R;
 import com.parse.ParseException;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class BorrowListFragment extends ListFragment
 {
+    private BorrowArrayAdapter adapter;
+    private ArrayList<BorrowObject> list;
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
 
-        BorrowArrayAdapter adapter = new BorrowArrayAdapter(getActivity(), HomeActivity.values);
-        setListAdapter(adapter);
-
         Log.d("Sagev", "Fragment initialized");
+        getState();
     }
 
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id)
     {
-        toast(((BorrowObject)getListAdapter().getItem(position)).getName());
+        toast(((BorrowObject) getListAdapter().getItem(position)).getName());
     }
 
     private void toast(String msg)
@@ -42,13 +43,44 @@ public class BorrowListFragment extends ListFragment
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
-    // inner class
-    private class BorrowArrayAdapter extends ArrayAdapter<BorrowObject> //TODO: rename this
+    protected void loadList(ArrayList<BorrowObject> list)
     {
-        private final Context context;
-        private final List<BorrowObject> values;
+        getState();
 
-        public BorrowArrayAdapter(Context context, List<BorrowObject> values) {
+        this.list = list;
+
+        adapter = new BorrowArrayAdapter(getActivity(), list);
+        setListAdapter(adapter);
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void getState()
+    {
+        if (adapter == null)
+            Log.d("Sagev", "adapter is null");
+        else
+            Log.d("Sagev", "adapter is not null");
+
+        if (getActivity() == null)
+            Log.d("Sagev", "getActivity() is null");
+        else
+            Log.d("Sagev", "getActivity() is not null");
+
+        if (list == null)
+            Log.d("Sagev", "list is null");
+        else
+            Log.d("Sagev", "list is not null");
+    }
+
+    // inner class
+    private class BorrowArrayAdapter extends ArrayAdapter<BorrowObject>
+    {
+        private Context context;
+        private ArrayList<BorrowObject> values;
+
+        public BorrowArrayAdapter(Context context, ArrayList<BorrowObject> values)
+        {
             super(context, R.layout.rowlayout, values);
             this.context = context;
             this.values = values;
