@@ -6,7 +6,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Camera dependencies -->
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- Storage dependencies -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,56 +18,64 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:screenOrientation="portrait">
+        android:screenOrientation="portrait"
+        android:theme="@style/AppTheme" >
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.HomeActivity"
+            android:name=".HomeActivity"
             android:label="@string/title_activity_home"
-            android:parentActivityName="edu.ncc.cis18b.project.Borrow.WelcomeActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".WelcomeActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.SigninActivity"
+            android:name=".SigninActivity"
             android:label="@string/title_activity_signin"
-            android:parentActivityName="edu.ncc.cis18b.project.Borrow.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.SignupActivity"
+            android:name=".SignupActivity"
             android:label="@string/title_activity_signup"
-            android:parentActivityName="edu.ncc.cis18b.project.Borrow.MainActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.AddItemActivity"
+            android:name=".AddItemActivity"
             android:label="@string/title_activity_add_new_item"
-            android:parentActivityName="edu.ncc.cis18b.project.Borrow.HomeActivity"
-            android:screenOrientation="portrait">
+            android:parentActivityName=".HomeActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ncc.cis18b.project.Borrow.HomeActivity" />
         </activity>
         <activity
-            android:name="edu.ncc.cis18b.project.Borrow.WelcomeActivity"
+            android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".BorrowObjectViewActivity"
+            android:label="@string/title_activity_borrow_object_view" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.ncc.cis18b.project.Borrow.HomeActivity" />
         </activity>
     </application>
 

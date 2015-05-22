@@ -47,6 +47,8 @@ public class HomeActivity extends ActionBarActivity
         initializeList();
 
         queryParse();
+        // TODO: if a new object is created before Database is initialized
+        // TODO: Will probably crash app - fix
     }
 
     private void initializeActionBar() {
@@ -101,6 +103,8 @@ public class HomeActivity extends ActionBarActivity
         ft.add(R.id.homeFragmentList, listFragment);
 
         ft.commit();
+        // TODO: perhaps place these as member variables
+        // TODO: may fix list loading issues
     }
 
     private void queryParse() // TODO: replace, improve -- do something with this method

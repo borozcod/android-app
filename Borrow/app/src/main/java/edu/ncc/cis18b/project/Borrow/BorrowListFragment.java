@@ -2,6 +2,7 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import java.util.ArrayList;
 public class BorrowListFragment extends ListFragment
 {
     private BorrowArrayAdapter adapter;
-    private ArrayList<BorrowObject> list;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
@@ -33,7 +33,13 @@ public class BorrowListFragment extends ListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id)
     {
-        toast(((BorrowObject) getListAdapter().getItem(position)).getName());
+        BorrowObject bo = (BorrowObject)getListAdapter().getItem(position);
+        toast("Placeholder:\t" + bo.getName());
+
+        BorrowObjectViewActivity.bo = bo;
+
+        Intent i = new Intent(getActivity(), BorrowObjectViewActivity.class);
+        startActivity(i);
     }
 
     private void toast(String msg)
@@ -43,8 +49,6 @@ public class BorrowListFragment extends ListFragment
 
     protected void loadList(ArrayList<BorrowObject> list)
     {
-        this.list = list;
-
         adapter = new BorrowArrayAdapter(getActivity(), list);
         setListAdapter(adapter);
 
