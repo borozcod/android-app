@@ -13,7 +13,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.appleuser.borrow.R;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ public class BorrowListFragment extends ListFragment
         super.onActivityCreated(savedInstanceState);
 
         Log.d("Sagev", "Fragment initialized");
-        getState();
     }
 
     @Override
@@ -45,32 +43,12 @@ public class BorrowListFragment extends ListFragment
 
     protected void loadList(ArrayList<BorrowObject> list)
     {
-        getState();
-
         this.list = list;
 
         adapter = new BorrowArrayAdapter(getActivity(), list);
         setListAdapter(adapter);
 
         adapter.notifyDataSetChanged();
-    }
-
-    private void getState()
-    {
-        if (adapter == null)
-            Log.d("Sagev", "adapter is null");
-        else
-            Log.d("Sagev", "adapter is not null");
-
-        if (getActivity() == null)
-            Log.d("Sagev", "getActivity() is null");
-        else
-            Log.d("Sagev", "getActivity() is not null");
-
-        if (list == null)
-            Log.d("Sagev", "list is null");
-        else
-            Log.d("Sagev", "list is not null");
     }
 
     // inner class
