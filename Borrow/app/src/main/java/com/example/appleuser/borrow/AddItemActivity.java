@@ -115,8 +115,7 @@ public class AddItemActivity extends ActionBarActivity
         } else {
             bo = getItem();
             bo.save();
-            toast("Placeholder: Item created!");
-            MyListActivity.values.add(bo); // TODO: temporary, replace later
+            HomeActivity.values.add(bo); // TODO: temporary, replace later
             toHomeActivity();
         }
     }
@@ -172,9 +171,9 @@ public class AddItemActivity extends ActionBarActivity
         finish();
     }
 
-    private void toast(String s)
+    private void toast(String msg)
     {
-        Toast.makeText(AddItemActivity.this, s, Toast.LENGTH_LONG).show();
+        Toast.makeText(AddItemActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -241,7 +240,6 @@ public class AddItemActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK) {
-            toast("Pic saved");
             picThumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picUri.getPath()), 320, 180);
             imageViewThumb.setImageBitmap(picThumb);
         } else if (resultCode == RESULT_CANCELED) {

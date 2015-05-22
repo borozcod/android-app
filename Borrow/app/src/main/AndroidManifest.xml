@@ -57,10 +57,6 @@
                 android:value="com.example.appleuser.borrow.HomeActivity" />
         </activity>
         <activity
-            android:name=".MyListActivity"
-            android:label="@string/title_activity_my_list" >
-        </activity>
-        <activity
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome" >
         </activity>

@@ -1,5 +1,7 @@
 package com.example.appleuser.borrow;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -7,20 +9,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
-import com.parse.ParseUser;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends ActionBarActivity //TODO: remove this
 {
     private ImageButton buttonAddItem;
+    private BorrowListFragment listFragment;
     private static Intent i;
+    protected static ArrayList<BorrowObject> values = new ArrayList<BorrowObject>();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
 
         initializeActivity();
     }
@@ -31,6 +39,10 @@ public class HomeActivity extends ActionBarActivity //TODO: remove this
         initializeActionBar();
 
         initializeButtons();
+
+        //temporary methods
+        queryParse();
+        setList();
     }
 
     private void initializeActionBar() {
@@ -46,9 +58,9 @@ public class HomeActivity extends ActionBarActivity //TODO: remove this
     }
 
     private void initializeButtons() {
-        buttonAddItem = (ImageButton) findViewById(R.id.homeButtonAddItem);
+        buttonAddItem = (ImageButton)findViewById(R.id.homeButtonAddItem);
 
-        buttonAddItem.setOnClickListener(new OnClickListener() {
+        buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toAddItemActivity();
@@ -71,6 +83,39 @@ public class HomeActivity extends ActionBarActivity //TODO: remove this
         finish();
     }
 
+    private void toast(String msg)
+    {
+        Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    private void setList() // TODO: replace this method
+    {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        listFragment = new BorrowListFragment();
+        ft.add(R.id.homeFragmentList, listFragment);
+
+        ft.commit();
+    }
+
+    private void queryParse() //test query
+    {
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        q.whereExists("pic");
+        q.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                for (ParseObject p : list) {
+                    BorrowObject bo = new BorrowObject();
+                    bo.fromParseObject(p);
+                    values.add(bo);
+                }
+            }
+        });
+    }
+
+    // menu stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_signin, menu);
