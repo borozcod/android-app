@@ -16,7 +16,8 @@ import com.parse.ParseException;
 
 import java.util.List;
 
-public class MySimpleArrayAdapter extends ArrayAdapter<BorrowObject> {
+public class MySimpleArrayAdapter extends ArrayAdapter<BorrowObject> //TODO: rename this
+{
     private final Context context;
     private final List<BorrowObject> values;
 
@@ -30,14 +31,15 @@ public class MySimpleArrayAdapter extends ArrayAdapter<BorrowObject> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(
+                Context.LAYOUT_INFLATER_SERVICE);
+
         View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+
+        TextView textView = (TextView)rowView.findViewById(R.id.label);
+        ImageView imageView = (ImageView)rowView.findViewById(R.id.icon);
 
         textView.setText(values.get(position).toString());
-        // Change the icon for Windows and iPhone
         String s = values.get(position).toString();
 
         try {

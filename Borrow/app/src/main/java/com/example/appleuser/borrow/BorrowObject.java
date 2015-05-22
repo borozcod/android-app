@@ -13,14 +13,19 @@ import java.io.ByteArrayOutputStream;
 /**
  * Created by S on 5/16/2015.
  */
-public class BorrowObject
+public class BorrowObject //TODO: extend ParseObject
 {
     private String name;
     private String desc; // description
     private Double price;
-    private ParseFile pic; // picture : temporary object
+    private ParseFile pic;
     private ParseUser user;
     private ParseObject borrowObject; // TODO: replace this by extending ParseObject
+    private final String KEY_NAME = "name";
+    private final String KEY_DESC = "desc";
+    private final String KEY_PRICE = "price";
+    private final String KEY_PIC = "pic";
+    private final String KEY_USER = "user";
 
     public BorrowObject(String name, String desc, Double price, ParseFile pic, ParseUser user)
     {
@@ -74,6 +79,7 @@ public class BorrowObject
                 + "Owner:\t" + user.getUsername());
     }
 
+    //TODO: cleanup these methods
     public void save()
     {
         if (borrowObject == null)
@@ -86,21 +92,21 @@ public class BorrowObject
     {
         borrowObject = new ParseObject("BorrowObject");
 
-        borrowObject.put("name", name);
-        borrowObject.put("desc", desc);
-        borrowObject.put("price", price);
-        borrowObject.put("user", user);
+        borrowObject.put(KEY_NAME, name);
+        borrowObject.put(KEY_DESC, desc);
+        borrowObject.put(KEY_PRICE, price);
+        borrowObject.put(KEY_USER, user);
 
         if (pic != null)
-            borrowObject.put("pic", pic);
+            borrowObject.put(KEY_PIC, pic);
     }
 
     public void fromParseObject(ParseObject po)
     {
-        name = po.getString("name");
-        desc = po.getString("desc");
-        price = po.getDouble("price");
-        user = po.getParseUser("user");
-        pic = po.getParseFile("pic");
+        name = po.getString(KEY_NAME);
+        desc = po.getString(KEY_DESC);
+        price = po.getDouble(KEY_PRICE);
+        user = po.getParseUser(KEY_USER);
+        pic = po.getParseFile(KEY_PIC);
     }
 }

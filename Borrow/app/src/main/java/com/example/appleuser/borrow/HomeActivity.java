@@ -13,7 +13,8 @@ import android.widget.ImageButton;
 
 import com.parse.ParseUser;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity //TODO: remove this
+{
     private ImageButton buttonAddItem;
     private static Intent i;
 

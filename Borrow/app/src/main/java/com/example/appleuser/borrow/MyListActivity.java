@@ -9,14 +9,22 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
-public class MyListActivity extends ListActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MyListActivity extends ListActivity //TODO: rename this
+{
     private ImageButton buttonAddItem;
     private static Intent i;
     protected static ArrayList<BorrowObject> values = new ArrayList<BorrowObject>();
 
-    public void onCreate(Bundle icicle) {
+    public void onCreate(Bundle icicle)
+    {
         super.onCreate(icicle);
 
         initializeActivity();
@@ -28,7 +36,9 @@ public class MyListActivity extends ListActivity {
 
         initializeButtons();
 
-        createTestObject(); //temporary
+        //temporary methods
+        queryParse();
+        setList();
     }
 
     private void initializeButtons()
@@ -63,15 +73,32 @@ public class MyListActivity extends ListActivity {
 
     // myList methods
     @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
+    protected void onListItemClick(ListView l, View v, int position, long id)
+    {
         String item = (String) getListAdapter().getItem(position);
         Toast.makeText(this, item + " selected", Toast.LENGTH_LONG).show();
     }
 
-    private void createTestObject()
+    private void setList() // TODO: replace this method
     {
         MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(this, values);
 
         setListAdapter(adapter);
+    }
+
+    private void queryParse() //test query
+    {
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        q.whereExists("pic");
+        q.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                for (ParseObject p : list) {
+                    BorrowObject bo = new BorrowObject();
+                    bo.fromParseObject(p);
+                    values.add(bo);
+                }
+            }
+        });
     }
 }

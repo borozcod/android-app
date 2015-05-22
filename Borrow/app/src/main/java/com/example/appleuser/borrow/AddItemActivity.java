@@ -65,7 +65,7 @@ public class AddItemActivity extends ActionBarActivity
         // set title
         setTitle("Borrow :: Add Item");
 
-        // set icon
+        // TODO: set icon
         //getActionBar().setIcon(R.drawable.PICTURE_NAME);
 
         // set back button
@@ -141,7 +141,7 @@ public class AddItemActivity extends ActionBarActivity
             errMsg.append("Item must have a price\n");
             err = true;
         }
-        // if statement for picture
+        // TODO: if statement for picture
 
         return err;
     }
