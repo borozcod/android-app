@@ -137,12 +137,20 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.84" />
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload picture"
-                android:id="@+id/addItemButtonUploadPicture" />
+            <ImageButton
+                android:layout_width="158dp"
+                android:layout_height="47dp"
+                android:id="@+id/addItemButtonUploadPicture"
+                android:src="@drawable/upload"
+                android:scaleType="fitCenter"
+                android:background="#57b3bc" />
+
+            <!--<Button-->
+                <!--style="?android:attr/buttonStyleSmall"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Upload picture"-->
+                <!--android:id="@+id/addItemButtonUploadPicture" />-->
 
         </LinearLayout>
 
@@ -158,7 +166,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/addItemImageViewThumb"
                 android:minWidth="320dp"
-                android:minHeight="180dp" />
+                android:minHeight="180dp"
+                android:layout_marginLeft="20dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -180,22 +189,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Item"
-                android:id="@+id/addItemButtonAddItem" />
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Add Item"-->
+                <!--android:id="@+id/addItemButtonAddItem" />-->
+
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:id="@+id/addItemButtonAddItem"
+                android:src="@drawable/add_item"
+                android:scaleType="fitCenter"
+                android:background="#57b3bc" />
 
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="0.99" />
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:id="@+id/addItemButtonCancel" />
+            <ImageButton
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:id="@+id/addItemButtonCancel"
+                android:src="@drawable/cancel"
+                android:scaleType="fitCenter"
+                android:background="#57b3bc" />
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Cancel"-->
+                <!--android:id="@+id/addItemButtonCancel" />-->
 
         </LinearLayout>
 

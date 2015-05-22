@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -29,9 +30,9 @@ import java.util.Date;
 
 public class AddItemActivity extends ActionBarActivity
 {
-    private Button buttonUploadPicture;
-    private Button buttonCancel;
-    private Button buttonAddItem;
+    private ImageButton buttonUploadPicture;
+    private ImageButton buttonCancel;
+    private ImageButton buttonAddItem;
     private EditText editTextName;
     private EditText editTextDesc;
     private EditText editTextPrice;
@@ -76,9 +77,9 @@ public class AddItemActivity extends ActionBarActivity
     {
         imageViewThumb = (ImageView)findViewById(R.id.addItemImageViewThumb);
 
-        buttonAddItem = (Button)findViewById(R.id.addItemButtonAddItem);
-        buttonCancel = (Button)findViewById(R.id.addItemButtonCancel);
-        buttonUploadPicture = (Button)findViewById(R.id.addItemButtonUploadPicture);
+        buttonAddItem = (ImageButton)findViewById(R.id.addItemButtonAddItem);
+        buttonCancel = (ImageButton)findViewById(R.id.addItemButtonCancel);
+        buttonUploadPicture = (ImageButton)findViewById(R.id.addItemButtonUploadPicture);
 
         buttonAddItem.setOnClickListener(new OnClickListener() {
             @Override
