@@ -51,7 +51,7 @@ public class WelcomeActivity extends ActionBarActivity
         buttonSignOut = (Button)findViewById(R.id.welcomeButtonSignOut);
         textUser = (TextView)findViewById(R.id.userText);
 
-        user = ParseUser.getCurrentUser().getUsername();
+        user = ParseUser.getCurrentUser().getString("desiredUserCase");
         textUser.setText(user);
 
         buttonContinue.setOnClickListener(new View.OnClickListener() {

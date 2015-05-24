@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -45,6 +46,7 @@ public class SignupActivity extends ActionBarActivity
         initializeActionBar();
 
         initializeButtons();
+        initializeTextFields();
     }
 
     private void initializeActionBar()
@@ -80,6 +82,24 @@ public class SignupActivity extends ActionBarActivity
         });
     }
 
+    private void initializeTextFields()
+    {
+        BorrowInputFilter borrowFilter = new BorrowInputFilter();
+
+        InputFilter[] userFilter =
+                { borrowFilter, new InputFilter.LengthFilter(12) };
+        InputFilter[] passFilter =
+                { borrowFilter, new InputFilter.LengthFilter(32) };
+
+        editTextUsername = (EditText)findViewById(R.id.signupUsernameText);
+        editTextPassword = (EditText)findViewById(R.id.signupPasswordText);
+        editTextPasswordRepeat = (EditText)findViewById(R.id.signupPasswordRepeatText);
+
+        editTextUsername.setFilters(userFilter);
+        editTextPassword.setFilters(passFilter);
+        editTextPasswordRepeat.setFilters(passFilter);
+    }
+
     private void signup()
     {
         getTextFields();
@@ -98,8 +118,10 @@ public class SignupActivity extends ActionBarActivity
         dialog.setMessage("Creating account");
         dialog.show();
 
-        user.setUsername(username);
+        user.setUsername(username.toLowerCase());
         user.setPassword(password);
+
+        user.put("desiredUserCase", username);
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
@@ -117,10 +139,6 @@ public class SignupActivity extends ActionBarActivity
 
     private void getTextFields()
     {
-        editTextUsername = (EditText)findViewById(R.id.signupUsernameText);
-        editTextPassword = (EditText)findViewById(R.id.signupPasswordText);
-        editTextPasswordRepeat = (EditText)findViewById(R.id.signupPasswordRepeatText);
-
         username = editTextUsername.getText().toString();
         password = editTextPassword.getText().toString();
         passwordRepeat = editTextPasswordRepeat.getText().toString();
