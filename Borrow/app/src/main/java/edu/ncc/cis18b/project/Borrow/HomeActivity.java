@@ -2,7 +2,10 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -47,7 +50,10 @@ public class HomeActivity extends ActionBarActivity
 
         initializeList();
 
-        queryParse();
+        if (isConnected())
+            queryParse();
+        else
+            toast("No internet connection");
         // TODO: if a new object is created before Database is initialized
         // TODO: Will probably crash app - fix
     }
@@ -135,6 +141,18 @@ public class HomeActivity extends ActionBarActivity
         }); // end FindCallBack<ParseObject>
 
         databaseInitialized = true;
+    }
+
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 
     // menu stuff

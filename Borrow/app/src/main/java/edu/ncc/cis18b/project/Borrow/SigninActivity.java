@@ -1,7 +1,11 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.InputFilter;
@@ -42,6 +46,9 @@ public class SigninActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_signin);
 
+        if (!isConnected())
+            toast("No internet connection");
+
         initializeActionBar();
 
         initializeButtons();
@@ -69,7 +76,10 @@ public class SigninActivity extends ActionBarActivity
         buttonSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin();
+                if (isConnected())
+                    signin();
+                else
+                    noConnectionAlert();
             }
         });
 
@@ -178,6 +188,32 @@ public class SigninActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void noConnectionAlert()
+    {
+        AlertDialog dialog;
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("No internet connection");
+        builder.setTitle("Error");
+
+        dialog = builder.create();
+
+        dialog.show();
     }
 }
 
