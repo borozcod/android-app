@@ -3,14 +3,11 @@ package edu.ncc.cis18b.project.Borrow;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -21,17 +18,15 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeActivity extends ActionBarActivity
+
+public class SavedItemActivity extends ActionBarActivity
 {
-    private ImageButton buttonAddItem;
     private BorrowListFragment listFragment;
-    private static Intent i;
-    protected static ArrayList<BorrowObject> borrowObjects;
-    // TODO: replace static array with method getter/setter
     private boolean databaseInitialized = false;
+    private ArrayList<BorrowObject> savedObjectList;
 
-
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initializeActivity();
@@ -39,22 +34,18 @@ public class HomeActivity extends ActionBarActivity
 
     private void initializeActivity()
     {
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_saved_item);
 
         initializeActionBar();
 
-        initializeButtons();
-
         initializeList();
 
-        queryParse();
-        // TODO: if a new object is created before Database is initialized
-        // TODO: Will probably crash app - fix
+        queryLocalDatabase();
     }
 
     private void initializeActionBar() {
         // set title
-        setTitle("Borrow :: Home");
+        setTitle("Borrow :: Saved items");
 
         // set icon
         //getActionBar().setIcon(R.drawable.PICTURE_NAME);
@@ -64,84 +55,59 @@ public class HomeActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initializeButtons() {
-        buttonAddItem = (ImageButton)findViewById(R.id.homeButtonAddItem);
-
-        buttonAddItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toAddItemActivity();
-            }
-        });
-    }
-
-    private void toAddItemActivity() {
-        i = new Intent(getApplicationContext(), AddItemActivity.class);
-        startActivity(i);
-    }
-
-    private void toMainActivity() {
-        finish();
-        i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
-    }
-
-    private void toWelcomeActivity() {
-        finish();
-    }
-
-    private void toast(String msg)
-    {
-        Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_LONG).show();
-    }
-
     private void initializeList()
     {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
         listFragment = new BorrowListFragment();
-        ft.add(R.id.homeFragmentList, listFragment);
+        ft.add(R.id.savedListCont, listFragment);
 
         ft.commit();
         // TODO: perhaps place these as member variables
         // TODO: may fix list loading issues
     }
 
-    private void queryParse() // TODO: replace, improve -- do something with this method
+    private void queryLocalDatabase() // TODO: replace, improve -- do something with this method
     {
         if (databaseInitialized)
             return;
 
-        borrowObjects = new ArrayList<BorrowObject>();
+        savedObjectList = new ArrayList<BorrowObject>();
 
-        Log.d("Sagev", "queryParse() start");
+        Log.d("Sagev", "queryLocalDatabase() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("SavedObject");
 
-        q.whereExists("pic");
+        q.fromLocalDatastore();
+        q.whereEqualTo("whoSaved", ParseUser.getCurrentUser());
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 for (ParseObject p : list) {
                     BorrowObject bo = new BorrowObject();
-                    bo.fromParseObject(p);
-                    borrowObjects.add(bo);
+
+                    try {
+                        bo.fromParseObject(p.fetchIfNeeded().getParseObject("BorrowObject"));
+                    } catch (ParseException pe) {
+                        Log.d("Sagev", pe.getMessage());
+                    }
+
+                    savedObjectList.add(bo);
                     Log.d("Sagev", bo.toString());
                 }
-                listFragment.loadList(borrowObjects); // loads items into list
+                listFragment.loadList(savedObjectList); // loads items into list
             } // end done()
         }); // end FindCallBack<ParseObject>
 
         databaseInitialized = true;
     }
 
-    // menu stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_saved_item, menu);
         return true;
     }
 
@@ -157,24 +123,14 @@ public class HomeActivity extends ActionBarActivity
                 return true;
             }
             case android.R.id.home : {
-                Log.d("Sagev", "Back");
-                toWelcomeActivity();
+                finish();
                 return true;
             }
             case R.id.action_logout : {
                 Log.d("Sagev", "ActionMenu logout");
                 ParseUser.getCurrentUser().logOut();
-                i = new Intent(getApplicationContext(), MainActivity.class);
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(i);
-                return true;
-            }
-            case R.id.action_profile : {
-                Log.d("Sagev", "Profile");
-                return true;
-            }
-            case R.id.action_saved_objects_list : {
-                i = new Intent(getApplicationContext(), SavedItemActivity.class);
                 startActivity(i);
                 return true;
             }

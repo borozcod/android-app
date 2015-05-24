@@ -98,8 +98,11 @@ public class BorrowObject //TODO: extend ParseObject
         borrowObject.saveInBackground();
     }
 
-    public void toParseObject()
+    public ParseObject toParseObject()
     {
+        if (borrowObject != null)
+            return borrowObject;
+
         borrowObject = new ParseObject("BorrowObject");
 
         borrowObject.put(KEY_NAME, name);
@@ -109,10 +112,14 @@ public class BorrowObject //TODO: extend ParseObject
 
         if (pic != null)
             borrowObject.put(KEY_PIC, pic);
+
+        return borrowObject;
     }
 
-    public void fromParseObject(ParseObject po)
+    public void fromParseObject(ParseObject po) // TODO: This should return a BorrowObject
     {
+        borrowObject = po;
+
         name = po.getString(KEY_NAME);
         desc = po.getString(KEY_DESC);
         price = po.getDouble(KEY_PRICE);

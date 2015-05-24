@@ -108,9 +108,16 @@ public class WelcomeActivity extends ActionBarActivity
                 i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+                return true;
             }
             case R.id.action_profile : {
                 Log.d("Sagev", "Profile");
+                return true;
+            }
+            case R.id.action_saved_objects_list : {
+                i = new Intent(getApplicationContext(), SavedItemActivity.class);
+                startActivity(i);
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);

@@ -5,11 +5,16 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View.OnClickListener;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.text.DecimalFormat;
@@ -22,7 +27,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private TextView viewPrice;
     private TextView viewUser;
     private ImageView viewPic;
+    private Button buttonContact;
+    private Button buttonSave;
     protected static BorrowObject bo;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         DecimalFormat df = new DecimalFormat("$,###.00");
         String formattedPrice = df.format(bo.getPrice());
 
+        buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
+        buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
         viewName = (TextView)findViewById(R.id.viewNameText);
         viewDesc = (TextView)findViewById(R.id.viewDescText);
         viewPrice = (TextView)findViewById(R.id.viewPriceText);
@@ -74,6 +84,25 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         } catch (ParseException pe) {
             Log.d("Sagev", pe.getMessage());
         }
+
+        buttonContact.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toast("Placeholder: Contact owner");
+            }
+        });
+
+        buttonSave.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveObject();
+            }
+        });
+    }
+
+    private void toast(String msg)
+    {
+        Toast.makeText(BorrowObjectViewActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
     private void toHomeActivity()
@@ -81,11 +110,23 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         finish();
     }
 
+    private void saveObject()
+    {
+        ParseObject po = new ParseObject("SavedObject");
+
+        po.put("whoSaved", ParseUser.getCurrentUser());
+        po.put("BorrowObject", bo.toParseObject());
+
+        po.pinInBackground();
+
+        toast("Item saved!");
+    }
+
     //menu stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_add_new_item, menu);
+        getMenuInflater().inflate(R.menu.menu_borrow_object_view, menu);
         return true;
     }
 
@@ -110,12 +151,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
             case R.id.action_logout : {
                 Log.d("Sagev", "ActionMenu logout");
                 ParseUser.getCurrentUser().logOut();
-                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i = new Intent(getApplicationContext(), MainActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
-            }
-            case R.id.action_profile : {
-                Log.d("Sagev", "Profile");
+                return true;
             }
         }
 

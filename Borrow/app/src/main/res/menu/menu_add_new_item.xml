@@ -4,6 +4,5 @@
     tools:context="edu.ncc.cis18b.project.Borrow.AddItemActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
          app:showAsAction="never" />
-    <item android:id="@+id/action_profile" android:title="Profile" />
     <item android:id="@+id/action_logout" android:title="Log out" />
 </menu>
