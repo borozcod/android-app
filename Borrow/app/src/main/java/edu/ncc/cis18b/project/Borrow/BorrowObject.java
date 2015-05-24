@@ -2,6 +2,7 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -73,10 +74,19 @@ public class BorrowObject //TODO: extend ParseObject
     @Override
     public String toString()
     {
+        String tUser;
+
+        try {
+            tUser = user.fetchIfNeeded().getUsername();
+        } catch (ParseException pe) {
+            Log.e("Sagev", pe.getMessage());
+            tUser = "NULL";
+        }
+
         return ( "Name:\t" + name + "\n"
                 + "Desc:\t" + desc + "\n"
                 + "Price:\t" + price + "\n"
-                + "Owner:\t" + user.getUsername());
+                + "Owner:\t" + tUser);
     }
 
     //TODO: cleanup these methods
