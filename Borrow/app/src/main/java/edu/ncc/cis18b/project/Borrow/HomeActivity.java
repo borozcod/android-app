@@ -16,6 +16,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +140,7 @@ public class HomeActivity extends ActionBarActivity
     // menu stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_signin, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
 
         return true;
     }
@@ -151,14 +152,24 @@ public class HomeActivity extends ActionBarActivity
         Log.d("Sagev", "Action Bar Start");
 
         switch (id) {
-            case R.id.action_settings: {
+            case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
                 return true;
             }
-            case android.R.id.home: {
+            case android.R.id.home : {
                 Log.d("Sagev", "Back");
                 toWelcomeActivity();
                 return true;
+            }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+            case R.id.action_profile : {
+                Log.d("Sagev", "Profile");
             }
         }
 

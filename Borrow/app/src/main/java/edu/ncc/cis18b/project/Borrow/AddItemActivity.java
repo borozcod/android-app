@@ -200,6 +200,16 @@ public class AddItemActivity extends ActionBarActivity
                 toHomeActivity();
                 return true;
             }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+            case R.id.action_profile : {
+                Log.d("Sagev", "Profile");
+            }
         }
 
         return super.onOptionsItemSelected(item);

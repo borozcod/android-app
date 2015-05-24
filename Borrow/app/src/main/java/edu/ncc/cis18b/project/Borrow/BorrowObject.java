@@ -77,7 +77,7 @@ public class BorrowObject //TODO: extend ParseObject
         String tUser;
 
         try {
-            tUser = user.fetchIfNeeded().getUsername();
+            tUser = user.fetchIfNeeded().getString("desiredUserCase");
         } catch (ParseException pe) {
             Log.e("Sagev", pe.getMessage());
             tUser = "NULL";

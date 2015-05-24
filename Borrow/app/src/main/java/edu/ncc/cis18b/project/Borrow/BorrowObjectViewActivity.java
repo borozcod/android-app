@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.text.DecimalFormat;
 
@@ -105,6 +106,16 @@ public class BorrowObjectViewActivity extends ActionBarActivity
                 Log.d("Sagev", "Back");
                 toHomeActivity();
                 return true;
+            }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+            }
+            case R.id.action_profile : {
+                Log.d("Sagev", "Profile");
             }
         }
 
