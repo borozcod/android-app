@@ -123,9 +123,9 @@ public class HomeActivity extends ActionBarActivity
 
         Log.d("Sagev", "queryParse() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObjectV2");
 
-        q.whereExists("pic");
+        q.whereExists("name");
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override

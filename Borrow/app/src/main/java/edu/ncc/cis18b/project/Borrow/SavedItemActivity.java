@@ -77,23 +77,17 @@ public class SavedItemActivity extends ActionBarActivity
 
         Log.d("Sagev", "queryLocalDatabase() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("SavedObject");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("SavedObjectV2");
 
         q.fromLocalDatastore();
-        q.whereEqualTo("whoSaved", ParseUser.getCurrentUser());
+        q.whereExists("name");
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 for (ParseObject p : list) {
                     BorrowObject bo = new BorrowObject();
-
-                    try {
-                        bo.fromParseObject(p.fetchIfNeeded().getParseObject("BorrowObject"));
-                    } catch (ParseException pe) {
-                        Log.d("Sagev", pe.getMessage());
-                    }
-
+                    bo.fromParseObject(p);
                     savedObjectList.add(bo);
                     Log.d("Sagev", bo.toString());
                 }

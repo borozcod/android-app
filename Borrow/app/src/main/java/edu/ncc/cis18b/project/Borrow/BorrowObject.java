@@ -19,23 +19,14 @@ public class BorrowObject //TODO: extend ParseObject
     private String name;
     private String desc; // description
     private Double price;
-    private ParseFile pic;
-    private ParseUser user;
+    private byte[] pic;
+    private String user;
     private ParseObject borrowObject; // TODO: replace this by extending ParseObject
     private final String KEY_NAME = "name";
     private final String KEY_DESC = "desc";
     private final String KEY_PRICE = "price";
     private final String KEY_PIC = "pic";
     private final String KEY_USER = "user";
-
-    public BorrowObject(String name, String desc, Double price, ParseFile pic, ParseUser user)
-    {
-        this.name = name;
-        this.desc = desc;
-        this.price = price;
-        this.pic = pic;
-        this.user = user;
-    }
 
     public BorrowObject(){}
 
@@ -48,8 +39,8 @@ public class BorrowObject //TODO: extend ParseObject
     public void setPrice(Double price){this.price = price;}
     public Double getPrice(){return price;}
 
-    public void setUser(ParseUser user){this.user = user;}
-    public ParseUser getUser(){return user;}
+    public void setUser(String user){this.user = user;}
+    public String getUser(){return user;}
 
     // picture getter/setters
     public void setPic(Bitmap pic, String name)
@@ -61,39 +52,28 @@ public class BorrowObject //TODO: extend ParseObject
         pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
         data = stream.toByteArray();
 
-        this.pic = new ParseFile("pic", data);
+        this.pic = data;
     }
 
-    public Bitmap getPic() throws ParseException
+    public Bitmap getPic()
     {
-        byte[] data = pic.getData();
-
-        return BitmapFactory.decodeByteArray(data, 0, data.length);
+        return BitmapFactory.decodeByteArray(pic, 0, pic.length);
     }
 
     @Override
     public String toString()
     {
-        String tUser;
-
-        try {
-            tUser = user.fetchIfNeeded().getString("desiredUserCase");
-        } catch (ParseException pe) {
-            Log.e("Sagev", pe.getMessage());
-            tUser = "NULL";
-        }
-
         return ( "Name:\t" + name + "\n"
                 + "Desc:\t" + desc + "\n"
                 + "Price:\t" + price + "\n"
-                + "Owner:\t" + tUser);
+                + "Owner:\t" + user);
     }
 
     //TODO: cleanup these methods
     public void save()
     {
         if (borrowObject == null)
-            toParseObject();
+            borrowObject = toParseObject();
 
         borrowObject.saveInBackground();
     }
@@ -103,7 +83,7 @@ public class BorrowObject //TODO: extend ParseObject
         if (borrowObject != null)
             return borrowObject;
 
-        borrowObject = new ParseObject("BorrowObject");
+        borrowObject = new ParseObject("BorrowObjectV2");
 
         borrowObject.put(KEY_NAME, name);
         borrowObject.put(KEY_DESC, desc);
@@ -116,6 +96,21 @@ public class BorrowObject //TODO: extend ParseObject
         return borrowObject;
     }
 
+    public ParseObject toParseObject(String objName)
+    {
+        ParseObject newObj = new ParseObject(objName);
+
+        newObj.put(KEY_NAME, name);
+        newObj.put(KEY_DESC, desc);
+        newObj.put(KEY_PRICE, price);
+        newObj.put(KEY_USER, user);
+
+        if (pic != null)
+            newObj.put(KEY_PIC, pic);
+
+        return newObj;
+    }
+
     public void fromParseObject(ParseObject po) // TODO: This should return a BorrowObject
     {
         borrowObject = po;
@@ -123,7 +118,7 @@ public class BorrowObject //TODO: extend ParseObject
         name = po.getString(KEY_NAME);
         desc = po.getString(KEY_DESC);
         price = po.getDouble(KEY_PRICE);
-        user = po.getParseUser(KEY_USER);
-        pic = po.getParseFile(KEY_PIC);
+        user = po.getString(KEY_USER);
+        pic = po.getBytes(KEY_PIC);
     }
 }

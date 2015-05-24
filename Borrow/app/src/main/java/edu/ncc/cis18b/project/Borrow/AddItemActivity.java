@@ -58,7 +58,7 @@ public class AddItemActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_add_new_item);
 
-        if (isConnected())
+        if (!isConnected())
             toast("No internet connection");
 
         initializeActionBar();
@@ -164,7 +164,7 @@ public class AddItemActivity extends ActionBarActivity
         Log.d("Sagev", "set price");
         bo.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
         Log.d("Sagev", "set user");
-        bo.setUser(ParseUser.getCurrentUser());
+        bo.setUser(ParseUser.getCurrentUser().getUsername());
         Log.d("Sagev", "set pic");
         if (picThumb != null)
             bo.setPic(picThumb, uid);

@@ -82,12 +82,7 @@ public class BorrowListFragment extends ListFragment
 
             textView.setText(values.get(position).toString());
             String s = values.get(position).toString();
-
-            try {
-                imageView.setImageBitmap(values.get(position).getPic());
-            } catch (ParseException pe) {
-                Log.e("Sagev", pe.getMessage());
-            }
+            imageView.setImageBitmap(values.get(position).getPic());
 
             return rowView;
         }

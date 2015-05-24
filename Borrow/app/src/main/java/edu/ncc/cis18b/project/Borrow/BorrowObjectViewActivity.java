@@ -77,13 +77,9 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         viewName.setText(bo.getName());
         viewDesc.setText(bo.getDesc());
         viewPrice.setText(formattedPrice);
-        viewUser.setText(bo.getUser().getUsername());
+        viewUser.setText(bo.getUser());
+        viewPic.setImageBitmap(bo.getPic());
 
-        try {
-            viewPic.setImageBitmap(bo.getPic());
-        } catch (ParseException pe) {
-            Log.d("Sagev", pe.getMessage());
-        }
 
         buttonContact.setOnClickListener(new OnClickListener() {
             @Override
@@ -112,10 +108,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void saveObject()
     {
-        ParseObject po = new ParseObject("SavedObject");
-
-        po.put("whoSaved", ParseUser.getCurrentUser());
-        po.put("BorrowObject", bo.toParseObject());
+        ParseObject po = bo.toParseObject("SavedObjectV2");
 
         po.pinInBackground();
 
