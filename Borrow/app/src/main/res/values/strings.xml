@@ -10,4 +10,5 @@
     <string name="title_activity_my_list">MyListActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_borrow_object_view">BorrowObjectViewActivity</string>
+    <string name="app_id">789276177837613</string>
 </resources>

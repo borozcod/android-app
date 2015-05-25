@@ -3,6 +3,9 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
+    repositories {
+        mavenCentral()
+    }
 
     defaultConfig {
         applicationId "edu.ncc.cis18b.project.Borrow"
@@ -27,4 +30,5 @@ dependencies {
 dependencies {
     compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.1.0'
 }
