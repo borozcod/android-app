@@ -2,6 +2,7 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -9,11 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class MainActivity extends ActionBarActivity
+        implements SignInDialog.SignInListener
 {
     private ImageButton buttonSignin;
     private ImageButton buttonSignup;
@@ -21,6 +24,7 @@ public class MainActivity extends ActionBarActivity
     private static boolean initializeParse = true;
     final private int SIGNUP_REQUEST = 0;
     final private int SIGNIN_REQUEST = 1;
+    private SignInDialog signInDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -74,7 +78,9 @@ public class MainActivity extends ActionBarActivity
         buttonSignin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toSigninActivity();
+                signInDialog = new SignInDialog();
+                signInDialog.show(getSupportFragmentManager(), "signin_dialog");
+                //toSigninActivity();
             }
         });
 
@@ -109,6 +115,21 @@ public class MainActivity extends ActionBarActivity
         i = new Intent(getApplicationContext(), SignupActivity.class);
         Log.d("Sagev", "start activity signup");
         startActivityForResult(i, SIGNUP_REQUEST);
+    }
+
+    private void toast(String msg)
+    {
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    // implemented methods
+    @Override
+    public void signInSuccess(DialogFragment dialog)
+    {
+        Log.d("Sagev", "Okay");
+        i = new Intent(getApplicationContext(), WelcomeActivity.class);
+        startActivity(i);
+        finish();
     }
 
     @Override
