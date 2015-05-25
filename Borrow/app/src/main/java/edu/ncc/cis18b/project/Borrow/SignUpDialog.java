@@ -1,5 +1,6 @@
 package edu.ncc.cis18b.project.Borrow;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.util.Log;
@@ -21,30 +23,36 @@ import android.widget.Toast;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
 
 /**
  * @author Sage
  */
-public class SignInDialog extends DialogFragment
+public class SignUpDialog extends DialogFragment
 {
     // interface
-    public interface SignInListener
+    public interface SignUpListener
     {
-        void signInSuccess(DialogFragment dialog);
+        void signUpSuccess(DialogFragment dialog);
     }
 
-    private SignInListener listener;
+    private SignUpListener listener;
     private EditText textUsername;
     private EditText textPassword;
+    private EditText textPasswordRepeat;
     private AlertDialog.Builder builder;
     private View view;
     private final int USERNAME_LENGTH = 12;
     private final int PASSWORD_LENGTH = 32;
     private String username;
     private String password;
+    private String passwordRepeat;
     private boolean closeDialog = false;
+    private StringBuilder errMsg;
+    private ParseUser user;
 
-    public SignInDialog(){}
+    public SignUpDialog(){}
 
     @Override
     public void onAttach(Activity a)
@@ -52,7 +60,7 @@ public class SignInDialog extends DialogFragment
         super.onAttach(a);
 
         try {
-            listener = (SignInListener)a;
+            listener = (SignUpListener)a;
         } catch (ClassCastException cce) {
             String err = a.toString() + " must implement SignInListener";
             throw new ClassCastException(err);
@@ -82,7 +90,7 @@ public class SignInDialog extends DialogFragment
                 public void onClick(View v)
                 {
                     if (isConnected())
-                        signIn();
+                        signUp();
                     else
                         noConnectionAlert();
 
@@ -98,13 +106,13 @@ public class SignInDialog extends DialogFragment
         builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        view = (View)inflater.inflate(R.layout.fragment_sign_in_dialog, null);
+        view = (View)inflater.inflate(R.layout.fragment_sign_up_dialog, null);
 
         // set layout
         builder.setView(view);
 
         // initialize buttons
-        builder.setPositiveButton("Sign in", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Sign up", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 // needed for older versions of android - nothing goes here
                 // See: onStart()
@@ -131,35 +139,25 @@ public class SignInDialog extends DialogFragment
         InputFilter[] passFilter =
                 {borrowFilter, new InputFilter.LengthFilter(PASSWORD_LENGTH)};
 
-        textUsername = (EditText)view.findViewById(R.id.signinDialogUsername);
-        textPassword = (EditText)view.findViewById(R.id.signinDialogPassword);
+        textUsername = (EditText)view.findViewById(R.id.signupDialogUsername);
+        textPassword = (EditText)view.findViewById(R.id.signupDialogPassword);
+        textPasswordRepeat = (EditText)view.findViewById((R.id.signupDialogPasswordRepeat));
 
         textUsername.setFilters(userFilter);
         textPassword.setFilters(passFilter);
+        textPasswordRepeat.setFilters(passFilter);
     }
 
-    private void signIn()
+    private void signUp()
     {
-        Log.d("Sagev", "Sign in");
+        Log.d("Sagev", "Sign up");
 
         getTextFieldData();
 
-        final ProgressDialog dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Signing in");
-        dialog.show();
-
-        ParseUser.logInInBackground(username.toLowerCase(), password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException pe) {
-                dialog.dismiss();
-                if (pe != null) {
-                    toast(pe.getMessage());
-                } else {
-                    closeDialog = true;
-                    listener.signInSuccess(SignInDialog.this);
-                }
-            }
-        });
+        if (inputIsValid())
+            createAccount();
+        else
+            toast(errMsg.toString());
     }
 
     private void cancel()
@@ -171,6 +169,60 @@ public class SignInDialog extends DialogFragment
     {
         username = textUsername.getText().toString();
         password = textPassword.getText().toString();
+        passwordRepeat = textPasswordRepeat.getText().toString();
+    }
+
+    private boolean inputIsValid()
+    {
+        errMsg = new StringBuilder();
+        errMsg.append("Please correct the following errors:");
+        boolean isValid = true;
+
+        if (username.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo username entered");
+        }
+        if (password.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo password entered");
+        }
+        if (passwordRepeat.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo repeat password entered");
+        }
+        if (!password.equals(passwordRepeat)) {
+            isValid = false;
+            errMsg.append("\nPasswords do not match");
+        }
+
+        return isValid;
+    }
+
+    private void createAccount()
+    {
+        user = new ParseUser();
+
+        final ProgressDialog dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Signing up");
+        dialog.show();
+
+        user.setUsername(username.toLowerCase());
+        user.setPassword(password);
+
+        user.put("desiredUserCase", username);
+
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(ParseException pe) {
+                dialog.dismiss();
+                if (pe != null) {
+                    toast(pe.getMessage());
+                } else {
+                    closeDialog = true;
+                    listener.signUpSuccess(SignUpDialog.this);
+                }
+            }
+        });
     }
 
     private void toast(String msg)

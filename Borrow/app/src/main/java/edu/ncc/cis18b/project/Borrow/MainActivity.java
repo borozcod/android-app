@@ -16,7 +16,7 @@ import com.parse.Parse;
 import com.parse.ParseUser;
 
 public class MainActivity extends ActionBarActivity
-        implements SignInDialog.SignInListener
+        implements SignInDialog.SignInListener, SignUpDialog.SignUpListener
 {
     private ImageButton buttonSignin;
     private ImageButton buttonSignup;
@@ -25,6 +25,7 @@ public class MainActivity extends ActionBarActivity
     final private int SIGNUP_REQUEST = 0;
     final private int SIGNIN_REQUEST = 1;
     private SignInDialog signInDialog;
+    private SignUpDialog signUpDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -56,9 +57,9 @@ public class MainActivity extends ActionBarActivity
 
     private void toWelcomeActivity()
     {
-        finish();
         i = new Intent(getApplicationContext(), WelcomeActivity.class);
         startActivity(i);
+        finish();
     }
 
     private void initializeActionBar()
@@ -78,8 +79,7 @@ public class MainActivity extends ActionBarActivity
         buttonSignin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInDialog = new SignInDialog();
-                signInDialog.show(getSupportFragmentManager(), "signin_dialog");
+                launchSignInDialog();
                 //toSigninActivity();
             }
         });
@@ -87,7 +87,8 @@ public class MainActivity extends ActionBarActivity
         buttonSignup.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                toSignupActivity();
+                launchSignUpDialog();
+                //toSignupActivity();
             }
         });
 
@@ -103,6 +104,24 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
+    private void launchSignInDialog()
+    {
+        signInDialog = new SignInDialog();
+        signInDialog.show(getSupportFragmentManager(), "signin_dialog");
+    }
+
+    private void launchSignUpDialog()
+    {
+        signUpDialog = new SignUpDialog();
+        signUpDialog.show(getSupportFragmentManager(), "signup_dialog");
+    }
+
+    private void toast(String msg)
+    {
+        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+    }
+
+    // TODO: methods to be deleted when Signup/SigninActivities deleted
     private void toSigninActivity()
     {
         i = new Intent(getApplicationContext(), SigninActivity.class);
@@ -117,21 +136,22 @@ public class MainActivity extends ActionBarActivity
         startActivityForResult(i, SIGNUP_REQUEST);
     }
 
-    private void toast(String msg)
-    {
-        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
-    }
-
     // implemented methods
     @Override
     public void signInSuccess(DialogFragment dialog)
     {
-        Log.d("Sagev", "Okay");
-        i = new Intent(getApplicationContext(), WelcomeActivity.class);
-        startActivity(i);
-        finish();
+        Log.d("Sagev", "Sign in success");
+        toWelcomeActivity();
     }
 
+    @Override
+    public void signUpSuccess(DialogFragment dialog)
+    {
+        Log.d("Sagev", "Sign up success");
+        toWelcomeActivity();
+    }
+
+    // menu methods
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -151,6 +171,7 @@ public class MainActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
+    // TODO: method to be deleted when Signup/SigninActivities deleted
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
