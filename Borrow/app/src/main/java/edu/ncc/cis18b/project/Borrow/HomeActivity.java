@@ -123,7 +123,7 @@ public class HomeActivity extends ActionBarActivity
 
         Log.d("Sagev", "queryParse() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObjectV2");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
 
         q.whereExists("name");
 

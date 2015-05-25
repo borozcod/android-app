@@ -45,6 +45,12 @@ public class AddItemActivity extends ActionBarActivity
     private Bitmap picThumb;
     private Intent i;
     private String uid; //picture name
+    private BorrowObject bo;
+
+    // these appear to be the maximum dimensions you can save without issues
+    private final int WIDTH = 320;
+    private final int HEIGHT = 180;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -113,14 +119,12 @@ public class AddItemActivity extends ActionBarActivity
 
     private void addItem()
     {
-        BorrowObject bo;
-
         if (readUserInput()) {
             toast(errMsg.toString());
         } else if (!isConnected()) {
             noConnectionAlert();
         } else {
-            bo = getItem();
+            getItem();
             bo.save();
             HomeActivity.borrowObjects.add(bo); // TODO: temporary, replace later
             toHomeActivity();
@@ -147,15 +151,19 @@ public class AddItemActivity extends ActionBarActivity
             errMsg.append("Item must have a price\n");
             err = true;
         }
-        // TODO: if statement for picture
+        if (picThumb == null)
+        {
+            errMsg.append("Item must have a picture\n");
+            err = true;
+        }
 
         return err;
     }
 
-    private BorrowObject getItem()
+    private void getItem()
     {
         Log.d("Sagev", "create obj");
-        BorrowObject bo = new BorrowObject();
+        bo = new BorrowObject();
 
         Log.d("Sagev", "set name");
         bo.setName(editTextName.getText().toString());
@@ -164,13 +172,9 @@ public class AddItemActivity extends ActionBarActivity
         Log.d("Sagev", "set price");
         bo.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
         Log.d("Sagev", "set user");
-        bo.setUser(ParseUser.getCurrentUser().getUsername());
+        bo.setUser(ParseUser.getCurrentUser().getString("desiredUserCase"));
         Log.d("Sagev", "set pic");
-        if (picThumb != null)
-            bo.setPic(picThumb, uid);
-
-        Log.d("Sagev", "return obj");
-        return bo;
+        bo.setPic(picThumb);
     }
 
     private void toHomeActivity()
@@ -281,7 +285,8 @@ public class AddItemActivity extends ActionBarActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         if (resultCode == RESULT_OK) {
-            picThumb = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(picUri.getPath()), 320, 180);
+            Bitmap pic = BitmapFactory.decodeFile(picUri.getPath());
+            picThumb = ThumbnailUtils.extractThumbnail(pic, WIDTH, HEIGHT);
             imageViewThumb.setImageBitmap(picThumb);
         } else if (resultCode == RESULT_CANCELED) {
             toast("Canceled operation");

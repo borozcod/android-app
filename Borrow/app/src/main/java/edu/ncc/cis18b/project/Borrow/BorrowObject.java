@@ -2,6 +2,7 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.util.Log;
 
 import com.parse.ParseException;
@@ -42,22 +43,44 @@ public class BorrowObject //TODO: extend ParseObject
     public void setUser(String user){this.user = user;}
     public String getUser(){return user;}
 
-    // picture getter/setters
-    public void setPic(Bitmap pic, String name)
+    /**
+     * Takes Bitmap and converts it to byte[]
+     * Stores byte[] in this.pic
+     * @param pic Bitmap to be converted to byte[]
+     */
+    public void setPic(Bitmap pic)
     {
-        byte[] data;
-        ByteArrayOutputStream stream;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-        stream = new ByteArrayOutputStream();
         pic.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        data = stream.toByteArray();
 
-        this.pic = data;
+        this.pic = stream.toByteArray();
     }
 
+    /**
+     * Decodes byte[] pic to Bitmap and returns it
+     * @return returns Bitmap decoded from byte[] pic
+     */
     public Bitmap getPic()
     {
         return BitmapFactory.decodeByteArray(pic, 0, pic.length);
+    }
+
+    /**
+     * Decodes byte[] pic and resizes pic to user set scale or
+     * returns largest possible scale if picture is too small
+     * @param width desired width downscale
+     * @param height desired height downscale
+     * @return returns scaled Bitmap
+     */
+    public Bitmap getPic(int width, int height)
+    {
+        Bitmap b = getPic(); // decoded byte[]
+
+        width = (width > b.getWidth()) ? width : b.getWidth();
+        height = (height > b.getHeight()) ? height : b.getHeight();
+
+        return ThumbnailUtils.extractThumbnail(b, width, height);
     }
 
     @Override
@@ -83,15 +106,13 @@ public class BorrowObject //TODO: extend ParseObject
         if (borrowObject != null)
             return borrowObject;
 
-        borrowObject = new ParseObject("BorrowObjectV2");
+        borrowObject = new ParseObject("BorrowObject");
 
         borrowObject.put(KEY_NAME, name);
         borrowObject.put(KEY_DESC, desc);
         borrowObject.put(KEY_PRICE, price);
         borrowObject.put(KEY_USER, user);
-
-        if (pic != null)
-            borrowObject.put(KEY_PIC, pic);
+        borrowObject.put(KEY_PIC, pic);
 
         return borrowObject;
     }

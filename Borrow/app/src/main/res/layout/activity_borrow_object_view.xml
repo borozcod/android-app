@@ -108,7 +108,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/viewPicImage"
                 android:layout_below="@+id/textView16"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:minHeight="126dp"
+                android:nestedScrollingEnabled="false"
+                android:minWidth="224dp" />
         </LinearLayout>
 
         <LinearLayout

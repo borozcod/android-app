@@ -73,11 +73,12 @@ public class SavedItemActivity extends ActionBarActivity
         if (databaseInitialized)
             return;
 
+        String uid = ParseUser.getCurrentUser().getString("desiredUserCase") + "Object";
         savedObjectList = new ArrayList<BorrowObject>();
 
         Log.d("Sagev", "queryLocalDatabase() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("SavedObjectV2");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery(uid);
 
         q.fromLocalDatastore();
         q.whereExists("name");

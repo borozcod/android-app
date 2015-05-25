@@ -31,6 +31,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private Button buttonSave;
     protected static BorrowObject bo;
     private Intent i;
+    private final int WIDTH = 224;
+    private final int HEIGHT = 126;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +80,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         viewDesc.setText(bo.getDesc());
         viewPrice.setText(formattedPrice);
         viewUser.setText(bo.getUser());
-        viewPic.setImageBitmap(bo.getPic());
+        viewPic.setImageBitmap(bo.getPic(WIDTH, HEIGHT));
 
 
         buttonContact.setOnClickListener(new OnClickListener() {
@@ -108,7 +110,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void saveObject()
     {
-        ParseObject po = bo.toParseObject("SavedObjectV2");
+        String uid = ParseUser.getCurrentUser().getString("desiredUserCase") + "Object";
+        ParseObject po = bo.toParseObject(uid);
 
         po.pinInBackground();
 
