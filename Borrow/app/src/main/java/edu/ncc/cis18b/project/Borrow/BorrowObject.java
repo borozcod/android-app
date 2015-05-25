@@ -142,4 +142,10 @@ public class BorrowObject //TODO: extend ParseObject
         user = po.getString(KEY_USER);
         pic = po.getBytes(KEY_PIC);
     }
+
+    public void delete()
+    {
+        if (borrowObject != null)
+            borrowObject.deleteInBackground();
+    }
 }

@@ -41,24 +41,6 @@
                 android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
         </activity>
         <activity
-            android:name=".SigninActivity"
-            android:label="@string/title_activity_signin"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
-        </activity>
-        <activity
-            android:name=".SignupActivity"
-            android:label="@string/title_activity_signup"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.ncc.cis18b.project.Borrow.MainActivity" />
-        </activity>
-        <activity
             android:name=".AddItemActivity"
             android:label="@string/title_activity_add_new_item"
             android:parentActivityName=".HomeActivity"

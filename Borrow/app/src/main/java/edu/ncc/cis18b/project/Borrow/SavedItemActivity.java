@@ -24,6 +24,7 @@ public class SavedItemActivity extends ActionBarActivity
     private BorrowListFragment listFragment;
     private boolean databaseInitialized = false;
     private ArrayList<BorrowObject> savedObjectList;
+    protected static boolean launchedFromSavedList = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

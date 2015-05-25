@@ -68,8 +68,14 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         DecimalFormat df = new DecimalFormat("$,###.00");
         String formattedPrice = df.format(bo.getPrice());
 
-        buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
         buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
+        buttonSave.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveObject();
+            }
+        });
+
         viewName = (TextView)findViewById(R.id.viewNameText);
         viewDesc = (TextView)findViewById(R.id.viewDescText);
         viewPrice = (TextView)findViewById(R.id.viewPriceText);
@@ -82,20 +88,36 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         viewUser.setText(bo.getUser());
         viewPic.setImageBitmap(bo.getPic(WIDTH, HEIGHT));
 
+        initializeDeleteButton();
+    }
 
-        buttonContact.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toast("Placeholder: Contact owner");
-            }
-        });
+    private void initializeDeleteButton()
+    {
+        if (bo.getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
+            buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
+            buttonContact.setText("Delete item");
+            buttonContact.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteObject();
+                }
+            });
+        } else {
+            buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
+            buttonContact.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toast("Placeholder: Contact owner");
+                }
+            });
+        }
+    }
 
-        buttonSave.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveObject();
-            }
-        });
+    private void deleteObject()
+    {
+        bo.delete();
+        HomeActivity.borrowObjects.remove(bo);
+        finish();
     }
 
     private void toast(String msg)

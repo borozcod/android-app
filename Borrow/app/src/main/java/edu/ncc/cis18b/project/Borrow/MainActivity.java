@@ -121,21 +121,6 @@ public class MainActivity extends ActionBarActivity
         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
-    // TODO: methods to be deleted when Signup/SigninActivities deleted
-    private void toSigninActivity()
-    {
-        i = new Intent(getApplicationContext(), SigninActivity.class);
-        Log.d("Sagev", "start activity signin");
-        startActivityForResult(i, SIGNIN_REQUEST);
-    }
-
-    private void toSignupActivity()
-    {
-        i = new Intent(getApplicationContext(), SignupActivity.class);
-        Log.d("Sagev", "start activity signup");
-        startActivityForResult(i, SIGNUP_REQUEST);
-    }
-
     // implemented methods
     @Override
     public void signInSuccess(DialogFragment dialog)
@@ -169,40 +154,5 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    // TODO: method to be deleted when Signup/SigninActivities deleted
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        Log.d("Sagev", "recieved result");
-        if (requestCode == SIGNIN_REQUEST) {
-            Log.d("Sagev", "request caught");
-            if (resultCode == RESULT_OK) {
-                Log.d("Sagev", "Okay");
-                i = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(i);
-                finish();
-            } else if (resultCode == RESULT_CANCELED) {
-                Log.d("Sagev", "canceled");
-            } else {
-                Log.d("Sagev", "err");
-            }
-        }
-
-        Log.d("Sagev", "recieved result");
-        if (requestCode == SIGNUP_REQUEST) {
-            Log.d("Sagev", "request caught");
-            if (resultCode == RESULT_OK) {
-                Log.d("Sagev", "Okay");
-                i = new Intent(getApplicationContext(), WelcomeActivity.class);
-                startActivity(i);
-                finish();
-            } else if (resultCode == RESULT_CANCELED) {
-                Log.d("Sagev", "canceled");
-            } else {
-                Log.d("Sagev", "err");
-            }
-        }
     }
 }
