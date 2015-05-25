@@ -90,6 +90,7 @@ public class SavedItemActivity extends ActionBarActivity
                 for (ParseObject p : list) {
                     BorrowObject bo = new BorrowObject();
                     bo.fromParseObject(p);
+                    bo.markSaved();
                     savedObjectList.add(bo);
                     Log.d("Sagev", bo.toString());
                 }

@@ -68,14 +68,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         DecimalFormat df = new DecimalFormat("$,###.00");
         String formattedPrice = df.format(bo.getPrice());
 
-        buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
-        buttonSave.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveObject();
-            }
-        });
-
         viewName = (TextView)findViewById(R.id.viewNameText);
         viewDesc = (TextView)findViewById(R.id.viewDescText);
         viewPrice = (TextView)findViewById(R.id.viewPriceText);
@@ -88,13 +80,38 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         viewUser.setText(bo.getUser());
         viewPic.setImageBitmap(bo.getPic(WIDTH, HEIGHT));
 
+        initializeSaveButton();
         initializeDeleteButton();
+    }
+
+    private void initializeSaveButton()
+    {
+        buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
+
+        if (bo.isSaved()) {
+            buttonSave.setText("Unsave item");
+            buttonSave.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    unsaveObject();
+                }
+            });
+        } else {
+            buttonSave.setText("Save item");
+            buttonSave.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    saveObject();
+                }
+            });
+        }
     }
 
     private void initializeDeleteButton()
     {
+        buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
+
         if (bo.getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
-            buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
             buttonContact.setText("Delete item");
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
@@ -103,7 +120,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity
                 }
             });
         } else {
-            buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -137,7 +153,17 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
         po.pinInBackground();
 
+        bo.markSaved();
+
+        initializeSaveButton();
         toast("Item saved!");
+    }
+
+    private void unsaveObject()
+    {
+        bo.toParseObject().unpinInBackground();
+        bo.markUnsaved();
+        initializeSaveButton();
     }
 
     //menu stuff

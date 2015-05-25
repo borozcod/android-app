@@ -28,6 +28,7 @@ public class BorrowObject //TODO: extend ParseObject
     private final String KEY_PRICE = "price";
     private final String KEY_PIC = "pic";
     private final String KEY_USER = "user";
+    private boolean isSaved = false;
 
     public BorrowObject(){}
 
@@ -147,5 +148,20 @@ public class BorrowObject //TODO: extend ParseObject
     {
         if (borrowObject != null)
             borrowObject.deleteInBackground();
+    }
+
+    public void markSaved()
+    {
+        isSaved = true;
+    }
+
+    public void markUnsaved()
+    {
+        isSaved = false;
+    }
+
+    public boolean isSaved()
+    {
+        return isSaved;
     }
 }
