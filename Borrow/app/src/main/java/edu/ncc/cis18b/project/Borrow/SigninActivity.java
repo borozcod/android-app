@@ -1,9 +1,16 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputFilter;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,9 +46,13 @@ public class SigninActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_signin);
 
+        if (!isConnected())
+            toast("No internet connection");
+
         initializeActionBar();
 
         initializeButtons();
+        initializeTextFields();
     }
 
     private void initializeActionBar()
@@ -65,7 +76,10 @@ public class SigninActivity extends ActionBarActivity
         buttonSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin();
+                if (isConnected())
+                    signin();
+                else
+                    noConnectionAlert();
             }
         });
 
@@ -77,6 +91,23 @@ public class SigninActivity extends ActionBarActivity
         });
     }
 
+    private void initializeTextFields()
+    {
+        BorrowInputFilter borrowFilter = new BorrowInputFilter();
+
+        InputFilter[] userFilter =
+                { borrowFilter, new InputFilter.LengthFilter(12) };
+        InputFilter[] passFilter =
+                { borrowFilter, new InputFilter.LengthFilter(32) };
+
+
+        editTextUsername = (EditText)findViewById(R.id.signinUsernameText);
+        editTextPassword = (EditText)findViewById(R.id.signinPasswordText);
+
+        editTextPassword.setFilters(passFilter);
+        editTextUsername.setFilters(userFilter);
+    }
+
     private void signin() {
         getTextFields();
 
@@ -84,7 +115,7 @@ public class SigninActivity extends ActionBarActivity
         dialog.setMessage("Logging in");
         dialog.show();
 
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
+        ParseUser.logInInBackground(username.toLowerCase(), password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException pe) {
                 dialog.dismiss();
@@ -100,9 +131,6 @@ public class SigninActivity extends ActionBarActivity
 
     private void getTextFields()
     {
-        editTextUsername = (EditText)findViewById(R.id.signinUsernameText);
-        editTextPassword = (EditText)findViewById(R.id.signinPasswordText);
-
         username = editTextUsername.getText().toString();
         password = editTextPassword.getText().toString();
     }
@@ -160,6 +188,32 @@ public class SigninActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void noConnectionAlert()
+    {
+        AlertDialog dialog;
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("No internet connection");
+        builder.setTitle("Error");
+
+        dialog = builder.create();
+
+        dialog.show();
     }
 }
 

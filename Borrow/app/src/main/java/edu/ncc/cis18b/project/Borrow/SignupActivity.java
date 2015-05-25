@@ -1,9 +1,14 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,9 +47,13 @@ public class SignupActivity extends ActionBarActivity
     {
         setContentView(R.layout.activity_signup);
 
+        if (!isConnected())
+            toast("No internet connection");
+
         initializeActionBar();
 
         initializeButtons();
+        initializeTextFields();
     }
 
     private void initializeActionBar()
@@ -68,7 +77,10 @@ public class SignupActivity extends ActionBarActivity
         buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signup();
+                if (isConnected())
+                    signup();
+                else
+                    noConnectionAlert();
             }
         });
 
@@ -78,6 +90,24 @@ public class SignupActivity extends ActionBarActivity
                 toMainActivity();
             }
         });
+    }
+
+    private void initializeTextFields()
+    {
+        BorrowInputFilter borrowFilter = new BorrowInputFilter();
+
+        InputFilter[] userFilter =
+                { borrowFilter, new InputFilter.LengthFilter(12) };
+        InputFilter[] passFilter =
+                { borrowFilter, new InputFilter.LengthFilter(32) };
+
+        editTextUsername = (EditText)findViewById(R.id.signupUsernameText);
+        editTextPassword = (EditText)findViewById(R.id.signupPasswordText);
+        editTextPasswordRepeat = (EditText)findViewById(R.id.signupPasswordRepeatText);
+
+        editTextUsername.setFilters(userFilter);
+        editTextPassword.setFilters(passFilter);
+        editTextPasswordRepeat.setFilters(passFilter);
     }
 
     private void signup()
@@ -98,8 +128,10 @@ public class SignupActivity extends ActionBarActivity
         dialog.setMessage("Creating account");
         dialog.show();
 
-        user.setUsername(username);
+        user.setUsername(username.toLowerCase());
         user.setPassword(password);
+
+        user.put("desiredUserCase", username);
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
@@ -117,10 +149,6 @@ public class SignupActivity extends ActionBarActivity
 
     private void getTextFields()
     {
-        editTextUsername = (EditText)findViewById(R.id.signupUsernameText);
-        editTextPassword = (EditText)findViewById(R.id.signupPasswordText);
-        editTextPasswordRepeat = (EditText)findViewById(R.id.signupPasswordRepeatText);
-
         username = editTextUsername.getText().toString();
         password = editTextPassword.getText().toString();
         passwordRepeat = editTextPasswordRepeat.getText().toString();
@@ -200,5 +228,31 @@ public class SignupActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void noConnectionAlert()
+    {
+        AlertDialog dialog;
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("No internet connection");
+        builder.setTitle("Error");
+
+        dialog = builder.create();
+
+        dialog.show();
     }
 }

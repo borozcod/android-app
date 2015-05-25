@@ -1,10 +1,14 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -53,6 +57,9 @@ public class AddItemActivity extends ActionBarActivity
     private void initializeActivity()
     {
         setContentView(R.layout.activity_add_new_item);
+
+        if (!isConnected())
+            toast("No internet connection");
 
         initializeActionBar();
 
@@ -110,7 +117,8 @@ public class AddItemActivity extends ActionBarActivity
 
         if (readUserInput()) {
             toast(errMsg.toString());
-            return;
+        } else if (!isConnected()) {
+            noConnectionAlert();
         } else {
             bo = getItem();
             bo.save();
@@ -156,7 +164,7 @@ public class AddItemActivity extends ActionBarActivity
         Log.d("Sagev", "set price");
         bo.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
         Log.d("Sagev", "set user");
-        bo.setUser(ParseUser.getCurrentUser());
+        bo.setUser(ParseUser.getCurrentUser().getUsername());
         Log.d("Sagev", "set pic");
         if (picThumb != null)
             bo.setPic(picThumb, uid);
@@ -200,9 +208,43 @@ public class AddItemActivity extends ActionBarActivity
                 toHomeActivity();
                 return true;
             }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void noConnectionAlert()
+    {
+        AlertDialog dialog;
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("No internet connection");
+        builder.setTitle("Error");
+
+        dialog = builder.create();
+
+        dialog.show();
     }
 
     // camera methods

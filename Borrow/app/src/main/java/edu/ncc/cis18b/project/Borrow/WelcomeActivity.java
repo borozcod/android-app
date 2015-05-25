@@ -3,6 +3,7 @@ package edu.ncc.cis18b.project.Borrow;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +52,7 @@ public class WelcomeActivity extends ActionBarActivity
         buttonSignOut = (Button)findViewById(R.id.welcomeButtonSignOut);
         textUser = (TextView)findViewById(R.id.userText);
 
-        user = ParseUser.getCurrentUser().getUsername();
+        user = ParseUser.getCurrentUser().getString("desiredUserCase");
         textUser.setText(user);
 
         buttonContinue.setOnClickListener(new View.OnClickListener() {
@@ -97,10 +98,28 @@ public class WelcomeActivity extends ActionBarActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings : {
+                return true;
+            }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                return true;
+            }
+            case R.id.action_profile : {
+                Log.d("Sagev", "Profile");
+                return true;
+            }
+            case R.id.action_saved_objects_list : {
+                i = new Intent(getApplicationContext(), SavedItemActivity.class);
+                startActivity(i);
+                return true;
+            }
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -2,7 +2,10 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -16,6 +19,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +50,10 @@ public class HomeActivity extends ActionBarActivity
 
         initializeList();
 
-        queryParse();
+        if (isConnected())
+            queryParse();
+        else
+            toast("No internet connection");
         // TODO: if a new object is created before Database is initialized
         // TODO: Will probably crash app - fix
     }
@@ -116,9 +123,9 @@ public class HomeActivity extends ActionBarActivity
 
         Log.d("Sagev", "queryParse() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObjectV2");
 
-        q.whereExists("pic");
+        q.whereExists("name");
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -136,10 +143,22 @@ public class HomeActivity extends ActionBarActivity
         databaseInitialized = true;
     }
 
+    private boolean isConnected() // checks internet connection
+    {
+        Context c = getApplication();
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
     // menu stuff
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_signin, menu);
+        getMenuInflater().inflate(R.menu.menu_home, menu);
 
         return true;
     }
@@ -151,13 +170,30 @@ public class HomeActivity extends ActionBarActivity
         Log.d("Sagev", "Action Bar Start");
 
         switch (id) {
-            case R.id.action_settings: {
+            case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
                 return true;
             }
-            case android.R.id.home: {
+            case android.R.id.home : {
                 Log.d("Sagev", "Back");
                 toWelcomeActivity();
+                return true;
+            }
+            case R.id.action_logout : {
+                Log.d("Sagev", "ActionMenu logout");
+                ParseUser.getCurrentUser().logOut();
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(i);
+                return true;
+            }
+            case R.id.action_profile : {
+                Log.d("Sagev", "Profile");
+                return true;
+            }
+            case R.id.action_saved_objects_list : {
+                i = new Intent(getApplicationContext(), SavedItemActivity.class);
+                startActivity(i);
                 return true;
             }
         }
