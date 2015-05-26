@@ -61,10 +61,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.ncc.cis18b.project.Borrow.HomeActivity" />
         </activity>
-        <activity
-            android:name=".SavedItemActivity"
-            android:label="@string/title_activity_saved_item" >
-        </activity>
+
     </application>
 
 </manifest>

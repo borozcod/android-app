@@ -6,9 +6,5 @@
     <string name="title_activity_my_list">MyListActivity</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_borrow_object_view">BorrowObjectViewActivity</string>
-<<<<<<< HEAD
     <string name="app_id">789276177837613</string>
-=======
-    <string name="title_activity_saved_item">SavedItemActivity</string>
->>>>>>> 9f652eb4207b0345344977ef77dd9def951ed32f
 </resources>
