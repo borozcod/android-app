@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.media.ThumbnailUtils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.ParseUser;
@@ -58,6 +60,8 @@ public class AddItemActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         initializeActivity();
+        addFonts();
+
     }
 
     private void initializeActivity()
@@ -293,5 +297,27 @@ public class AddItemActivity extends ActionBarActivity
         } else {
             toast("Error");
         }
+    }
+
+    private void addFonts(){
+        TextView tv12=(TextView)findViewById(R.id.textView12);
+        Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        tv12.setTypeface(face12);
+
+        TextView tv=(TextView)findViewById(R.id.textView);
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        tv.setTypeface(face);
+
+        TextView tv11=(TextView)findViewById(R.id.textView11);
+        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        tv11.setTypeface(face11);
+
+        TextView tv10=(TextView)findViewById(R.id.textView10);
+        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        tv10.setTypeface(face10);
+
+        TextView tv9=(TextView)findViewById(R.id.textView9);
+        Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        tv9.setTypeface(face9);
     }
 }
