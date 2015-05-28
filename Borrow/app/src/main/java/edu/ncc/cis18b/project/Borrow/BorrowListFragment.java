@@ -1,5 +1,6 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
@@ -49,10 +50,13 @@ public class BorrowListFragment extends ListFragment
 
     protected void loadList(ArrayList<BorrowObject> list)
     {
-        adapter = new BorrowArrayAdapter(getActivity(), list);
-        setListAdapter(adapter);
-
-        adapter.notifyDataSetChanged();
+        if (adapter == null) {
+            adapter = new BorrowArrayAdapter(getActivity(), list);
+            setListAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        } else {
+            adapter.updateList(list);
+        }
     }
 
     // inner class
@@ -67,6 +71,12 @@ public class BorrowListFragment extends ListFragment
             this.context = context;
             this.values = values;
             Log.d("Sagev", "Adapter initialized");
+        }
+
+        public void updateList(ArrayList<BorrowObject> values)
+        {
+            this.values = values;
+            notifyDataSetChanged();
         }
 
         @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,14 +24,12 @@ public class SavedItemActivity extends ActionBarActivity
 {
     private BorrowListFragment listFragment;
     private boolean databaseInitialized = false;
-    private ArrayList<BorrowObject> savedObjectList;
-    protected static boolean launchedFromSavedList = false;
+    protected static ArrayList<BorrowObject> savedObjectList = null;
+    private boolean firstCreate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initializeActivity();
     }
 
     private void initializeActivity()
@@ -75,7 +74,6 @@ public class SavedItemActivity extends ActionBarActivity
             return;
 
         String uid = ParseUser.getCurrentUser().getString("desiredUserCase") + "Object";
-        savedObjectList = new ArrayList<BorrowObject>();
 
         Log.d("Sagev", "queryLocalDatabase() start");
 
@@ -87,6 +85,7 @@ public class SavedItemActivity extends ActionBarActivity
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                savedObjectList = new ArrayList<BorrowObject>();
                 for (ParseObject p : list) {
                     BorrowObject bo = new BorrowObject();
                     bo.fromParseObject(p);
@@ -102,9 +101,32 @@ public class SavedItemActivity extends ActionBarActivity
     }
 
     @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if (firstCreate) {
+            initializeActivity();
+            firstCreate = false;
+        }
+
+        if (savedObjectList != null && listFragment != null && !savedObjectList.isEmpty())
+            listFragment.loadList(savedObjectList);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_saved_item, menu);
         return true;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            savedObjectList = null;
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -119,6 +141,7 @@ public class SavedItemActivity extends ActionBarActivity
                 return true;
             }
             case android.R.id.home : {
+                savedObjectList = null;
                 finish();
                 return true;
             }

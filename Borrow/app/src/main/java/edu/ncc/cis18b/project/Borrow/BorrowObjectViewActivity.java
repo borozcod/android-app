@@ -163,6 +163,11 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         bo.toParseObject().unpinInBackground();
         bo.markUnsaved();
+
+        if (SavedItemActivity.savedObjectList != null)
+            if (SavedItemActivity.savedObjectList.contains(bo))
+                SavedItemActivity.savedObjectList.remove(bo);
+
         initializeSaveButton();
     }
 

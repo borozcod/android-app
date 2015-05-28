@@ -32,12 +32,11 @@ public class HomeActivity extends ActionBarActivity
     protected static ArrayList<BorrowObject> borrowObjects;
     // TODO: replace static array with method getter/setter
     private boolean databaseInitialized = false;
+    private boolean firstCreate = true;
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        initializeActivity();
     }
 
     private void initializeActivity()
@@ -119,8 +118,6 @@ public class HomeActivity extends ActionBarActivity
         if (databaseInitialized)
             return;
 
-        borrowObjects = new ArrayList<BorrowObject>();
-
         Log.d("Sagev", "queryParse() start");
 
         ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
@@ -130,6 +127,7 @@ public class HomeActivity extends ActionBarActivity
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
+                borrowObjects = new ArrayList<BorrowObject>();
                 for (ParseObject p : list) {
                     BorrowObject bo = new BorrowObject();
                     bo.fromParseObject(p);
@@ -153,6 +151,20 @@ public class HomeActivity extends ActionBarActivity
 
         return activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        if (firstCreate) {
+            initializeActivity();
+            firstCreate = false;
+        }
+
+        if (borrowObjects != null && listFragment != null)
+            listFragment.loadList(borrowObjects);
     }
 
     // menu stuff
