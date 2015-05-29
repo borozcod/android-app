@@ -8,4 +8,9 @@
     <string name="title_activity_borrow_object_view">BorrowObjectViewActivity</string>
     <string name="app_id">789276177837613</string>
     <string name="title_activity_saved_item">SavedItemActivity</string>
+    <string name="title_activity_compose_message">ComposeMessageActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_recieved_message">RecievedMessageActivity</string>
+    <string name="title_activity_sent_message">SentMessageActivity</string>
 </resources>

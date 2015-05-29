@@ -119,6 +119,11 @@ public class WelcomeActivity extends ActionBarActivity
                 startActivity(i);
                 return true;
             }
+            case R.id.action_message_center : {
+                i = new Intent(getApplicationContext(), ReceivedMessageActivity.class);
+                startActivity(i);
+                return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

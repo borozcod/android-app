@@ -62,4 +62,5 @@
         android:id="@+id/userText"
         android:layout_below="@+id/welcomeText"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

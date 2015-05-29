@@ -64,6 +64,18 @@
             android:name=".SavedItemActivity"
             android:label="@string/title_activity_saved_item" >
         </activity>
+        <activity
+            android:name=".ComposeMessageActivity"
+            android:label="@string/title_activity_compose_message" >
+        </activity>
+        <activity
+            android:name=".ReceivedMessageActivity"
+            android:label="@string/title_activity_recieved_message" >
+        </activity>
+        <activity
+            android:name=".SentMessageActivity"
+            android:label="@string/title_activity_sent_message" >
+        </activity>
     </application>
 
 </manifest>
