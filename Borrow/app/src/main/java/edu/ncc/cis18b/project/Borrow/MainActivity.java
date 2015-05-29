@@ -1,6 +1,9 @@
 package edu.ncc.cis18b.project.Borrow;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -13,8 +16,11 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.parse.Parse;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends ActionBarActivity
         implements SignInDialog.SignInListener, SignUpDialog.SignUpListener
@@ -52,6 +58,17 @@ public class MainActivity extends ActionBarActivity
     private void getUserStatus()
     {
         if (ParseUser.getCurrentUser() != null) {
+            //TODO: DELETE THIS STUFF EVENTUALLY
+            Drawable d = getResources().getDrawable(R.drawable.camera);
+            Bitmap b = ((BitmapDrawable)d).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            b.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            byte[] data = stream.toByteArray();
+
+            ParseFile pf = new ParseFile("pic", data);
+            ParseUser.getCurrentUser().put("pic", pf);
+            ParseUser.getCurrentUser().saveInBackground();
+
             toWelcomeActivity();
         }
     }
@@ -98,6 +115,9 @@ public class MainActivity extends ActionBarActivity
     private void initializeDatabase()
     {
         if (initializeParse) {
+            ParseObject.registerSubclass(BorrowObject.class);
+            ParseObject.registerSubclass(BorrowItem.class);
+            ParseObject.registerSubclass(BorrowMessage.class);
             // connects to Parse database: borrowappandroid@gmail.com
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, "xEVrr9KpRW07GEYHlph9pkrRAdeAXFg5xZllfaN8", "OTu2sE7Dr72YZQazWAVkPPVN9cDuC1kBSB23Nfau");

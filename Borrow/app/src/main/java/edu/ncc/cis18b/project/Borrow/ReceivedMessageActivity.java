@@ -1,13 +1,25 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ReceivedMessageActivity extends ActionBarActivity {
@@ -16,6 +28,9 @@ public class ReceivedMessageActivity extends ActionBarActivity {
     private Button buttonToSent;
     private Button buttonToReceived;
     private Intent i;
+    private BorrowListFragment<BorrowMessage> listFragment;
+    private boolean databaseInitialized = false;
+    private ArrayList<BorrowMessage> borrowMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +46,10 @@ public class ReceivedMessageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_received_message);
 
         initializeButtons();
+
+        initializeList();
+
+        queryParse();
     }
 
     private void initializeActionBar() {
@@ -71,6 +90,45 @@ public class ReceivedMessageActivity extends ActionBarActivity {
                 toReceivedActivity();
             }
         });
+    }
+
+    private void initializeList()
+    {
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+
+        listFragment = new BorrowListFragment();
+        ft.add(R.id.recievedMessageContainer, listFragment);
+
+        ft.commit();
+        // TODO: perhaps place these as member variables
+        // TODO: may fix list loading issues
+    }
+
+    private void queryParse() // TODO: replace, improve -- do something with this method
+    {
+        if (databaseInitialized)
+            return;
+
+        Log.d("Sagev", "queryParse() start");
+
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowMessage");
+
+        q.whereEqualTo(BorrowMessage.KEY_RECIPIENT, ParseUser.getCurrentUser());
+
+        q.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                borrowMessages = new ArrayList<BorrowMessage>();
+                for (ParseObject p : list) {
+                    borrowMessages.add((BorrowMessage)p);
+                    Log.d("Sagev", p.toString());
+                }
+                listFragment.loadList(borrowMessages); // loads items into list
+            } // end done()
+        }); // end FindCallBack<ParseObject>
+
+        databaseInitialized = true;
     }
 
     private void toComposeActivity()

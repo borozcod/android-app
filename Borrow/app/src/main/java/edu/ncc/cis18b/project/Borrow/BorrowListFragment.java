@@ -19,12 +19,12 @@ import com.parse.ParseException;
 
 import java.util.ArrayList;
 
-public class BorrowListFragment extends ListFragment
+public class BorrowListFragment<T extends BorrowObject> extends ListFragment //TODO: template ListFragment?
 {
     private BorrowArrayAdapter adapter;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState)
+    public void onActivityCreated(Bundle savedInstanceState) //TODO: change to onCreate
     {
         super.onActivityCreated(savedInstanceState);
 
@@ -34,13 +34,9 @@ public class BorrowListFragment extends ListFragment
     @Override
     public void onListItemClick(ListView listView, View view, int position, long id)
     {
-        BorrowObject bo = (BorrowObject)getListAdapter().getItem(position);
-        toast("Placeholder:\t" + bo.getName());
+        T t = (T)getListAdapter().getItem(position);
 
-        BorrowObjectViewActivity.bo = bo;
-
-        Intent i = new Intent(getActivity(), BorrowObjectViewActivity.class);
-        startActivity(i);
+        t.viewObject(getActivity());
     }
 
     private void toast(String msg)
@@ -48,7 +44,7 @@ public class BorrowListFragment extends ListFragment
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
-    protected void loadList(ArrayList<BorrowObject> list)
+    protected void loadList(ArrayList<T> list)
     {
         if (adapter == null) {
             adapter = new BorrowArrayAdapter(getActivity(), list);
@@ -60,12 +56,12 @@ public class BorrowListFragment extends ListFragment
     }
 
     // inner class
-    private class BorrowArrayAdapter extends ArrayAdapter<BorrowObject>
+    private class BorrowArrayAdapter extends ArrayAdapter<T>
     {
         private Context context;
-        private ArrayList<BorrowObject> values;
+        private ArrayList<T> values;
 
-        public BorrowArrayAdapter(Context context, ArrayList<BorrowObject> values)
+        public BorrowArrayAdapter(Context context, ArrayList<T> values)
         {
             super(context, R.layout.rowlayout, values);
             this.context = context;
@@ -73,7 +69,7 @@ public class BorrowListFragment extends ListFragment
             Log.d("Sagev", "Adapter initialized");
         }
 
-        public void updateList(ArrayList<BorrowObject> values)
+        public void updateList(ArrayList<T> values)
         {
             this.values = values;
             notifyDataSetChanged();
@@ -92,6 +88,7 @@ public class BorrowListFragment extends ListFragment
 
             textView.setText(values.get(position).toString());
             String s = values.get(position).toString();
+
             imageView.setImageBitmap(values.get(position).getPic());
 
             return rowView;

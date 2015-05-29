@@ -13,4 +13,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_recieved_message">RecievedMessageActivity</string>
     <string name="title_activity_sent_message">SentMessageActivity</string>
+    <string name="title_activity_borrow_message_view">BorrowMessageViewActivity</string>
 </resources>

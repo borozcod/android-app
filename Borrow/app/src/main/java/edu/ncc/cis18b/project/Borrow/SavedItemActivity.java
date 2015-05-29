@@ -73,25 +73,21 @@ public class SavedItemActivity extends ActionBarActivity
         if (databaseInitialized)
             return;
 
-        String uid = ParseUser.getCurrentUser().getString("desiredUserCase") + "Object";
-
         Log.d("Sagev", "queryLocalDatabase() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery(uid);
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowItem");
 
         q.fromLocalDatastore();
-        q.whereExists("name");
+        q.whereExists(BorrowItem.KEY_NAME);
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
                 savedObjectList = new ArrayList<BorrowObject>();
                 for (ParseObject p : list) {
-                    BorrowObject bo = new BorrowObject();
-                    bo.fromParseObject(p);
-                    bo.markSaved();
-                    savedObjectList.add(bo);
-                    Log.d("Sagev", bo.toString());
+                    //(BorrowItem)p).markSaved(); TODO: add method of marking object as saved
+                    savedObjectList.add((BorrowItem)p);
+                    Log.d("Sagev", ((BorrowItem) p).toString());
                 }
                 listFragment.loadList(savedObjectList); // loads items into list
             } // end done()

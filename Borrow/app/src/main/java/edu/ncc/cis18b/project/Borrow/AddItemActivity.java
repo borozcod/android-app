@@ -33,7 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class AddItemActivity extends ActionBarActivity
+public class AddItemActivity extends ActionBarActivity // TODO: clean this class
 {
     private ImageButton buttonUploadPicture;
     private ImageButton buttonCancel;
@@ -47,7 +47,7 @@ public class AddItemActivity extends ActionBarActivity
     private Bitmap picThumb;
     private Intent i;
     private String uid; //picture name
-    private BorrowObject bo;
+    private BorrowItem borrowItem;
 
     // these appear to be the maximum dimensions you can save without issues
     private final int WIDTH = 320;
@@ -60,8 +60,6 @@ public class AddItemActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         initializeActivity();
-        addFonts();
-
     }
 
     private void initializeActivity()
@@ -74,6 +72,8 @@ public class AddItemActivity extends ActionBarActivity
         initializeActionBar();
 
         initializeWidgets();
+
+        addFonts();
     }
 
     private void initializeActionBar()
@@ -121,43 +121,43 @@ public class AddItemActivity extends ActionBarActivity
         });
     }
 
-    private void addItem()
+    private void addItem() // TODO: clean this method
     {
         if (readUserInput()) {
             toast(errMsg.toString());
         } else if (!isConnected()) {
             noConnectionAlert();
         } else {
-            getItem();
-            bo.save();
-            HomeActivity.borrowObjects.add(bo); // TODO: temporary, replace later
+            getItem(); // TODO: Clean/remove this method?
+            borrowItem.saveInBackground(); // TODO: Replace with saveEventually()?
+            //HomeActivity.borrowObjects.add(borrowItem); // TODO: temporary, replace later!!!
             toHomeActivity();
         }
     }
 
     private boolean readUserInput()
     {
-        errMsg = new StringBuilder("Issue(s) with item\n");
+        errMsg = new StringBuilder("Issue(s) with item:");
         boolean err = false;
         editTextName = (EditText)findViewById(R.id.addItemEditTextName);
         editTextDesc = (EditText)findViewById(R.id.addItemEditTextDesc);
         editTextPrice = (EditText)findViewById(R.id.addItemEditTextPrice);
 
         if (editTextName.length() == 0){
-            errMsg.append("Item must have a name\n");
+            errMsg.append("\nItem must have a name");
             err = true;
         }
         if (editTextDesc.length() == 0){
-            errMsg.append("Item must have a description\n");
+            errMsg.append("\nItem must have a description");
             err = true;
         }
         if (editTextPrice.length() == 0){
-            errMsg.append("Item must have a price\n");
+            errMsg.append("\nItem must have a price");
             err = true;
         }
         if (picThumb == null)
         {
-            errMsg.append("Item must have a picture\n");
+            errMsg.append("\nItem must have a picture");
             err = true;
         }
 
@@ -167,18 +167,18 @@ public class AddItemActivity extends ActionBarActivity
     private void getItem()
     {
         Log.d("Sagev", "create obj");
-        bo = new BorrowObject();
+        borrowItem = new BorrowItem();
 
         Log.d("Sagev", "set name");
-        bo.setName(editTextName.getText().toString());
+        borrowItem.setName(editTextName.getText().toString());
         Log.d("Sagev", "set desc");
-        bo.setDesc(editTextDesc.getText().toString());
+        borrowItem.setDesc(editTextDesc.getText().toString());
         Log.d("Sagev", "set price");
-        bo.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
+        borrowItem.setPrice(Double.parseDouble(editTextPrice.getText().toString()));
         Log.d("Sagev", "set user");
-        bo.setUser(ParseUser.getCurrentUser().getString("desiredUserCase"));
+        borrowItem.setUser(ParseUser.getCurrentUser());
         Log.d("Sagev", "set pic");
-        bo.setPic(picThumb);
+        borrowItem.setPic(picThumb);
     }
 
     private void toHomeActivity()
@@ -299,7 +299,8 @@ public class AddItemActivity extends ActionBarActivity
         }
     }
 
-    private void addFonts(){
+    private void addFonts() // TODO: Clean this method
+    {
         TextView tv12=(TextView)findViewById(R.id.textView12);
         Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
         tv12.setTypeface(face12);

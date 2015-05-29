@@ -1,5 +1,6 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -10,6 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ComposeMessageActivity extends ActionBarActivity {
@@ -23,6 +34,10 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private EditText editTextSubject;
     private EditText editTextMessage;
     private Intent i;
+    private String message;
+    private String subject;
+    private String recipient;
+    private StringBuilder errMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,11 +155,92 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private void cancel()
     {
         Log.d("Sagev", "Cancel");
+        finish();
     }
 
     private void send()
     {
         Log.d("Sagev", "Send");
+
+        getValuesFromTextFields();
+
+        if (!userInputIsValid()) {
+            toast(errMsg.toString());
+            return;
+        }
+
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Querying database");
+        dialog.show();
+
+        ParseQuery<ParseUser> q = ParseUser.getQuery();
+
+        q.whereEqualTo("username", recipient.toLowerCase());
+
+        q.findInBackground(new FindCallback<ParseUser>() {
+            @Override
+            public void done(List<ParseUser> list, ParseException pe) {
+                dialog.dismiss();
+                if (list.isEmpty())
+                    toast("Recipient does not exist");
+                else
+                    sendMessage(list.get(0));
+            } // end done()
+        }); // end FindCallBack<ParseObject>
+
+    }
+
+    private void sendMessage(ParseUser recipient)
+    {
+        toast("Sent message to " + this.recipient);
+
+        BorrowMessage message = new BorrowMessage();
+
+        message.setMessage(this.message);
+        message.setSender(ParseUser.getCurrentUser());
+        message.setRecipient(recipient);
+        message.setSubject(subject);
+        try {
+            message.setPic(recipient.getParseFile(BorrowObject.KEY_PIC).getData());
+        } catch (ParseException pe) {
+            Log.d("Sagev", pe.getMessage());
+        }
+        
+        message.saveInBackground();
+    }
+
+    private boolean userInputIsValid()
+    {
+        errMsg = new StringBuilder();
+        errMsg.append("Please correct the following errors:");
+        boolean isValid = true;
+
+        if (recipient.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo recipient entered");
+        }
+        if (subject.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo subject entered");
+        }
+        if (message.length() == 0) {
+            isValid = false;
+            errMsg.append("\nNo message entered");
+        }
+
+        return isValid;
+    }
+
+    private void getValuesFromTextFields()
+    {
+        message = editTextMessage.getText().toString();
+        subject = editTextSubject.getText().toString();
+        recipient = editTextRecipient.getText().toString();
+    }
+
+    private void toast(String msg)
+    {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
     @Override

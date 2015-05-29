@@ -76,6 +76,10 @@
             android:name=".SentMessageActivity"
             android:label="@string/title_activity_sent_message" >
         </activity>
+        <activity
+            android:name=".BorrowMessageViewActivity"
+            android:label="@string/title_activity_borrow_message_view" >
+        </activity>
     </application>
 
 </manifest>

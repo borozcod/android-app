@@ -29,7 +29,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private ImageView viewPic;
     private Button buttonContact;
     private Button buttonSave;
-    protected static BorrowObject bo;
+    protected static BorrowObject borrowItem;
     private Intent i;
     private final int WIDTH = 224;
     private final int HEIGHT = 126;
@@ -53,7 +53,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private void initializeActionBar()
     {
         // set title
-        setTitle("Borrow :: Item#" + bo.getName());
+        setTitle("Borrow :: Item#" + ((BorrowItem) borrowItem).getName());
 
         // TODO: set icon
         //getActionBar().setIcon(R.drawable.PICTURE_NAME);
@@ -63,10 +63,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void initializeWidgets()
+    private void initializeWidgets() // TODO: seperate this
     {
-        DecimalFormat df = new DecimalFormat("$,###.00");
-        String formattedPrice = df.format(bo.getPrice());
+        DecimalFormat df = new DecimalFormat("$,###.00"); // TODO: fix this?
+        String formattedPrice = df.format(((BorrowItem)borrowItem).getPrice());
 
         viewName = (TextView)findViewById(R.id.viewNameText);
         viewDesc = (TextView)findViewById(R.id.viewDescText);
@@ -74,11 +74,11 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         viewUser = (TextView)findViewById(R.id.viewUserText);
         viewPic = (ImageView)findViewById(R.id.viewPicImage);
 
-        viewName.setText(bo.getName());
-        viewDesc.setText(bo.getDesc());
+        viewName.setText(((BorrowItem)borrowItem).getName());
+        viewDesc.setText(((BorrowItem)borrowItem).getDesc());
         viewPrice.setText(formattedPrice);
-        viewUser.setText(bo.getUser());
-        viewPic.setImageBitmap(bo.getPic(WIDTH, HEIGHT));
+        viewUser.setText(((BorrowItem)borrowItem).getUser());
+        viewPic.setImageBitmap(borrowItem.getPic(WIDTH, HEIGHT)); // TODO: replace this?
 
         initializeSaveButton();
         initializeDeleteButton();
@@ -88,7 +88,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
 
-        if (bo.isSaved()) {
+        if (/*borrowItem.isSaved()*/1 == 2) { // TODO: FIX THIS!!!!!
             buttonSave.setText("Unsave item");
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
@@ -111,7 +111,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
 
-        if (bo.getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
+        if (((BorrowItem)borrowItem).getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
             buttonContact.setText("Delete item");
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
@@ -131,8 +131,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void deleteObject()
     {
-        bo.delete();
-        HomeActivity.borrowObjects.remove(bo);
+        borrowItem.deleteInBackground(); // TODO: replace with deleteEventually()?
+        HomeActivity.borrowObjects.remove(borrowItem); // TODO: fix this!
         finish();
     }
 
@@ -146,14 +146,12 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         finish();
     }
 
+    // saves to local database
     private void saveObject()
     {
-        String uid = ParseUser.getCurrentUser().getString("desiredUserCase") + "Object";
-        ParseObject po = bo.toParseObject(uid);
+        borrowItem.pinInBackground();
 
-        po.pinInBackground();
-
-        bo.markSaved();
+        // borrowItem.markSaved(); TODO: some method of marking an object saved?
 
         initializeSaveButton();
         toast("Item saved!");
@@ -161,12 +159,12 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void unsaveObject()
     {
-        bo.toParseObject().unpinInBackground();
-        bo.markUnsaved();
+        borrowItem.unpinInBackground();
+        //borrowItem.markUnsaved(); TODO: some method of unmarking an object saved?
 
-        if (SavedItemActivity.savedObjectList != null)
-            if (SavedItemActivity.savedObjectList.contains(bo))
-                SavedItemActivity.savedObjectList.remove(bo);
+        if (SavedItemActivity.savedObjectList != null) // TODO: fix whatever this is
+            if (SavedItemActivity.savedObjectList.contains(borrowItem))
+                SavedItemActivity.savedObjectList.remove(borrowItem);
 
         initializeSaveButton();
     }

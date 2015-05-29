@@ -7,6 +7,9 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -22,8 +25,11 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
+
+import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -219,10 +225,24 @@ public class SignUpDialog extends DialogFragment
                     toast(pe.getMessage());
                 } else {
                     closeDialog = true;
+                    setDefaultProfilePicture();
                     listener.signUpSuccess(SignUpDialog.this);
                 }
             }
         });
+    }
+
+    private void setDefaultProfilePicture() // TODO: Temporary - replace!
+    {
+        Drawable d = getResources().getDrawable(R.drawable.camera);
+        Bitmap b = ((BitmapDrawable)d).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        b.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] data = stream.toByteArray();
+
+        ParseFile pf = new ParseFile("pic", data);
+        ParseUser.getCurrentUser().put("pic", pf);
+        ParseUser.getCurrentUser().saveInBackground();
     }
 
     private void toast(String msg)

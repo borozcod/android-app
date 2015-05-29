@@ -27,9 +27,9 @@ import java.util.List;
 public class HomeActivity extends ActionBarActivity
 {
     private ImageButton buttonAddItem;
-    private BorrowListFragment listFragment;
+    private BorrowListFragment<BorrowItem> listFragment;
     private static Intent i;
-    protected static ArrayList<BorrowObject> borrowObjects;
+    protected static ArrayList<BorrowItem> borrowObjects;
     // TODO: replace static array with method getter/setter
     private boolean databaseInitialized = false;
     private boolean firstCreate = true;
@@ -120,19 +120,17 @@ public class HomeActivity extends ActionBarActivity
 
         Log.d("Sagev", "queryParse() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowObject");
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowItem");
 
-        q.whereExists("name");
+        q.whereExists(BorrowItem.KEY_NAME);
 
         q.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
-                borrowObjects = new ArrayList<BorrowObject>();
+                borrowObjects = new ArrayList<BorrowItem>();
                 for (ParseObject p : list) {
-                    BorrowObject bo = new BorrowObject();
-                    bo.fromParseObject(p);
-                    borrowObjects.add(bo);
-                    Log.d("Sagev", bo.toString());
+                    borrowObjects.add((BorrowItem)p);
+                    Log.d("Sagev", p.toString());
                 }
                 listFragment.loadList(borrowObjects); // loads items into list
             } // end done()
