@@ -29,8 +29,6 @@ public class ReceivedMessageActivity extends ActionBarActivity {
     private Button buttonToReceived;
     private Intent i;
     private BorrowListFragment<BorrowMessage> listFragment;
-    private boolean databaseInitialized = false;
-    private ArrayList<BorrowMessage> borrowMessages;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,28 +105,7 @@ public class ReceivedMessageActivity extends ActionBarActivity {
 
     private void queryParse() // TODO: replace, improve -- do something with this method
     {
-        if (databaseInitialized)
-            return;
-
-        Log.d("Sagev", "queryParse() start");
-
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowMessage");
-
-        q.whereEqualTo(BorrowMessage.KEY_RECIPIENT, ParseUser.getCurrentUser());
-
-        q.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                borrowMessages = new ArrayList<BorrowMessage>();
-                for (ParseObject p : list) {
-                    borrowMessages.add((BorrowMessage)p);
-                    Log.d("Sagev", p.toString());
-                }
-                listFragment.loadList(borrowMessages); // loads items into list
-            } // end done()
-        }); // end FindCallBack<ParseObject>
-
-        databaseInitialized = true;
+        BorrowQueryManager.queryBorrowMessageUserReceived(listFragment);
     }
 
     private void toComposeActivity()

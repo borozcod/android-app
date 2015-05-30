@@ -132,7 +132,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private void deleteObject()
     {
         borrowItem.deleteInBackground(); // TODO: replace with deleteEventually()?
-        HomeActivity.borrowObjects.remove(borrowItem); // TODO: fix this!
+        //HomeActivity.borrowObjects.remove(borrowItem); // TODO: fix this!
         finish();
     }
 
@@ -161,10 +161,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         borrowItem.unpinInBackground();
         //borrowItem.markUnsaved(); TODO: some method of unmarking an object saved?
-
-        if (SavedItemActivity.savedObjectList != null) // TODO: fix whatever this is
-            if (SavedItemActivity.savedObjectList.contains(borrowItem))
-                SavedItemActivity.savedObjectList.remove(borrowItem);
 
         initializeSaveButton();
     }

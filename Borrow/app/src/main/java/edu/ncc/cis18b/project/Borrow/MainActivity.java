@@ -121,6 +121,7 @@ public class MainActivity extends ActionBarActivity
             // connects to Parse database: borrowappandroid@gmail.com
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, "xEVrr9KpRW07GEYHlph9pkrRAdeAXFg5xZllfaN8", "OTu2sE7Dr72YZQazWAVkPPVN9cDuC1kBSB23Nfau");
+            BorrowQueryManager.queryLocalDatabaseAll(); //TODO: find alternative method of saving/unsaving objects
             initializeParse = false;
         }
     }

@@ -29,9 +29,6 @@ public class HomeActivity extends ActionBarActivity
     private ImageButton buttonAddItem;
     private BorrowListFragment<BorrowItem> listFragment;
     private static Intent i;
-    protected static ArrayList<BorrowItem> borrowObjects;
-    // TODO: replace static array with method getter/setter
-    private boolean databaseInitialized = false;
     private boolean firstCreate = true;
 
 
@@ -115,28 +112,7 @@ public class HomeActivity extends ActionBarActivity
 
     private void queryParse() // TODO: replace, improve -- do something with this method
     {
-        if (databaseInitialized)
-            return;
-
-        Log.d("Sagev", "queryParse() start");
-
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowItem");
-
-        q.whereExists(BorrowItem.KEY_NAME);
-
-        q.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                borrowObjects = new ArrayList<BorrowItem>();
-                for (ParseObject p : list) {
-                    borrowObjects.add((BorrowItem)p);
-                    Log.d("Sagev", p.toString());
-                }
-                listFragment.loadList(borrowObjects); // loads items into list
-            } // end done()
-        }); // end FindCallBack<ParseObject>
-
-        databaseInitialized = true;
+        BorrowQueryManager.queryBorrowItemAll(listFragment);
     }
 
     private boolean isConnected() // checks internet connection
@@ -156,13 +132,7 @@ public class HomeActivity extends ActionBarActivity
     {
         super.onResume();
 
-        if (firstCreate) {
-            initializeActivity();
-            firstCreate = false;
-        }
-
-        if (borrowObjects != null && listFragment != null)
-            listFragment.loadList(borrowObjects);
+        initializeActivity();
     }
 
     // menu stuff
