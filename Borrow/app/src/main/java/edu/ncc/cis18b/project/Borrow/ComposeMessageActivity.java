@@ -38,6 +38,7 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private String subject;
     private String recipient;
     private StringBuilder errMsg;
+    protected static String requestedRecipient = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +76,11 @@ public class ComposeMessageActivity extends ActionBarActivity {
         InputFilter[] userFilter = {borrowFilter};
 
         editTextMessage = (EditText)findViewById(R.id.composeEditTextMessage);
-        editTextRecipient = (EditText)findViewById(R.id.composeEditTextTo);
         editTextSubject = (EditText)findViewById(R.id.composeEditTextSubject);
+        editTextRecipient = (EditText)findViewById(R.id.composeEditTextTo);
+
+        if (requestedRecipient != null)
+            editTextRecipient.setText(requestedRecipient);
 
         editTextRecipient.setFilters(userFilter);
     }
@@ -173,6 +177,7 @@ public class ComposeMessageActivity extends ActionBarActivity {
         dialog.setMessage("Querying database");
         dialog.show();
 
+        // TODO: Add following to BorrowQueryManager
         ParseQuery<ParseUser> q = ParseUser.getQuery();
 
         q.whereEqualTo("username", recipient.toLowerCase());
@@ -187,7 +192,6 @@ public class ComposeMessageActivity extends ActionBarActivity {
                     sendMessage(list.get(0));
             } // end done()
         }); // end FindCallBack<ParseObject>
-
     }
 
     private void sendMessage(ParseUser recipient)
@@ -241,6 +245,14 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private void toast(String msg)
     {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        super.onDestroy();
+
+        requestedRecipient = null;
     }
 
     @Override

@@ -130,7 +130,7 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         } else {
             getItem(); // TODO: Clean/remove this method?
             borrowItem.saveInBackground(); // TODO: Replace with saveEventually()?
-            //HomeActivity.borrowObjects.add(borrowItem); // TODO: temporary, replace later!!!
+            toast("May take a moment to appear");
             toHomeActivity();
         }
     }

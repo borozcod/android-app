@@ -88,7 +88,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
 
-        if (/*borrowItem.isSaved()*/1 == 2) { // TODO: FIX THIS!!!!!
+        if (SavedItemActivity.savedItemList.contains(borrowItem)) { // TODO: FIX THIS!!!!!
             buttonSave.setText("Unsave item");
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
@@ -123,7 +123,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    toast("Placeholder: Contact owner");
+                    toComposeMessageActivity();
                 }
             });
         }
@@ -131,8 +131,12 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void deleteObject()
     {
+        if (SavedItemActivity.savedItemList.contains(borrowItem))
+            SavedItemActivity.savedItemList.remove(borrowItem);
+
         borrowItem.deleteInBackground(); // TODO: replace with deleteEventually()?
-        //HomeActivity.borrowObjects.remove(borrowItem); // TODO: fix this!
+
+        toast("Item may take a few moments to be deleted");
         finish();
     }
 
@@ -151,18 +155,24 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     {
         borrowItem.pinInBackground();
 
-        // borrowItem.markSaved(); TODO: some method of marking an object saved?
+        SavedItemActivity.savedItemList.add((BorrowItem)borrowItem);
 
         initializeSaveButton();
-        toast("Item saved!");
     }
 
     private void unsaveObject()
     {
         borrowItem.unpinInBackground();
-        //borrowItem.markUnsaved(); TODO: some method of unmarking an object saved?
+        SavedItemActivity.savedItemList.remove(borrowItem);
 
         initializeSaveButton();
+    }
+
+    private void toComposeMessageActivity()
+    {
+        ComposeMessageActivity.requestedRecipient = ((BorrowItem)borrowItem).getUser();
+        i = new Intent(getApplicationContext(), ComposeMessageActivity.class);
+        startActivity(i);
     }
 
     //menu stuff
