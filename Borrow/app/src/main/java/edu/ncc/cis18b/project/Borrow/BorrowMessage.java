@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.ParseClassName;
 
@@ -46,8 +48,16 @@ public class BorrowMessage extends BorrowObject
     @Override
     public String toString()
     {
+        String sender;
+
+        try {
+            sender = getSender().fetchIfNeeded().getString(BorrowObject.KEY_DISPLAY_NAME);
+        } catch (ParseException pe) {
+            sender = "null";
+        }
+
         return ( "Subject:\t" + getSubject() + "\n"
-                + "Sender:\t" + getSender().getString(BorrowObject.KEY_DISPLAY_NAME) + "\n"
+                + "Sender:\t" + sender + "\n"
                 + this.getCreatedAt() );
     }
 }
