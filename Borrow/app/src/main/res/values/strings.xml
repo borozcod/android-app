@@ -9,6 +9,7 @@
     <string name="app_id">789276177837613</string>
     <string name="title_activity_saved_item">SavedItemActivity</string>
     <string name="title_activity_compose_message">ComposeMessageActivity</string>
+    <string name="title_name_activity_profile">ProfileActivity</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_recieved_message">RecievedMessageActivity</string>

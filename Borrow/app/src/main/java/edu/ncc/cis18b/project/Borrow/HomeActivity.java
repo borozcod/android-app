@@ -88,6 +88,13 @@ public class HomeActivity extends ActionBarActivity
         startActivity(i);
     }
 
+
+    private void toProfileActivity() {
+
+        i = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(i);
+    }
+
     private void toWelcomeActivity() {
         finish();
     }
@@ -169,6 +176,7 @@ public class HomeActivity extends ActionBarActivity
             }
             case R.id.action_profile : {
                 Log.d("Sagev", "Profile");
+                toProfileActivity();
                 return true;
             }
             case R.id.action_saved_objects_list : {

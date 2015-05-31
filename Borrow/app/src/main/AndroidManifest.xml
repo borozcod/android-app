@@ -65,6 +65,10 @@
             android:label="@string/title_activity_saved_item" >
         </activity>
         <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_name_activity_profile" >
+        </activity>
+        <activity
             android:name=".ComposeMessageActivity"
             android:label="@string/title_activity_compose_message" >
         </activity>
