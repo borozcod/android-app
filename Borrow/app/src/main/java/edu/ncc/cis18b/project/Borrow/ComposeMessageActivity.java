@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -28,8 +29,8 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private Button buttonToCompose;
     private Button buttonToSent;
     private Button buttonToReceived;
-    private Button buttonCancel;
-    private Button buttonSend;
+    private ImageButton buttonCancel;
+    private ImageButton buttonSend;
     private EditText editTextRecipient;
     private EditText editTextSubject;
     private EditText editTextMessage;
@@ -90,8 +91,8 @@ public class ComposeMessageActivity extends ActionBarActivity {
         buttonToReceived = (Button)findViewById(R.id.composeButtonReceived);
         buttonToSent = (Button)findViewById(R.id.composeButtonSent);
         buttonToCompose = (Button)findViewById(R.id.composeButtonCompose);
-        buttonCancel = (Button)findViewById(R.id.composeButtonCancel);
-        buttonSend = (Button)findViewById(R.id.composeButtonSend);
+        buttonCancel = (ImageButton)findViewById(R.id.composeButtonCancel);
+        buttonSend = (ImageButton)findViewById(R.id.composeButtonSend);
 
         buttonToCompose.setOnClickListener(new View.OnClickListener() {
             @Override

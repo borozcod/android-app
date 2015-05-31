@@ -1,9 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
-import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,11 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.ParseException;
-
 import java.util.ArrayList;
 
-public class BorrowListFragment<T extends BorrowObject> extends ListFragment //TODO: template ListFragment?
+public class BorrowListFragmentMessages<T extends BorrowObject> extends ListFragment //TODO: template ListFragment?
 {
     private BorrowArrayAdapter adapter;
 
@@ -64,7 +60,7 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
 
         public BorrowArrayAdapter(Context context, ArrayList<T> values)
         {
-            super(context, R.layout.rowlayout, values);
+            super(context, R.layout.messages_rowlayout, values);
             this.context = context;
             this.values = values;
             Log.d("Sagev", "Adapter initialized");
@@ -82,7 +78,7 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
-            View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+            View rowView = inflater.inflate(R.layout.messages_rowlayout, parent, false);
 
             TextView textView = (TextView) rowView.findViewById(R.id.label);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);

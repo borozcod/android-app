@@ -2,24 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="#24B2DA">
+    android:background="#24B2DA"
+    android:paddingBottom="10dp">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="200px"
-        android:layout_height="200px"
-        android:layout_marginLeft="4px"
-        android:layout_marginRight="10px"
-        android:layout_marginTop="4px"
-        android:src="@drawable/camera" >
-    </ImageView>
-
-    <TextView
-        android:id="@+id/label"
+    <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@+id/label"
-        android:textSize="50px" >
-    </TextView>
+        android:layout_height="266dp">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="514dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="4px"
+            android:layout_marginRight="10px"
+            android:layout_marginTop="4px"
+            android:src="@drawable/camera"
+            android:layout_gravity="center_horizontal|bottom">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/label"
+            android:layout_width="fill_parent"
+            android:layout_height="110dp"
+            android:text="@+id/label"
+            android:textSize="50px"
+            android:layout_gravity="center_horizontal|bottom"
+            android:background="#000"
+            android:textColor="#ffffff"
+            android:layout_marginTop="20dp"
+            android:alpha=".70">
+        </TextView>
+    </FrameLayout>
+
+
 
 </LinearLayout>

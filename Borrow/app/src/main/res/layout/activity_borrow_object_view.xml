@@ -16,6 +16,32 @@
         android:weightSum="1">
 
         <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="169dp"
+            android:id="@+id/picCont">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Picture"
+                android:id="@+id/textView17" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewPicImage"
+                android:layout_below="@+id/textView16"
+                android:layout_alignParentStart="true"
+                android:minHeight="126dp"
+                android:nestedScrollingEnabled="false"
+                android:minWidth="224dp"
+                android:src="@drawable/camera"
+                android:paddingLeft="100dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -90,29 +116,29 @@
                 android:layout_toEndOf="@+id/textView14" />
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="169dp"
-            android:id="@+id/picCont">
+        <!--<LinearLayout-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="169dp"-->
+            <!--android:id="@+id/picCont">-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Picture"
-                android:id="@+id/textView17" />
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textAppearance="?android:attr/textAppearanceLarge"-->
+                <!--android:text="Picture"-->
+                <!--android:id="@+id/textView17" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/viewPicImage"
-                android:layout_below="@+id/textView16"
-                android:layout_alignParentStart="true"
-                android:minHeight="126dp"
-                android:nestedScrollingEnabled="false"
-                android:minWidth="224dp" />
-        </LinearLayout>
+            <!--<ImageView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:id="@+id/viewPicImage"-->
+                <!--android:layout_below="@+id/textView16"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:minHeight="126dp"-->
+                <!--android:nestedScrollingEnabled="false"-->
+                <!--android:minWidth="224dp" />-->
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:orientation="horizontal"
@@ -149,21 +175,37 @@
             android:layout_weight="0.15"
             android:id="@+id/buttonLayout">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contact owner"
-                android:id="@+id/viewButtonContactOwner"
-                android:maxWidth="50dp"
-                android:layout_weight=".5" />
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Contact owner"-->
+                <!--android:id="@+id/viewButtonContactOwner"-->
+                <!--android:maxWidth="50dp"-->
+                <!--android:layout_weight=".5" />-->
 
-            <Button
+            <ImageButton
+                android:layout_width="124dp"
+                android:layout_height="82dp"
+                android:id="@+id/viewButtonContactOwner"
+                android:src="@drawable/messages_button"
+                android:background="@android:color/transparent"
+                android:layout_weight="0.29" />
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Save item"-->
+                <!--android:id="@+id/viewButtonSaveItem"-->
+                <!--android:maxWidth="50dp"-->
+                <!--android:layout_weight=".5" />-->
+
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save item"
                 android:id="@+id/viewButtonSaveItem"
-                android:maxWidth="50dp"
-                android:layout_weight=".5" />
+                android:layout_weight="0.29"
+                android:src="@drawable/save_button"
+                android:background="@android:color/transparent"/>
         </LinearLayout>
 
     </LinearLayout>

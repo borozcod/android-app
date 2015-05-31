@@ -106,13 +106,13 @@
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/composeEditTextMessage"
-            android:layout_weight="1.02"
+            android:layout_weight="0.46"
             android:nestedScrollingEnabled="true"
 
-            android:hint="(Compose)"
             android:textColorHint="#aaaaaa"
             android:textColor="#000000"
-            android:background="#ffffff" />
+            android:background="#ffffff"
+            android:alpha=".70" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -120,18 +120,36 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send"
-                android:id="@+id/composeButtonSend" />
+                android:id="@+id/composeButtonSend"
+                android:layout_gravity="right"
+                android:src="@drawable/send_button"
+                android:background="@android:color/transparent"/>
 
-            <Button
+            <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
-                android:id="@+id/composeButtonCancel" />
+                android:id="@+id/composeButtonCancel"
+                android:src="@drawable/cancel_button"
+                android:background="@android:color/transparent"
+                android:layout_marginLeft="150dp" />
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Send"-->
+                <!--android:id="@+id/composeButtonSend" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Cancel"-->
+                <!--android:id="@+id/composeButtonCancel"-->
+                <!--android:/>-->
         </LinearLayout>
+
+
 
     </LinearLayout>
 </RelativeLayout>

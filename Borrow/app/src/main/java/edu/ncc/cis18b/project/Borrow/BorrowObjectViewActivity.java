@@ -1,6 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,8 +29,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private TextView viewPrice;
     private TextView viewUser;
     private ImageView viewPic;
-    private Button buttonContact;
-    private Button buttonSave;
+    private ImageButton buttonContact;
+    private ImageButton buttonSave;
     protected static BorrowObject borrowItem;
     private Intent i;
     private final int WIDTH = 224;
@@ -48,6 +50,8 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         initializeActionBar();
 
         initializeWidgets();
+
+        addFonts();
     }
 
     private void initializeActionBar()
@@ -86,10 +90,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void initializeSaveButton()
     {
-        buttonSave = (Button)findViewById(R.id.viewButtonSaveItem);
+        buttonSave = (ImageButton)findViewById(R.id.viewButtonSaveItem);
 
         if (SavedItemActivity.savedItemList.contains(borrowItem)) { // TODO: FIX THIS!!!!!
-            buttonSave.setText("Unsave item");
+            //buttonSave.setText("Unsave item");
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,7 +101,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
                 }
             });
         } else {
-            buttonSave.setText("Save item");
+           // buttonSave.setText("Save item");
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,10 +113,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
 
     private void initializeDeleteButton()
     {
-        buttonContact = (Button)findViewById(R.id.viewButtonContactOwner);
+        buttonContact = (ImageButton)findViewById(R.id.viewButtonContactOwner);
 
         if (((BorrowItem)borrowItem).getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
-            buttonContact.setText("Delete item");
+          //  buttonContact.setText("Delete item");
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -212,5 +216,27 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void addFonts() // TODO: Clean this method
+    {
+        TextView tv12=(TextView)findViewById(R.id.textView14);
+        Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv12.setTypeface(face12);
+
+        TextView tv=(TextView)findViewById(R.id.textView15);
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv.setTypeface(face);
+
+        TextView tv11=(TextView)findViewById(R.id.textView16);
+        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv11.setTypeface(face11);
+
+        TextView tv10=(TextView)findViewById(R.id.textView17);
+        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv10.setTypeface(face10);
+
+        TextView tv9=(TextView)findViewById(R.id.textView13);
+        Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv9.setTypeface(face9);
     }
 }

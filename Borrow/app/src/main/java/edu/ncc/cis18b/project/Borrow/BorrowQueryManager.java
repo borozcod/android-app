@@ -94,7 +94,7 @@ public class BorrowQueryManager
         });
     }
 
-    public static void queryBorrowMessageUserReceived(final BorrowListFragment listFragment) // TODO: replace, improve -- do something with this method
+    public static void queryBorrowMessageUserReceived(final BorrowListFragmentMessages<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
     {
         Log.d("Sagev", "queryBorrowMessageUserReceived(BorrowListFragment) start");
 
@@ -118,7 +118,7 @@ public class BorrowQueryManager
         });
     }
 
-    public static void queryBorrowMessageUserSent(final BorrowListFragment listFragment) // TODO: replace, improve -- do something with this method
+    public static void queryBorrowMessageUserSent(final BorrowListFragmentMessages<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
     {
         Log.d("Sagev", "queryBorrowMessageUserSent(BorrowListFragment) start");
 

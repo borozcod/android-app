@@ -7,21 +7,32 @@
     tools:context="edu.ncc.cis18b.project.Borrow.HomeActivity"
     android:background="#24B2DA">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/homeButtonAddItem"
-        android:src="@drawable/pluss_button"
-        android:background="@android:color/transparent"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/homeFragmentList"
-        android:layout_above="@+id/homeButtonAddItem"></FrameLayout>
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/homeFragmentList">
+
+        </FrameLayout>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/homeButtonAddItem"
+            android:src="@drawable/pluss_button"
+            android:background="@android:color/transparent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal|bottom"
+            android:paddingLeft="250dp" />
+
+    </FrameLayout>
+
+
 
 </RelativeLayout>

@@ -302,23 +302,23 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
     private void addFonts() // TODO: Clean this method
     {
         TextView tv12=(TextView)findViewById(R.id.textView12);
-        Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv12.setTypeface(face12);
 
         TextView tv=(TextView)findViewById(R.id.textView);
-        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv.setTypeface(face);
 
         TextView tv11=(TextView)findViewById(R.id.textView11);
-        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv11.setTypeface(face11);
 
         TextView tv10=(TextView)findViewById(R.id.textView10);
-        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv10.setTypeface(face10);
 
         TextView tv9=(TextView)findViewById(R.id.textView9);
-        Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Philadelphian-Gothic.ttf");
+        Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv9.setTypeface(face9);
     }
 }
