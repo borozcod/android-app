@@ -20,6 +20,7 @@ public abstract class BorrowObject extends ParseObject
     public final static String KEY_DISPLAY_NAME = "desiredUserCase";
 
     public abstract void viewObject(Context context);
+    public abstract int getArrayAdapterStyle();
 
     public void setPic(Bitmap pic)
     {
