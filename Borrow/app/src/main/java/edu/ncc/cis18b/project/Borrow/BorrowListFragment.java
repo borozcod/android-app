@@ -84,9 +84,9 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             Log.d("Sagev", "Adapter initialized");
         }
 
-        public void updateList(ArrayList<T> values)
+        public void updateList(ArrayList<T> objects)
         {
-            this.objects = values;
+            this.objects = objects;
             notifyDataSetChanged();
         }
 
