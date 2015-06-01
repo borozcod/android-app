@@ -45,34 +45,48 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 
-    protected void loadList(ArrayList<T> list)
+    protected void loadList(ArrayList<T> list, Class<T> listParameterType)
     {
-        if (adapter == null) {
-            adapter = new BorrowArrayAdapter(getActivity(), list);
-            setListAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        } else {
-            adapter.updateList(list);
+        try {
+            if (adapter == null) {
+                adapter = new BorrowArrayAdapter(getActivity(),
+                        getNewInstanceOfType(listParameterType).getArrayAdapterStyle(), list);
+                setListAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            } else {
+                adapter.updateList(list);
+            }
+        } catch (IllegalAccessException iae) {
+            Log.d("Sagev", iae.getMessage());
+        } catch (java.lang.InstantiationException ie) {
+            Log.d("Sagev", ie.getMessage());
         }
+    }
+
+    private T getNewInstanceOfType(Class<T> listParameterType) throws IllegalAccessException, java.lang.InstantiationException
+    {
+        return listParameterType.newInstance();
     }
 
     // inner class
     private class BorrowArrayAdapter extends ArrayAdapter<T>
     {
         private Context context;
-        private ArrayList<T> values;
+        private ArrayList<T> objects;
+        private int layoutResourceId;
 
-        public BorrowArrayAdapter(Context context, ArrayList<T> values)
+        public BorrowArrayAdapter(Context context, int layoutResourceId, ArrayList<T> objects)
         {
-            super(context, R.layout.rowlayout, values);
+            super(context, layoutResourceId, objects);
             this.context = context;
-            this.values = values;
+            this.objects = objects;
+            this.layoutResourceId = layoutResourceId;
             Log.d("Sagev", "Adapter initialized");
         }
 
         public void updateList(ArrayList<T> values)
         {
-            this.values = values;
+            this.objects = values;
             notifyDataSetChanged();
         }
 
@@ -82,20 +96,18 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
-            View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+            View rowView = inflater.inflate(layoutResourceId, parent, false);
 
             TextView textView = (TextView) rowView.findViewById(R.id.label);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-            textView.setText(values.get(position).toString());
-            String s = values.get(position).toString();
+            textView.setText(objects.get(position).toString());
+            String s = objects.get(position).toString();
 
-            imageView.setImageBitmap(values.get(position).getPic());
-
+            imageView.setImageBitmap(objects.get(position).getPic());
 
             Typeface face10=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Aventura-Bold.otf");
             textView.setTypeface(face10);
-
 
             return rowView;
         }

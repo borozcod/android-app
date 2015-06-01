@@ -38,6 +38,12 @@ public class BorrowMessage extends BorrowObject
     public String getMessage(){return this.getString(KEY_MESSAGE);}
 
     @Override
+    public int getArrayAdapterStyle()
+    {
+        return R.layout.messages_rowlayout;
+    }
+
+    @Override
     public void viewObject(Context context)
     {
         BorrowMessageViewActivity.message = this; // TODO:encapsulate this

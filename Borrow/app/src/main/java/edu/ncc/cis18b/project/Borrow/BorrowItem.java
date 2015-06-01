@@ -37,6 +37,12 @@ public class BorrowItem extends BorrowObject
     public String getUser(){return this.getString(KEY_USER);}
 
     @Override
+    public int getArrayAdapterStyle()
+    {
+        return R.layout.rowlayout;
+    }
+
+    @Override
     public void viewObject(Context context)
     {
         BorrowObjectViewActivity.borrowItem = this;
@@ -53,4 +59,6 @@ public class BorrowItem extends BorrowObject
                 + "Price:\t" + getPrice() + "\n"
                 + "Owner:\t" + getUser() );
     }
+
+
 }

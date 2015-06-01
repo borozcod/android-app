@@ -65,7 +65,7 @@ public class BorrowQueryManager
                     Log.d("Sagev", (p).toString());
                 }
 
-                listFragment.loadList(savedItemList);
+                listFragment.loadList(savedItemList, BorrowItem.class);
             }
         });
     }
@@ -89,12 +89,12 @@ public class BorrowQueryManager
                     Log.d("Sagev", p.toString());
                 }
 
-                listFragment.loadList(borrowObjects);
+                listFragment.loadList(borrowObjects, BorrowItem.class);
             }
         });
     }
 
-    public static void queryBorrowMessageUserReceived(final BorrowListFragmentMessages<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
+    public static void queryBorrowMessageUserReceived(final BorrowListFragment<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
     {
         Log.d("Sagev", "queryBorrowMessageUserReceived(BorrowListFragment) start");
 
@@ -113,12 +113,12 @@ public class BorrowQueryManager
                     Log.d("Sagev", p.toString());
                 }
 
-                listFragment.loadList(borrowMessages);
+                listFragment.loadList(borrowMessages, BorrowMessage.class);
             }
         });
     }
 
-    public static void queryBorrowMessageUserSent(final BorrowListFragmentMessages<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
+    public static void queryBorrowMessageUserSent(final BorrowListFragment<BorrowMessage> listFragment) // TODO: replace, improve -- do something with this method
     {
         Log.d("Sagev", "queryBorrowMessageUserSent(BorrowListFragment) start");
 
@@ -137,7 +137,7 @@ public class BorrowQueryManager
                     Log.d("Sagev", p.toString());
                 }
 
-                listFragment.loadList(borrowMessages);
+                listFragment.loadList(borrowMessages, BorrowMessage.class);
             }
         });
     }

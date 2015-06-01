@@ -28,7 +28,7 @@ public class ReceivedMessageActivity extends ActionBarActivity {
     private Button buttonToSent;
     private Button buttonToReceived;
     private Intent i;
-    private BorrowListFragmentMessages<BorrowMessage> listFragment;
+    private BorrowListFragment<BorrowMessage> listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +95,7 @@ public class ReceivedMessageActivity extends ActionBarActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        listFragment = new BorrowListFragmentMessages<>();
+        listFragment = new BorrowListFragment<>();
         ft.add(R.id.recievedMessageContainer, listFragment);
 
         ft.commit();
