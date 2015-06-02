@@ -1,7 +1,11 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -57,6 +61,9 @@ public class ComposeMessageActivity extends ActionBarActivity {
         initializeTextFields();
 
         initializeButtons();
+
+        if (!isConnected())
+            toast("No internet connection");
     }
 
     private void initializeActionBar() {
@@ -125,7 +132,10 @@ public class ComposeMessageActivity extends ActionBarActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                send();
+                if (isConnected())
+                    send();
+                else
+                    noConnectionAlert();
             }
         });
     }
@@ -248,6 +258,28 @@ public class ComposeMessageActivity extends ActionBarActivity {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
+    // Network state checks
+    private boolean isConnected()
+    {
+        Context c = this;
+        ConnectivityManager cm;
+        cm = (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+    }
+
+    private void noConnectionAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("No internet connection");
+        builder.setTitle("Error");
+
+        builder.create().show();
+    }
+
     @Override
     public void onDestroy()
     {
@@ -266,8 +298,16 @@ public class ComposeMessageActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings: {
+                Log.d("Sagev", "Settings");
+                return true;
+            }
+            case android.R.id.home: {
+                Log.d("Sagev", "Back");
+                finish();
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
