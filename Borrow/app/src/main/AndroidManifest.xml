@@ -84,6 +84,14 @@
             android:name=".BorrowMessageViewActivity"
             android:label="@string/title_activity_borrow_message_view" >
         </activity>
+        <activity
+            android:name=".BorrowedListActivity"
+            android:label="@string/title_activity_borrowed_list" >
+        </activity>
+        <activity
+            android:name=".LentListActivity"
+            android:label="@string/title_activity_lent_list" >
+        </activity>
     </application>
 
 </manifest>

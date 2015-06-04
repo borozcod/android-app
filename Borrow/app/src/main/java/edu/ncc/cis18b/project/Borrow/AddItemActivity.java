@@ -179,6 +179,8 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         borrowItem.setUser(ParseUser.getCurrentUser());
         Log.d("Sagev", "set pic");
         borrowItem.setPic(picThumb);
+        Log.d("Sagev", "set isLent");
+        borrowItem.setIsLent(false);
     }
 
     private void toHomeActivity()

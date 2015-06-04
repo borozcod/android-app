@@ -19,7 +19,9 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="169dp"
-            android:id="@+id/picCont">
+            android:id="@+id/picCont"
+            android:layout_weight="0.52"
+            android:weightSum="1">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,7 +31,7 @@
                 android:id="@+id/textView17" />
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/viewPicImage"
                 android:layout_below="@+id/textView16"
@@ -37,14 +39,14 @@
                 android:minHeight="126dp"
                 android:nestedScrollingEnabled="false"
                 android:minWidth="224dp"
-                android:src="@drawable/camera"
-                android:paddingLeft="100dp" />
+                android:paddingLeft="100dp"
+                android:layout_weight="0.33" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:id="@+id/nameLayout">
 
             <TextView
@@ -69,7 +71,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:id="@+id/priceLayout">
 
             <TextView
@@ -94,7 +96,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:id="@+id/userLayout">
 
             <TextView
@@ -143,9 +145,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="82dp"
+            android:layout_height="60dp"
             android:id="@+id/descLayout"
-            android:layout_weight="0.76">
+            android:layout_weight="0.49">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -185,11 +187,10 @@
 
             <ImageButton
                 android:layout_width="124dp"
-                android:layout_height="82dp"
+                android:layout_height="match_parent"
                 android:id="@+id/viewButtonContactOwner"
                 android:src="@drawable/messages_button"
-                android:background="@android:color/transparent"
-                android:layout_weight="0.29" />
+                android:background="@android:color/transparent" />
 
             <!--<Button-->
                 <!--android:layout_width="wrap_content"-->
@@ -203,9 +204,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/viewButtonSaveItem"
-                android:layout_weight="0.29"
                 android:src="@drawable/save_button"
                 android:background="@android:color/transparent"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="92dp"
+                android:text="borrow(temp)"
+                android:id="@+id/viewButtonBorrow" />
         </LinearLayout>
 
     </LinearLayout>

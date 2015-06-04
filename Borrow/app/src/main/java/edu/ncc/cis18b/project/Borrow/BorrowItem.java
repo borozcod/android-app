@@ -20,7 +20,10 @@ public class BorrowItem extends BorrowObject
     public final static String KEY_DESC = "desc";
     public final static String KEY_PRICE = "price";
     public final static String KEY_USER = "user";
+    public final static String KEY_IS_LENT = "isLent";
+    public final static String KEY_BORROWER = "borrower";
 
+    // default constructor required for ParseClassName
     public BorrowItem(){}
 
     public void setName(String name){this.put(KEY_NAME, name);}
@@ -32,9 +35,17 @@ public class BorrowItem extends BorrowObject
     public void setPrice(Double price){this.put(KEY_PRICE, price);}
     public Double getPrice(){return this.getDouble(KEY_PRICE);}
 
+    // set owner
     public void setUser(ParseUser user) {
         this.put(KEY_USER, user.getString(BorrowObject.KEY_DISPLAY_NAME));}
     public String getUser(){return this.getString(KEY_USER);}
+
+    public void setIsLent(boolean isLent){this.put(KEY_IS_LENT, isLent);}
+    public boolean getIsLent(){return this.getBoolean(KEY_IS_LENT);}
+
+    public void setBorrower(ParseUser borrower) {
+        this.put(KEY_BORROWER, borrower.getString(BorrowObject.KEY_DISPLAY_NAME));}
+    public String getBorrower(){return this.getString(KEY_BORROWER);}
 
     @Override
     public int getArrayAdapterStyle()

@@ -141,4 +141,53 @@ public class BorrowQueryManager
             }
         });
     }
+
+    public static void queryBorrowedObjects(final BorrowListFragment<BorrowItem> listFragment)
+    {
+        Log.d("Sagev", "queryBorrowedObjects(BorrowListFragment");
+
+        // TODO: change other queries to be like this
+        ParseQuery<BorrowItem> q = ParseQuery.getQuery(BorrowItem.class);
+
+        // TODO: replace getCurrentUser with a variable
+        q.whereEqualTo(BorrowItem.KEY_BORROWER,
+                ParseUser.getCurrentUser().get(BorrowObject.KEY_DISPLAY_NAME));
+
+        q.findInBackground(new FindCallback<BorrowItem>() {
+            @Override
+            public void done(List<BorrowItem> list, ParseException e) {
+                ArrayList<BorrowItem> borrowedItems = new ArrayList<BorrowItem>();
+
+                for (BorrowItem b : list)
+                    borrowedItems.add(b);
+
+                listFragment.loadList(borrowedItems, BorrowItem.class);
+            }
+        });
+    }
+
+    public static void queryLentObjects(final BorrowListFragment<BorrowItem> listFragment)
+    {
+        Log.d("Sagev", "queryLentObjects(BorrowListFragment)");
+
+        // TODO: change other queries to be like this
+        ParseQuery<BorrowItem> q = ParseQuery.getQuery(BorrowItem.class);
+
+        // TODO: replace getCurrentUser with a variable
+        q.whereEqualTo(BorrowItem.KEY_USER,
+                ParseUser.getCurrentUser().getString(BorrowObject.KEY_DISPLAY_NAME));
+
+        q.findInBackground(new FindCallback<BorrowItem>() {
+            @Override
+            public void done(List<BorrowItem> list, ParseException e) {
+                ArrayList<BorrowItem> lentItems = new ArrayList<BorrowItem>();
+
+                for (BorrowItem b : list)
+                    if (b.getIsLent())
+                        lentItems.add(b);
+
+                listFragment.loadList(lentItems, BorrowItem.class);
+            }
+        });
+    }
 }

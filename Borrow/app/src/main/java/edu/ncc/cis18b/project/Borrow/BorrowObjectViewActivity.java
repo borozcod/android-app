@@ -22,8 +22,7 @@ import com.parse.ParseUser;
 import java.text.DecimalFormat;
 
 
-public class BorrowObjectViewActivity extends ActionBarActivity
-{
+public class BorrowObjectViewActivity extends ActionBarActivity {
     private TextView viewName;
     private TextView viewDesc;
     private TextView viewPrice;
@@ -31,6 +30,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private ImageView viewPic;
     private ImageButton buttonContact;
     private ImageButton buttonSave;
+    private Button buttonBorrow;
     protected static BorrowObject borrowItem;
     private Intent i;
     private final int WIDTH = 224;
@@ -43,8 +43,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         initializeActivity();
     }
 
-    private void initializeActivity()
-    {
+    private void initializeActivity() {
         setContentView(R.layout.activity_borrow_object_view);
 
         initializeActionBar();
@@ -54,8 +53,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         addFonts();
     }
 
-    private void initializeActionBar()
-    {
+    private void initializeActionBar() {
         // set title
         setTitle("Borrow :: Item#" + ((BorrowItem) borrowItem).getName());
 
@@ -70,27 +68,27 @@ public class BorrowObjectViewActivity extends ActionBarActivity
     private void initializeWidgets() // TODO: seperate this
     {
         DecimalFormat df = new DecimalFormat("$,###.00"); // TODO: fix this?
-        String formattedPrice = df.format(((BorrowItem)borrowItem).getPrice());
+        String formattedPrice = df.format(((BorrowItem) borrowItem).getPrice());
 
-        viewName = (TextView)findViewById(R.id.viewNameText);
-        viewDesc = (TextView)findViewById(R.id.viewDescText);
-        viewPrice = (TextView)findViewById(R.id.viewPriceText);
-        viewUser = (TextView)findViewById(R.id.viewUserText);
-        viewPic = (ImageView)findViewById(R.id.viewPicImage);
+        viewName = (TextView) findViewById(R.id.viewNameText);
+        viewDesc = (TextView) findViewById(R.id.viewDescText);
+        viewPrice = (TextView) findViewById(R.id.viewPriceText);
+        viewUser = (TextView) findViewById(R.id.viewUserText);
+        viewPic = (ImageView) findViewById(R.id.viewPicImage);
 
-        viewName.setText(((BorrowItem)borrowItem).getName());
-        viewDesc.setText(((BorrowItem)borrowItem).getDesc());
+        viewName.setText(((BorrowItem) borrowItem).getName());
+        viewDesc.setText(((BorrowItem) borrowItem).getDesc());
         viewPrice.setText(formattedPrice);
-        viewUser.setText(((BorrowItem)borrowItem).getUser());
+        viewUser.setText(((BorrowItem) borrowItem).getUser());
         viewPic.setImageBitmap(borrowItem.getPic(WIDTH, HEIGHT)); // TODO: replace this?
 
         initializeSaveButton();
         initializeDeleteButton();
+        initializeBorrowButton();
     }
 
-    private void initializeSaveButton()
-    {
-        buttonSave = (ImageButton)findViewById(R.id.viewButtonSaveItem);
+    private void initializeSaveButton() {
+        buttonSave = (ImageButton) findViewById(R.id.viewButtonSaveItem);
 
         if (SavedItemActivity.savedItemList.contains(borrowItem)) { // TODO: FIX THIS!!!!!
             //buttonSave.setText("Unsave item");
@@ -102,7 +100,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity
                 }
             });
         } else {
-           // buttonSave.setText("Save item");
+            //buttonSave.setText("Save item");
             buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.SAVE_BUTTON_GOES_HERE));
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
@@ -113,11 +111,10 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         }
     }
 
-    private void initializeDeleteButton()
-    {
-        buttonContact = (ImageButton)findViewById(R.id.viewButtonContactOwner);
+    private void initializeDeleteButton() {
+        buttonContact = (ImageButton) findViewById(R.id.viewButtonContactOwner);
 
-        if (((BorrowItem)borrowItem).getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
+        if (((BorrowItem) borrowItem).getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
             //buttonContact.setText("Delete item");
             buttonContact.setImageDrawable(getResources().getDrawable(R.drawable.DELETE_BUTTON_GOES_HERE)); // Keep in mind this button will replace Contact button!
             buttonContact.setOnClickListener(new OnClickListener() {
@@ -136,15 +133,41 @@ public class BorrowObjectViewActivity extends ActionBarActivity
         }
     }
 
+    private void initializeBorrowButton()
+    {
+        buttonBorrow = (Button) findViewById(R.id.viewButtonBorrow);
+
+        String itemOwner = ((BorrowItem) borrowItem).getUser().toLowerCase();
+        String currentUser = ParseUser.getCurrentUser().getUsername();
+        boolean isLent = ((BorrowItem) borrowItem).getIsLent();
+
+        if (isLent || itemOwner.equals(currentUser))
+            buttonBorrow.setVisibility(View.INVISIBLE);
+        else
+            buttonBorrow.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    borrowObject();
+                }
+            });
+    }
+
     private void deleteObject()
     {
         if (SavedItemActivity.savedItemList.contains(borrowItem))
             SavedItemActivity.savedItemList.remove(borrowItem);
 
-        borrowItem.deleteInBackground(); // TODO: replace with deleteEventually()?
+        borrowItem.deleteInBackground();
 
         toast("Item may take a few moments to be deleted");
         finish();
+    }
+
+    private void borrowObject()
+    {
+        ((BorrowItem)borrowItem).setBorrower(ParseUser.getCurrentUser());
+        ((BorrowItem)borrowItem).setIsLent(true);
+        borrowItem.saveInBackground();
     }
 
     private void toast(String msg)
