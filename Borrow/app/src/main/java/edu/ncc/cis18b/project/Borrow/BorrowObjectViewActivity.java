@@ -92,7 +92,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         if (SavedItemActivity.savedItemList.contains(borrowItem)) { // TODO: FIX THIS!!!!!
             //buttonSave.setText("Unsave item");
-            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.UNSAVE_BUTTON_GOES_HERE));
+            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.unsave_button));
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -101,7 +101,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
             });
         } else {
             //buttonSave.setText("Save item");
-            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.SAVE_BUTTON_GOES_HERE));
+            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.save_button));
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -116,7 +116,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         if (((BorrowItem) borrowItem).getUser().toLowerCase().equals(ParseUser.getCurrentUser().getUsername())) {
             //buttonContact.setText("Delete item");
-            buttonContact.setImageDrawable(getResources().getDrawable(R.drawable.DELETE_BUTTON_GOES_HERE)); // Keep in mind this button will replace Contact button!
+            buttonContact.setImageDrawable(getResources().getDrawable(R.drawable.delete_button)); // Keep in mind this button will replace Contact button!
             buttonContact.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
