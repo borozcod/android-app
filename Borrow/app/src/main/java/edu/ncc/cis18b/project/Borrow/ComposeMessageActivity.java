@@ -27,6 +27,10 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 
 public class ComposeMessageActivity extends ActionBarActivity {
 
@@ -45,11 +49,44 @@ public class ComposeMessageActivity extends ActionBarActivity {
     private StringBuilder errMsg;
     protected static String requestedRecipient = null;
 
+    InterstitialAd mInterstitialAd;
+    Button mNewGameButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initializeActivity();
+
+        mNewGameButton = (Button) findViewById(R.id.newgame_button);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+
+        mNewGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mInterstitialAd.isLoaded()) {
+                    mInterstitialAd.show();
+                } else {
+                    //Begin Game, continue with app
+                }
+            }
+        });
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+
+                //Begin Game, continue with app
+            }
+        });
+
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+        mInterstitialAd.loadAd(adRequest);
+
     }
 
     private void initializeActivity()
