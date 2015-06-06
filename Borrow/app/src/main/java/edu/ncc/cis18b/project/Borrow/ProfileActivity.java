@@ -1,19 +1,66 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 
-public class ProfileActivity extends ActionBarActivity {
+public class ProfileActivity extends ActionBarActivity
+{
+    private Button buttonBorrowed;
+    private Button buttonLent;
+    private Intent i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+
+        initializeActivity();
     }
 
+    private void initializeActivity()
+    {
+        setContentView(R.layout.activity_profile);
+
+        initializeButtons();
+    }
+
+    private void initializeButtons()
+    {
+        buttonBorrowed = (Button)findViewById(R.id.profileButtonBorrowed);
+        buttonLent = (Button)findViewById(R.id.profileButtonLent);
+
+        buttonBorrowed.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toBorrowedListActivity();
+            }
+        });
+
+        buttonLent.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toLentListActivity();
+            }
+        });
+    }
+
+    private void toBorrowedListActivity()
+    {
+        i = new Intent(getApplicationContext(), BorrowedListActivity.class);
+        startActivity(i);
+    }
+
+    private void toLentListActivity()
+    {
+        i = new Intent(getApplicationContext(), LentListActivity.class);
+        startActivity(i);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
