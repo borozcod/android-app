@@ -109,6 +109,27 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             Typeface face10=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Aventura-Bold.otf");
             textView.setTypeface(face10);
 
+            //start performanceArrayAdapter HOW DO YOU IMPLEMENT THIS CODE/?????????///
+            View rowView = convertView;
+            if (rowView == null) {
+                rowView = inflater.inflate(R.layout.rowlayout, null);
+                ViewHolder viewHolder = new ViewHolder();
+                viewHolder.text = (TextView) rowView.findViewById(R.id.label);
+                viewHolder.image = (ImageView) rowView
+                        .findViewById(R.id.icon);
+                rowView.setTag(viewHolder);
+            }
+            ViewHolder holder = (ViewHolder) rowView.getTag();
+            String s = names[position];
+            holder.text.setText(s);
+            if (s.startsWith("Windows7") || s.startsWith("iPhone")
+                    || s.startsWith("Solaris")) {
+                holder.image.setImageResource(R.drawable.image1);
+            } else {
+                holder.image.setImageResource(R.drawable.image2);
+            }
+            //end performanceArrayAdapter
+
             return rowView;
         }
     }
