@@ -109,15 +109,23 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             Typeface face10=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Aventura-Bold.otf");
             textView.setTypeface(face10);
 
-            //start performanceArrayAdapter HOW DO YOU IMPLEMENT THIS CODE/?????????///
+
+
+            return rowView;
+        }
+    }
+}
+
+/*
+ //start performanceArrayAdapter HOW DO YOU IMPLEMENT THIS CODE/?????????///
             View rowView = convertView;
-            if (rowView == null) {
-                rowView = inflater.inflate(R.layout.rowlayout, null);
-                ViewHolder viewHolder = new ViewHolder();
-                viewHolder.text = (TextView) rowView.findViewById(R.id.label);
-                viewHolder.image = (ImageView) rowView
-                        .findViewById(R.id.icon);
-                rowView.setTag(viewHolder);
+                if (rowView == null) {
+                    rowView = inflater.inflate(R.layout.rowlayout, null);
+                    ViewHolder viewHolder = new ViewHolder();
+                    viewHolder.text = (TextView) rowView.findViewById(R.id.label);
+                    viewHolder.image = (ImageView) rowView
+                            .findViewById(R.id.icon);
+                    rowView.setTag(viewHolder);
             }
             ViewHolder holder = (ViewHolder) rowView.getTag();
             String s = names[position];
@@ -130,7 +138,4 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             }
             //end performanceArrayAdapter
 
-            return rowView;
-        }
-    }
-}
+ */
