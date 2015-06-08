@@ -1,5 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
@@ -92,10 +94,19 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         if (SavedItemActivity.savedItemList.contains(borrowItem)) { // TODO: FIX THIS!!!!!
             //buttonSave.setText("Unsave item");
-            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.unsave_button));
+            buttonSave.setImageDrawable(getResources().getDrawable(R.drawable.unsave));
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+                    alertDialog.setTitle("Item Unsaved");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                     unsaveObject();
                 }
             });
@@ -105,6 +116,15 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+                    alertDialog.setTitle("Item Saved");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
                     saveObject();
                 }
             });

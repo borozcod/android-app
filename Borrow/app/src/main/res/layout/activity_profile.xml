@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="#  Borrowed"
+        android:text="Borrowed"
         android:id="@+id/textView"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
@@ -37,7 +37,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="# Lent"
+        android:text="Lent"
         android:id="@+id/textView2"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
@@ -45,23 +45,23 @@
         android:layout_marginTop="58dp"
         android:textSize="25dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView3"
-        android:layout_centerVertical="true"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="New Text"-->
+        <!--android:id="@+id/textView3"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_alignRight="@+id/imageView"-->
+        <!--android:layout_alignEnd="@+id/imageView" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView4"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignRight="@+id/imageView"
-        android:layout_alignEnd="@+id/imageView" />
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="New Text"-->
+        <!--android:id="@+id/textView4"-->
+        <!--android:layout_alignBottom="@+id/textView2"-->
+        <!--android:layout_alignRight="@+id/imageView"-->
+        <!--android:layout_alignEnd="@+id/imageView" />-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +71,8 @@
         android:textSize="25dp"
         android:layout_above="@+id/imageView3"
         android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_toEndOf="@+id/textView"
+        android:gravity="center"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -99,22 +100,28 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Borrowed (Temp)"
         android:id="@+id/profileButtonBorrowed"
+        android:src="@drawable/list_button"
+        android:background="@android:color/transparent"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@+id/textView3" />
+        android:layout_toEndOf="@+id/imageView" />
 
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Lent (Temp)"
         android:id="@+id/profileButtonLent"
-        android:layout_alignTop="@+id/textView2"
-        android:layout_toEndOf="@+id/textView4" />
+        android:src="@drawable/list_button"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/profileButtonBorrowed"
+        android:layout_toEndOf="@+id/imageView" />
+
+
 
 </RelativeLayout>

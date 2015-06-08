@@ -1,6 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -8,19 +9,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import com.parse.ParseUser;
 
 
 public class ProfileActivity extends ActionBarActivity
 {
-    private Button buttonBorrowed;
-    private Button buttonLent;
+    private ImageButton buttonBorrowed;
+    private ImageButton buttonLent;
     private Intent i;
+    private String user;
+    private TextView textUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         initializeActivity();
+        initializeWidgets();
+        addFonts();
     }
 
     private void initializeActivity()
@@ -30,10 +39,20 @@ public class ProfileActivity extends ActionBarActivity
         initializeButtons();
     }
 
+    private void initializeWidgets()
+    {
+
+        textUser = (TextView)findViewById(R.id.profileName);
+
+        user = ParseUser.getCurrentUser().getString("desiredUserCase");
+        textUser.setText(user);
+
+    }
+
     private void initializeButtons()
     {
-        buttonBorrowed = (Button)findViewById(R.id.profileButtonBorrowed);
-        buttonLent = (Button)findViewById(R.id.profileButtonLent);
+        buttonBorrowed = (ImageButton)findViewById(R.id.profileButtonBorrowed);
+        buttonLent = (ImageButton)findViewById(R.id.profileButtonLent);
 
         buttonBorrowed.setOnClickListener(new OnClickListener() {
             @Override
@@ -82,5 +101,23 @@ public class ProfileActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void addFonts() // TODO: Clean this method
+    {
+        TextView tv12=(TextView)findViewById(R.id.textView);
+        Typeface face12=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv12.setTypeface(face12);
+
+        TextView tv=(TextView)findViewById(R.id.textView2);
+        Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv.setTypeface(face);
+
+        TextView tv11=(TextView)findViewById(R.id.textView5);
+        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv11.setTypeface(face11);
+
+        TextView tv10=(TextView)findViewById(R.id.profileName);
+        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+        tv10.setTypeface(face10);
     }
 }
