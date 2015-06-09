@@ -143,6 +143,12 @@ public class MainActivity extends ActionBarActivity
         Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     // implemented methods
     @Override
     public void signInSuccess(DialogFragment dialog)
@@ -172,6 +178,7 @@ public class MainActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            toSettingsActivity();
             return true;
         }
 

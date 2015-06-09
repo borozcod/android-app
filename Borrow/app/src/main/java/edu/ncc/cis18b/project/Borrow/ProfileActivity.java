@@ -8,12 +8,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.parse.ParseUser;
-
 
 public class ProfileActivity extends ActionBarActivity
 {
@@ -28,8 +26,6 @@ public class ProfileActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
 
         initializeActivity();
-        initializeWidgets();
-        addFonts();
     }
 
     private void initializeActivity()
@@ -37,16 +33,30 @@ public class ProfileActivity extends ActionBarActivity
         setContentView(R.layout.activity_profile);
 
         initializeButtons();
+        initializeWidgets();
+        initializeActionBar();
+
+        addFonts();
+    }
+
+    private void initializeActionBar() {
+        // set title
+        setTitle("Borrow :: Profile");
+
+        // set icon
+        //getActionBar().setIcon(R.drawable.PICTURE_NAME);
+
+        // set back button
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initializeWidgets()
     {
-
         textUser = (TextView)findViewById(R.id.profileName);
 
         user = ParseUser.getCurrentUser().getString("desiredUserCase");
         textUser.setText(user);
-
     }
 
     private void initializeButtons()
@@ -81,6 +91,12 @@ public class ProfileActivity extends ActionBarActivity
         startActivity(i);
     }
 
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -97,6 +113,7 @@ public class ProfileActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            toSettingsActivity();
             return true;
         }
 

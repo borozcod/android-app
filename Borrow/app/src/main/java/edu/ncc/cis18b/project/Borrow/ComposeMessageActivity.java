@@ -20,16 +20,12 @@ import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.parse.SaveCallback;
 
@@ -326,6 +322,12 @@ public class ComposeMessageActivity extends ActionBarActivity {
         builder.create().show();
     }
 
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public void onDestroy()
     {
@@ -347,6 +349,7 @@ public class ComposeMessageActivity extends ActionBarActivity {
         switch (id) {
             case R.id.action_settings: {
                 Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case android.R.id.home: {

@@ -92,6 +92,12 @@ public class WelcomeActivity extends ActionBarActivity
         startActivity(i);
     }
 
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -106,6 +112,8 @@ public class WelcomeActivity extends ActionBarActivity
 
         switch (id) {
             case R.id.action_settings : {
+                Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case R.id.action_logout : {

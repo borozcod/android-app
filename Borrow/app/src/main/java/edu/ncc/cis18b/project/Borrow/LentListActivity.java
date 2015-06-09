@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.ActionBarActivity;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 
 public class LentListActivity extends ActionBarActivity {
 
@@ -95,6 +95,12 @@ public class LentListActivity extends ActionBarActivity {
         builder.create().show();
     }
 
+    private void toSettingsActivity()
+    {
+        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     // TODO: these
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -112,6 +118,7 @@ public class LentListActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            toSettingsActivity();
             return true;
         }
 

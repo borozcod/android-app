@@ -16,16 +16,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
-
-import java.util.ArrayList;
-import java.util.List;
-
-
 public class SentMessageActivity extends ActionBarActivity {
 
     private Button buttonToCompose;
@@ -169,6 +159,12 @@ public class SentMessageActivity extends ActionBarActivity {
         builder.create().show();
     }
 
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_sent_message, menu);
@@ -182,6 +178,7 @@ public class SentMessageActivity extends ActionBarActivity {
         switch (id) {
             case R.id.action_settings: {
                 Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case android.R.id.home: {

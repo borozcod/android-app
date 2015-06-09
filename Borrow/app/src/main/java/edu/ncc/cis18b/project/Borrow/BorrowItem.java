@@ -2,13 +2,9 @@ package edu.ncc.cis18b.project.Borrow;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 
 import com.parse.ParseUser;
 import com.parse.ParseClassName;
-
-import java.io.ByteArrayOutputStream;
 
 /**
  * Created by S on 5/29/2015.

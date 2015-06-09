@@ -6,19 +6,12 @@ import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class SavedItemActivity extends ActionBarActivity
 {
@@ -71,6 +64,12 @@ public class SavedItemActivity extends ActionBarActivity
         BorrowQueryManager.queryLocalDatabaseAll(listFragment);
     }
 
+    private void toSettingsActivity()
+    {
+        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public void onResume()
     {
@@ -94,6 +93,7 @@ public class SavedItemActivity extends ActionBarActivity
         switch (id) {
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case android.R.id.home : {

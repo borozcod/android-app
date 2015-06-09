@@ -1,6 +1,5 @@
 package edu.ncc.cis18b.project.Borrow;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,7 +12,6 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.v4.app.DialogFragment;
 import android.text.InputFilter;
 import android.util.Log;
@@ -23,14 +21,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import java.io.ByteArrayOutputStream;
-
 
 /**
  * @author Sage
@@ -234,7 +230,7 @@ public class SignUpDialog extends DialogFragment
 
     private void setDefaultProfilePicture() // TODO: Temporary - replace!
     {
-        Drawable d = getResources().getDrawable(R.drawable.camera);
+        Drawable d = getResources().getDrawable(R.drawable.profile_pic);
         Bitmap b = ((BitmapDrawable)d).getBitmap();
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         b.compress(Bitmap.CompressFormat.JPEG, 100, stream);

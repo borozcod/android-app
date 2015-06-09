@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.View.OnClickListener;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,11 +19,9 @@ import android.widget.Toast;
 
 import com.parse.DeleteCallback;
 import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import java.text.DecimalFormat;
-
 
 public class BorrowObjectViewActivity extends ActionBarActivity {
     private TextView viewName;
@@ -248,8 +245,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         initializeSaveButton();
 
-        toast("Added item to saved list");
-
+        //toast("Added item to saved list");
         AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
         alertDialog.setTitle("Item Saved");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -259,7 +255,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     }
                 });
         alertDialog.show();
-
     }
 
     private void unsaveObject()
@@ -269,8 +264,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         initializeSaveButton();
 
-        toast("Removed item from saved list");
-
+        //toast("Removed item from saved list");
         AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
         alertDialog.setTitle("Item Unsaved");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -280,13 +274,18 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     }
                 });
         alertDialog.show();
-
     }
 
     private void toComposeMessageActivity()
     {
         ComposeMessageActivity.requestedRecipient = ((BorrowItem)borrowItem).getUser();
         i = new Intent(getApplicationContext(), ComposeMessageActivity.class);
+        startActivity(i);
+    }
+
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
         startActivity(i);
     }
 
@@ -309,6 +308,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         {
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case android.R.id.home : {
@@ -328,6 +328,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
     private void addFonts() // TODO: Clean this method
     {
         TextView tv12=(TextView)findViewById(R.id.textView14);

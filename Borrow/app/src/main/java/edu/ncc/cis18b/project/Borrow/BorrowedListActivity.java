@@ -11,10 +11,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
 
 public class BorrowedListActivity extends ActionBarActivity {
 
@@ -98,6 +95,12 @@ public class BorrowedListActivity extends ActionBarActivity {
         builder.create().show();
     }
 
+    private void toSettingsActivity()
+    {
+        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
+
     // TODO: these
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,6 +118,7 @@ public class BorrowedListActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            toSettingsActivity();
             return true;
         }
 

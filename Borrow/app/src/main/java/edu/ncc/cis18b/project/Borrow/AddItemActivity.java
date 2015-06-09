@@ -35,7 +35,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class AddItemActivity extends ActionBarActivity // TODO: clean this class
 {
     private ImageButton buttonUploadPicture;
@@ -224,6 +223,7 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         {
             case R.id.action_settings : {
                 Log.d("Sagev", "Settings");
+                toSettingsActivity();
                 return true;
             }
             case android.R.id.home : {
@@ -335,5 +335,11 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         TextView tv9=(TextView)findViewById(R.id.textView9);
         Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv9.setTypeface(face9);
+    }
+
+    private void toSettingsActivity()
+    {
+        i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
     }
 }

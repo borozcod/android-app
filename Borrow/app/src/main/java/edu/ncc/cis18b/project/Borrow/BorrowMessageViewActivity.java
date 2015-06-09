@@ -1,15 +1,21 @@
 package edu.ncc.cis18b.project.Borrow;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-
 public class BorrowMessageViewActivity extends ActionBarActivity {
 
     public static BorrowObject message;
+
+    private void toSettingsActivity()
+    {
+        Intent i = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,7 @@ public class BorrowMessageViewActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            toSettingsActivity();
             return true;
         }
 
