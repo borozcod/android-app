@@ -152,7 +152,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
             currentUserIsBorrower = currentUser.equals(itemBorrower.toLowerCase());
 
         if (currentUserIsBorrower) {
-            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.send_button));
+            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.returned_itme));
             buttonBorrow.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -162,7 +162,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         } else if ((isLent && !currentUserIsBorrower) || isSaved || currentUserIsOwner) {
             buttonBorrow.setVisibility(View.INVISIBLE);
         } else {
-            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.star));
+            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.borrow_button));
             buttonBorrow.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
