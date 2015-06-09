@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,11 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
 
     protected void loadList(ArrayList<T> list, Class<T> listParameterType)
     {
+        if (getActivity() == null) {
+            Log.e("Sagev", "Activity is null");
+            return;
+        }
+
         try {
             if (adapter == null) {
                 adapter = new BorrowArrayAdapter(getActivity(),
@@ -96,20 +102,37 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
 
+            /*
+                This is roughly how it would be implemented.
+                Though it appears ViewHolder is a class you created,
+                so you would need to add that somewhere, too.
+                - Sage
+             */
+
+            // start
             View rowView = inflater.inflate(layoutResourceId, parent, false);
+
+            //ViewHolder viewHolder = new ViewHolder();
 
             TextView textView = (TextView) rowView.findViewById(R.id.label);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-            textView.setText(objects.get(position).toString());
+            //viewHolder.text = textView;
+            //viewHolder.image = imageView;
+            //rowView.setTag(viewHolder);
+
+            //ViewHolder holder = (ViewHolder)rowView.getTag();
+
             String s = objects.get(position).toString();
+            textView.setText(s); //holder.text.setText(s);
 
-            imageView.setImageBitmap(objects.get(position).getPic());
+            Bitmap b = objects.get(position).getPic();
+            imageView.setImageBitmap(b); //holder.image.setImage(b); // ?
 
-            Typeface face10=Typeface.createFromAsset(getActivity().getAssets(),"fonts/Aventura-Bold.otf");
+            // probably would need to change this, too.
+            Typeface face10 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Aventura-Bold.otf");
             textView.setTypeface(face10);
-
-
+            // end
 
             return rowView;
         }

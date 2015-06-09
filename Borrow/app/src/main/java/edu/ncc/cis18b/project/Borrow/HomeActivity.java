@@ -29,8 +29,6 @@ public class HomeActivity extends ActionBarActivity
     private ImageButton buttonAddItem;
     private BorrowListFragment<BorrowItem> listFragment;
     private static Intent i;
-    private boolean firstCreate = true;
-
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
