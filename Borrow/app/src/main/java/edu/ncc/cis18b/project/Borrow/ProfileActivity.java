@@ -112,10 +112,6 @@ public class ProfileActivity extends ActionBarActivity
         Typeface face=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv.setTypeface(face);
 
-        TextView tv11=(TextView)findViewById(R.id.textView5);
-        Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
-        tv11.setTypeface(face11);
-
         TextView tv10=(TextView)findViewById(R.id.profileName);
         Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv10.setTypeface(face10);

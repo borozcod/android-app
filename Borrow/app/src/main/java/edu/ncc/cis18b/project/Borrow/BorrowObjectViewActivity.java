@@ -154,7 +154,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     returnObject();
                 }
             });
-        } else if (isLent || isSaved) {
+        } else if (isLent || isSaved || currentUserIsOwner) {
             buttonBorrow.setVisibility(View.INVISIBLE);
         } else {
             buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.borrow_button));
