@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId "edu.ncc.cis18b.project.Borrow"
-        minSdkVersion 17
+        minSdkVersion 9
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0"
+        versionName "1.1"
     }
     buildTypes {
         release {
