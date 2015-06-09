@@ -17,4 +17,5 @@
     <string name="title_activity_borrow_message_view">BorrowMessageViewActivity</string>
     <string name="title_activity_borrowed_list">BorrowedListActivity</string>
     <string name="title_activity_lent_list">LentListActivity</string>
+
 </resources>
