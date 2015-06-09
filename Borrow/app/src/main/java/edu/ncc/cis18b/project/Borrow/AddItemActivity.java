@@ -324,3 +324,5 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         tv9.setTypeface(face9);
     }
 }
+
+//Tiffany: added new items to the app via external android device
