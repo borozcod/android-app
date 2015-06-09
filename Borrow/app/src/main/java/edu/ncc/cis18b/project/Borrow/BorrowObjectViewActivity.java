@@ -141,17 +141,12 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
         String itemOwner = ((BorrowItem) borrowItem).getUser().toLowerCase();
         String currentUser = ParseUser.getCurrentUser().getUsername();
-        String itemBorrower = ((BorrowItem)borrowItem).getBorrower();
 
         boolean isLent = ((BorrowItem) borrowItem).getIsLent();
         boolean isSaved = ((BorrowItem) borrowItem).isSaved();
         boolean currentUserIsOwner = itemOwner.equals(currentUser);
-        boolean currentUserIsBorrower = false;
 
-        if (itemBorrower != null)
-            currentUserIsBorrower = currentUser.equals(itemBorrower.toLowerCase());
-
-        if (currentUserIsBorrower) {
+        if (currentUserIsOwner && isLent) {
             buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.returned_itme));
             buttonBorrow.setOnClickListener(new OnClickListener() {
                 @Override
@@ -159,7 +154,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     returnObject();
                 }
             });
-        } else if ((isLent && !currentUserIsBorrower) || isSaved || currentUserIsOwner) {
+        } else if (isLent || isSaved) {
             buttonBorrow.setVisibility(View.INVISIBLE);
         } else {
             buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.borrow_button));
@@ -318,9 +313,9 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         Typeface face11=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
         tv11.setTypeface(face11);
 
-        TextView tv10=(TextView)findViewById(R.id.textView17);
-        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
-        tv10.setTypeface(face10);
+//        TextView tv10=(TextView)findViewById(R.id.textView17);
+//        Typeface face10=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
+//        tv10.setTypeface(face10);
 
         TextView tv9=(TextView)findViewById(R.id.textView13);
         Typeface face9=Typeface.createFromAsset(getAssets(),"fonts/Aventura-Bold.otf");
