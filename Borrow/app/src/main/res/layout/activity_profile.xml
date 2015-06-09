@@ -3,13 +3,14 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".profile">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".profile"
+    android:background="#394F50">
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/imageView"
-        android:src="@drawable/camera"
+        android:src="@drawable/profile_pic"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -39,11 +40,9 @@
         android:layout_height="wrap_content"
         android:text="Lent"
         android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="58dp"
-        android:textSize="25dp" />
+        android:textSize="25dp"
+        android:layout_alignBottom="@+id/profileButtonLent"
+        android:layout_alignParentStart="true" />
 
     <!--<TextView-->
         <!--android:layout_width="wrap_content"-->
@@ -63,42 +62,42 @@
         <!--android:layout_alignRight="@+id/imageView"-->
         <!--android:layout_alignEnd="@+id/imageView" />-->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="RATING"
-        android:id="@+id/textView5"
-        android:textSize="25dp"
-        android:layout_above="@+id/imageView3"
-        android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:gravity="center"/>
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="RATING"-->
+        <!--android:id="@+id/textView5"-->
+        <!--android:textSize="25dp"-->
+        <!--android:layout_above="@+id/imageView3"-->
+        <!--android:layout_toRightOf="@+id/textView"-->
+        <!--android:layout_toEndOf="@+id/textView"-->
+        <!--android:gravity="center"/>-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView2"
-        android:src="@drawable/star"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView2"-->
+        <!--android:src="@drawable/star"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:src="@drawable/star"
-        android:layout_alignTop="@+id/imageView2"
-        android:layout_centerHorizontal="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView3"-->
+        <!--android:src="@drawable/star"-->
+        <!--android:layout_alignTop="@+id/imageView2"-->
+        <!--android:layout_centerHorizontal="true" />-->
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
-        android:src="@drawable/star"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView4"-->
+        <!--android:src="@drawable/star"-->
+        <!--android:layout_below="@+id/textView5"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentEnd="true" />-->
 
     <ImageButton
         style="?android:attr/buttonStyleSmall"
@@ -120,7 +119,8 @@
         android:src="@drawable/list_button"
         android:background="@android:color/transparent"
         android:layout_below="@+id/profileButtonBorrowed"
-        android:layout_toEndOf="@+id/imageView" />
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_marginTop="48dp" />
 
 
 

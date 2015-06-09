@@ -187,6 +187,16 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         toast("Item borrowed!");
 
         initializeBorrowButton();
+
+        AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+        alertDialog.setTitle("Item Borrowed");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void returnObject()
@@ -198,6 +208,15 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         toast("Item returned!");
 
         initializeBorrowButton();
+        AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+        alertDialog.setTitle("Item Returned");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
     }
 
     private void toast(String msg)
@@ -220,7 +239,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         initializeSaveButton();
 
         toast("Added item to saved list");
-        /*
+
         AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
         alertDialog.setTitle("Item Saved");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -230,7 +249,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     }
                 });
         alertDialog.show();
-        */
+
     }
 
     private void unsaveObject()
@@ -241,7 +260,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         initializeSaveButton();
 
         toast("Removed item from saved list");
-        /*
+
         AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
         alertDialog.setTitle("Item Unsaved");
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -251,7 +270,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
                     }
                 });
         alertDialog.show();
-        */
+
     }
 
     private void toComposeMessageActivity()
