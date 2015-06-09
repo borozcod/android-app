@@ -1,6 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -26,7 +27,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -129,9 +132,19 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
             noConnectionAlert();
         } else {
             getItem(); // TODO: Clean/remove this method?
-            borrowItem.saveInBackground(); // TODO: Replace with saveEventually()?
-            toast("May take a moment to appear");
-            toHomeActivity();
+
+            final ProgressDialog dialog = new ProgressDialog(AddItemActivity.this);
+            dialog.setMessage("Saving item");
+            dialog.show();
+
+            borrowItem.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    dialog.dismiss();
+                    toast("Item saved!");
+                    toHomeActivity();
+                }
+            });
         }
     }
 
@@ -324,5 +337,3 @@ public class AddItemActivity extends ActionBarActivity // TODO: clean this class
         tv9.setTypeface(face9);
     }
 }
-
-//Tiffany: added new items to the app via external android device

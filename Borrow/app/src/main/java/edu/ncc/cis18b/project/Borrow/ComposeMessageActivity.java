@@ -31,6 +31,7 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.parse.SaveCallback;
 
 public class ComposeMessageActivity extends ActionBarActivity {
 
@@ -244,8 +245,6 @@ public class ComposeMessageActivity extends ActionBarActivity {
 
     private void sendMessage(ParseUser recipient)
     {
-        toast("Sent message to " + this.recipient);
-
         BorrowMessage message = new BorrowMessage();
 
         message.setMessage(this.message);
@@ -257,8 +256,18 @@ public class ComposeMessageActivity extends ActionBarActivity {
         } catch (ParseException pe) {
             Log.d("Sagev", pe.getMessage());
         }
-        
-        message.saveInBackground();
+
+        final ProgressDialog dialog = new ProgressDialog(ComposeMessageActivity.this);
+        dialog.setMessage("Sending message");
+        dialog.show();
+
+        message.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                dialog.dismiss();
+                toast("Sent message!");
+            }
+        });
     }
 
     private boolean userInputIsValid()

@@ -1,6 +1,7 @@
 package edu.ncc.cis18b.project.Borrow;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.parse.DeleteCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -172,10 +174,18 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         if (SavedItemActivity.savedItemList.contains(borrowItem))
             SavedItemActivity.savedItemList.remove(borrowItem);
 
-        borrowItem.deleteInBackground();
+        final ProgressDialog dialog = new ProgressDialog(BorrowObjectViewActivity.this);
+        dialog.setMessage("Deleting item");
+        dialog.show();
 
-        toast("Item may take a few moments to be deleted");
-        finish();
+        borrowItem.deleteInBackground(new DeleteCallback() {
+            @Override
+            public void done(ParseException e) {
+                dialog.dismiss();
+                toast("Item deleted!");
+                finish();
+            }
+        });
     }
 
     private void borrowObject()
