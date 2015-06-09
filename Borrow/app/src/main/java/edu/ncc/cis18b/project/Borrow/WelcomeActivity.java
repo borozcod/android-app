@@ -86,6 +86,12 @@ public class WelcomeActivity extends ActionBarActivity
         finish();
     }
 
+    private void toProfileActivity()
+    {
+        i = new Intent(getApplicationContext(), ProfileActivity.class);
+        startActivity(i);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
@@ -112,6 +118,7 @@ public class WelcomeActivity extends ActionBarActivity
             }
             case R.id.action_profile : {
                 Log.d("Sagev", "Profile");
+                toProfileActivity();
                 return true;
             }
             case R.id.action_saved_objects_list : {
