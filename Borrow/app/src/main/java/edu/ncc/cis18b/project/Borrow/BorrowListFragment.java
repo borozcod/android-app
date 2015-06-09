@@ -101,7 +101,10 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
         {
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(
                     Context.LAYOUT_INFLATER_SERVICE);
-
+            class ViewHolder {
+                public TextView text;
+                public ImageView image;
+            }
             /*
                 This is roughly how it would be implemented.
                 Though it appears ViewHolder is a class you created,
@@ -112,22 +115,24 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             // start
             View rowView = inflater.inflate(layoutResourceId, parent, false);
 
-            //ViewHolder viewHolder = new ViewHolder();
+            ViewHolder viewHolder = new ViewHolder();
 
             TextView textView = (TextView) rowView.findViewById(R.id.label);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
 
-            //viewHolder.text = textView;
-            //viewHolder.image = imageView;
-            //rowView.setTag(viewHolder);
+            viewHolder.text = textView;
+            viewHolder.image = imageView;
+            rowView.setTag(viewHolder);
 
-            //ViewHolder holder = (ViewHolder)rowView.getTag();
+            ViewHolder holder = (ViewHolder)rowView.getTag();
 
             String s = objects.get(position).toString();
-            textView.setText(s); //holder.text.setText(s);
+            //textView.setText(s);
+            holder.text.setText(s);
 
             Bitmap b = objects.get(position).getPic();
-            imageView.setImageBitmap(b); //holder.image.setImage(b); // ?
+            //imageView.setImageBitmap(b);
+            holder.image.setImageBitmap(b);
 
             // probably would need to change this, too.
             Typeface face10 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Aventura-Bold.otf");

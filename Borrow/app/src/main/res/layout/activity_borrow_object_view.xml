@@ -208,13 +208,12 @@
                 android:background="@android:color/transparent"/>
 
             <ImageButton
-                style="?android:attr/buttonStyleSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="92dp"
-                android:text="borrow button"
+                android:layout_height="wrap_content"
                 android:id="@+id/viewButtonBorrow"
-                android:src="@drawable/borrow_button"
-                android:background="@android:color/transparent"/>
+                android:src="@drawable/star"
+                android:background="@android:color/transparent" />
+
         </LinearLayout>
 
     </LinearLayout>
