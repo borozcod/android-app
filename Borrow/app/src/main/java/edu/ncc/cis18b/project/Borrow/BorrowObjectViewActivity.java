@@ -32,7 +32,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
     private ImageView viewPic;
     private ImageButton buttonContact;
     private ImageButton buttonSave;
-    private Button buttonBorrow;
+    private ImageButton buttonBorrow;
     protected static BorrowObject borrowItem;
     private Intent i;
     private final int WIDTH = 224;
@@ -155,7 +155,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
     private void initializeBorrowButton()
     {
-        buttonBorrow = (Button) findViewById(R.id.viewButtonBorrow);
+        buttonBorrow = (ImageButton) findViewById(R.id.viewButtonBorrow);
 
         String itemOwner = ((BorrowItem) borrowItem).getUser().toLowerCase();
         String currentUser = ParseUser.getCurrentUser().getUsername();
