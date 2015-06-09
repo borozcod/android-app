@@ -207,12 +207,13 @@
                 android:src="@drawable/save_button"
                 android:background="@android:color/transparent"/>
 
-            <Button
-                style="?android:attr/buttonStyleSmall"
+            <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="92dp"
-                android:text="borrow(temp)"
-                android:id="@+id/viewButtonBorrow" />
+                android:layout_height="wrap_content"
+                android:id="@+id/viewButtonBorrow"
+                android:src="@drawable/star"
+                android:background="@android:color/transparent" />
+
         </LinearLayout>
 
     </LinearLayout>

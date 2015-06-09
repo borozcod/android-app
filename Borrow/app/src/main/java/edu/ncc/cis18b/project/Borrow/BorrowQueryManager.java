@@ -21,21 +21,22 @@ public class BorrowQueryManager
     {
         Log.d("Sagev", "queryLocalDatabaseAll() start");
 
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("BorrowItem"); //TODO: replace string literal with variable
+        ParseQuery<BorrowItem> q = ParseQuery.getQuery(BorrowItem.class); //TODO: replace string literal with variable
 
         q.fromLocalDatastore();
         q.whereExists(BorrowItem.KEY_NAME);
 
-        q.findInBackground(new FindCallback<ParseObject>() {
+        q.findInBackground(new FindCallback<BorrowItem>() {
             @Override
-            public void done(List<ParseObject> list, ParseException e)
+            public void done(List<BorrowItem> list, ParseException e)
             {
                 ArrayList<BorrowItem> savedItemList = new ArrayList<BorrowItem>();
 
-                for (ParseObject p : list)
+                for (BorrowItem b : list)
                 {
-                    savedItemList.add((BorrowItem)p);
-                    Log.d("Sagev", (p).toString());
+                    b.markSaved();
+                    savedItemList.add((BorrowItem)b);
+                    Log.v("Sagev", b.toString());
                 }
 
                 SavedItemActivity.savedItemList = savedItemList;

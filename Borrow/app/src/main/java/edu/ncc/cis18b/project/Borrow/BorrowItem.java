@@ -16,6 +16,7 @@ import java.io.ByteArrayOutputStream;
 @ParseClassName("BorrowItem")
 public class BorrowItem extends BorrowObject
 {
+    private boolean isSaved = false;
     public final static String KEY_NAME = "name";
     public final static String KEY_DESC = "desc";
     public final static String KEY_PRICE = "price";
@@ -43,9 +44,20 @@ public class BorrowItem extends BorrowObject
     public void setIsLent(boolean isLent){this.put(KEY_IS_LENT, isLent);}
     public boolean getIsLent(){return this.getBoolean(KEY_IS_LENT);}
 
-    public void setBorrower(ParseUser borrower) {
-        this.put(KEY_BORROWER, borrower.getString(BorrowObject.KEY_DISPLAY_NAME));}
+    // set borrower
+    public void setBorrower(ParseUser borrower)
+    {
+        if (borrower == null)
+            this.put(KEY_BORROWER, "");
+        else
+            this.put(KEY_BORROWER, borrower.getString(BorrowObject.KEY_DISPLAY_NAME));
+    }
+
     public String getBorrower(){return this.getString(KEY_BORROWER);}
+
+    // saved checks
+    public boolean isSaved(){return isSaved;}
+    public void markSaved(){isSaved = true;}
 
     @Override
     public int getArrayAdapterStyle()

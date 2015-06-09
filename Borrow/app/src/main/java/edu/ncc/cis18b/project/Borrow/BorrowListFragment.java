@@ -127,7 +127,7 @@ public class BorrowListFragment<T extends BorrowObject> extends ListFragment //T
             textView.setText(s); //holder.text.setText(s);
 
             Bitmap b = objects.get(position).getPic();
-            imageView.setImageBitmap(b); //holder.image.setImage(b); // ?
+            imageView.setImageBitmap(b); //holder.image.setImageBitmap(b); // ?
 
             // probably would need to change this, too.
             Typeface face10 = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Aventura-Bold.otf");

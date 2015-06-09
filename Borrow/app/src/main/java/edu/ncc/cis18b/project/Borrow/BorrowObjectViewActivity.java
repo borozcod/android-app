@@ -32,7 +32,7 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
     private ImageView viewPic;
     private ImageButton buttonContact;
     private ImageButton buttonSave;
-    private Button buttonBorrow;
+    private ImageButton buttonBorrow;
     protected static BorrowObject borrowItem;
     private Intent i;
     private final int WIDTH = 224;
@@ -98,15 +98,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
-                    alertDialog.setTitle("Item Unsaved");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
                     unsaveObject();
                 }
             });
@@ -116,15 +107,6 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
             buttonSave.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
-                    alertDialog.setTitle("Item Saved");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
                     saveObject();
                 }
             });
@@ -155,21 +137,39 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
 
     private void initializeBorrowButton()
     {
-        buttonBorrow = (Button) findViewById(R.id.viewButtonBorrow);
+        buttonBorrow = (ImageButton) findViewById(R.id.viewButtonBorrow);
 
         String itemOwner = ((BorrowItem) borrowItem).getUser().toLowerCase();
         String currentUser = ParseUser.getCurrentUser().getUsername();
-        boolean isLent = ((BorrowItem) borrowItem).getIsLent();
+        String itemBorrower = ((BorrowItem)borrowItem).getBorrower();
 
-        if (isLent || itemOwner.equals(currentUser))
+        boolean isLent = ((BorrowItem) borrowItem).getIsLent();
+        boolean isSaved = ((BorrowItem) borrowItem).isSaved();
+        boolean currentUserIsOwner = itemOwner.equals(currentUser);
+        boolean currentUserIsBorrower = false;
+
+        if (itemBorrower != null)
+            currentUserIsBorrower = currentUser.equals(itemBorrower.toLowerCase());
+
+        if (currentUserIsBorrower) {
+            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.send_button));
+            buttonBorrow.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    returnObject();
+                }
+            });
+        } else if ((isLent && !currentUserIsBorrower) || isSaved || currentUserIsOwner) {
             buttonBorrow.setVisibility(View.INVISIBLE);
-        else
+        } else {
+            buttonBorrow.setImageDrawable(getResources().getDrawable(R.drawable.star));
             buttonBorrow.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     borrowObject();
                 }
             });
+        }
     }
 
     private void deleteObject()
@@ -189,10 +189,20 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         ((BorrowItem)borrowItem).setIsLent(true);
         borrowItem.saveInBackground();
 
-        buttonBorrow.setVisibility(View.INVISIBLE);
-        buttonBorrow.setOnClickListener(null);
-
         toast("Item borrowed!");
+
+        initializeBorrowButton();
+    }
+
+    private void returnObject()
+    {
+        ((BorrowItem)borrowItem).setBorrower(null);
+        ((BorrowItem) borrowItem).setIsLent(false);
+        borrowItem.saveInBackground();
+
+        toast("Item returned!");
+
+        initializeBorrowButton();
     }
 
     private void toast(String msg)
@@ -210,9 +220,22 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
     {
         borrowItem.pinInBackground();
 
-        SavedItemActivity.savedItemList.add((BorrowItem)borrowItem);
+        SavedItemActivity.savedItemList.add((BorrowItem)borrowItem); //TODO: fix this
 
         initializeSaveButton();
+
+        toast("Added item to saved list");
+        /*
+        AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+        alertDialog.setTitle("Item Saved");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+        */
     }
 
     private void unsaveObject()
@@ -221,6 +244,19 @@ public class BorrowObjectViewActivity extends ActionBarActivity {
         SavedItemActivity.savedItemList.remove(borrowItem);
 
         initializeSaveButton();
+
+        toast("Removed item from saved list");
+        /*
+        AlertDialog alertDialog = new AlertDialog.Builder(BorrowObjectViewActivity.this).create();
+        alertDialog.setTitle("Item Unsaved");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+        */
     }
 
     private void toComposeMessageActivity()
